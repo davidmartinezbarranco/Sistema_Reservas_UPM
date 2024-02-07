@@ -1,7 +1,8 @@
-const {nextui} = require("@nextui-org/react");
+const { nextui } = require("@nextui-org/react");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: "media",
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -17,17 +18,19 @@ module.exports = {
         light: {
           layout: {},
           colors: {
-            beige: '#E5D9B6',
-          }
+            beige: "#E5D9B6",
+            azul: "#E6F7FF",
+            gris: "#333333",
+          },
         },
         dark: {
           layout: {},
           colors: {
-            primary:'#E5D9B6',
-            secondary: '#285430'
-          }
+            beige: "#E5D9B6",
+            secondary: "#285430",
+          },
         },
-      }
-    })
-  ]
+      },
+    }),
+  ],
 };
