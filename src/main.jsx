@@ -19,7 +19,7 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <NextUIProvider>
-    <main className=" bg-beige text-foreground min-h-screen grid place-content-center">
+    <main className=" bg-azul text-foreground min-h-screen grid place-content-center">
       <RouterProvider router={router} />
     </main>
   </NextUIProvider>

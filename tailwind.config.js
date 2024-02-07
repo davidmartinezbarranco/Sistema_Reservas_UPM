@@ -19,14 +19,14 @@ module.exports = {
           layout: {},
           colors: {
             beige: "#E5D9B6",
-            azul: "#E6F7FF",
+            azul: "#1C2833",
             gris: "#333333",
           },
         },
         dark: {
           layout: {},
           colors: {
-            beige: "#E5D9B6",
+            azulOscuro: "#34495E",
             secondary: "#285430",
           },
         },
