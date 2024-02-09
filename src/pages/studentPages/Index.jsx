@@ -25,7 +25,11 @@ function Index() {
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-          <p>Realizar reserva</p>
+          <Link href="/Reserva">
+            <Button color="primary">
+              Realizar reserva
+            </Button>
+          </Link>
         </NavbarItem>
         <NavbarItem>
           <p>Cancelar reserva</p>

@@ -4,7 +4,8 @@ import { NextUIProvider } from "@nextui-org/react";
 import "tailwindcss/tailwind.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/login";
-import Index from "./pages/Index";
+import Index from "./pages/studentPages/Index";
+import Reserva from "./pages/studentPages/Reserva";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,11 @@ const router = createBrowserRouter([
     path: "/",
     element: <Index />,
   },
+
+  {
+    path: "/Reserva",
+    element: <Reserva />,
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
