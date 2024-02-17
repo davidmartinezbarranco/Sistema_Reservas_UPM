@@ -1,0 +1,94 @@
+
+.Inicio div{
+    justify-content: center;
+    align-self: center;
+   
+}
+
+.Back{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Front{
+    display: flex;
+    justify-content: center;
+}
+
+.LoginBackBox{
+    margin: 5px;
+}
+
+.RegisterBackBox{
+    margin: 5px;
+}
+
+.LoginBox{
+    margin: 5px;
+}
+
+.RegisterBox{
+    margin: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+.RegisterBox{
+    position: absolute;
+    top: -25px
+}
+.InicioBoxBack {
+    width: 100%;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+
+    
+}
+
+.InicioBoxBack div{
+    justify-self: center;
+    transition: all 500ms;
+    flex: 1;
+    display: 10px;
+}
+
+.boxBack{
+    flex: 1;
+    margin: 10px; 
+}
+
+.InicioBox{
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.InicioBox div{
+    justify-content: center;
+    justify-self: center;
+}
+
+.box {
+    flex: 1;
+    margin: 10px; 
+}
+
+
+.boxLogin {
+    position: relative;
+    top: -30px;
+}
+
+*/

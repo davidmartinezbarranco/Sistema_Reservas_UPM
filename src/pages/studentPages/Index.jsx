@@ -40,7 +40,7 @@ function Index() {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          <Link href="/Login">
+          <Link href="/Inicio">
             <Button color="primary" variant="flat">
               Cerrar sesion
             </Button>
