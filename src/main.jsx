@@ -4,7 +4,7 @@ import { NextUIProvider } from "@nextui-org/react";
 import "tailwindcss/tailwind.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/Login";
-import Signin from "./pages/RegisterBack";
+import Signin from "./pages/NotRegistered";
 import Index from "./pages/studentPages/Index";
 import Reserva from "./pages/studentPages/Reserva";
 import Inicio from "./pages/Inicio";

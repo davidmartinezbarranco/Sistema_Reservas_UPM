@@ -1,42 +1,33 @@
 import React from "react";
 import Login from "./Login";
-import RegisterBack from "./RegisterBack";
+import RegisterBack from "./NotRegistered";
 import LoginBack from "./LoginBack";
 import Register from "./Register";
+import "../styles2.css"
 
 
 
 
 function Inicio() {
         return (
-                <div className="Inicio">
-                        <div className="Back">
-                                <div className="RegisterBackBox">
-                                        <RegisterBack></RegisterBack>
+                <html>
+                        <head>
+                                <link rel="stylesheet" href="styles2.css" />
+                        </head>
+                        <body>
+                                <div className="Inicio">
+                                        <div className="Ventana-iniciar-sesion">
+                                                <div className="Not-registered-box">
+                                                        <RegisterBack></RegisterBack>
+                                                </div>
+                                                <div className="Login-box">
+                                                        <Login></Login>
+                                                </div>
+                                        </div>
                                 </div>
-                                <div className="LoginBackBox">
-                                        <LoginBack></LoginBack>
-                                </div>
-                                
+                        </body>
+                </html>
 
-                        </div>
-
-                        <div className="Front">
-                                <div className="RegisterBox">
-                                        <Register></Register>
-                                </div>
-                                <div className="LoginBox">
-                                        <Login></Login>
-                                </div>
-                               
-
-
-
-                        </div>
-
-
-
-                </div>
 
         );
 }
