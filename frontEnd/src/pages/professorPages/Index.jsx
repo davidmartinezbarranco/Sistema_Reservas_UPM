@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -14,7 +15,7 @@ function Index() {
       <NavbarBrand>
         <img
           alt="Logo Sistema de Reserva"
-          src="Logo.png"
+          src="frontEnd\public\Logo.png"
           className="w-14 h-14"
         />
         <p className="ml-2 font-bold text-inherit">SIRA</p>
