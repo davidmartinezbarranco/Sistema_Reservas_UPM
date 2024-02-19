@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import { NextUIProvider } from "@nextui-org/react";
 import "tailwindcss/tailwind.css";
@@ -20,7 +19,7 @@ const router = createBrowserRouter([
   {
     path: "/Reserva",
     element: <Reserva />,
-  }
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

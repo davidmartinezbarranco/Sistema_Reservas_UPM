@@ -1,12 +1,8 @@
-import React from "react";
 import {
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  NavbarMenuToggle,
-  NavbarMenu,
-  NavbarMenuItem,
 } from "@nextui-org/react";
 
 import { Button } from "@nextui-org/react";
@@ -26,9 +22,7 @@ function Index() {
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
           <Link href="/ConfiguracionAulas">
-            <Button color="primary">
-              Configurar disponibilidad de aulas
-            </Button>
+            <Button color="primary">Configurar disponibilidad de aulas</Button>
           </Link>
         </NavbarItem>
         <NavbarItem>
