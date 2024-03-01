@@ -29,6 +29,10 @@ const router2 = createBrowserRouter([
     path: "/",
     element: <Index />,
   },
+  {
+    path: "/Reserva",
+    element: <Reserva />,
+  },
 ]);
 
 

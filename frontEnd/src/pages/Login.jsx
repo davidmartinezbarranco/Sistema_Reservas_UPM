@@ -14,7 +14,7 @@ function Login() {
           <br />
           <img
             className="w-36 h-36 object-center"
-            src="/public/Logo.png"
+            src="frontEnd\public\Logo.png"
             alt="Imagen logo web"
           />
         </div>
