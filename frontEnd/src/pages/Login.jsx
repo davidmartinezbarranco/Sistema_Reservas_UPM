@@ -5,13 +5,13 @@ import { Card, CardHeader, CardBody } from "@nextui-org/react";
 
 function Login() {
   return (
-    <Card className="border-none bg-background/90 table-row px-10 pb-10 pt-5 ">
+    <Card className="bg-background/90 table-row px-10 pb-10 pt-5">
       <CardHeader className="text-xl font-bold">
         <div className="flex flex-col items-center justify-center">
           <h1>HERRAMIENTA DE RESERVA DE AULAS ETSISI</h1>
           <img
             className="w-36 h-36 object-center"
-            src="frontEnd\public\Logo.png"
+            src="/public/Logo.png"
             alt="Imagen logo web"
           />
         </div>

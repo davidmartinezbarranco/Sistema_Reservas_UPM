@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { NextUIProvider } from "@nextui-org/react";
 import "tailwindcss/tailwind.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Login from "./pages/login";
+import Login from "./pages/Login";
 import Index from "./pages/studentPages/Index";
 import Reserva from "./pages/studentPages/Reserva";
 
