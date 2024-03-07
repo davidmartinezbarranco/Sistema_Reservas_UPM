@@ -6,7 +6,7 @@ import "../styles.css"
 
 function Login() {
   return (
-    <Card className="border-none bg-background/90 px-10 pb-10 pt-5">
+    <Card className="bg-background/90 table-row px-10 pb-10 pt-5">
       <CardHeader className="text-xl font-bold">
         <div className="flex flex-col items-center justify-center">
           <h1>RESERVA DE AULAS ETSISI</h1>
