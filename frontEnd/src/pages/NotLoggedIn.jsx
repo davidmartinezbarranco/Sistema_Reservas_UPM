@@ -1,9 +1,10 @@
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
 import React from "react";
+import "../styles2.css"
 
 
-function LoginBack() {
+function NotLoggedIn() {
     return (
         <Card className="border-none bg-background/70 px-10 pb-5 pt-10">
             <CardHeader className="text-xl font-bold justify-center">
@@ -25,4 +26,4 @@ function LoginBack() {
 
 }
 
-export default LoginBack;
+export default NotLoggedIn;
