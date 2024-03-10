@@ -3,6 +3,7 @@ import { Input } from "@nextui-org/react";
 import { Button, ButtonGroup } from "@nextui-org/react";
 import { Card, CardHeader, CardBody } from "@nextui-org/react";
 import "../styles.css"
+import { Link } from "@nextui-org/react";
 
 function Login() {
   return (
@@ -33,9 +34,11 @@ function Login() {
           placeholder="Introduce tu contraseña"
         />
         <ButtonGroup className="flex pt-2">
-          <Button color="#285430" className="flex-1 hover:bg-blue-600">
-            Iniciar sesión
-          </Button>
+          <Link href="/Index" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Button color="#285430" className="flex-1 hover:bg-blue-600">
+              Iniciar sesión
+            </Button>
+          </Link>
         </ButtonGroup>
       </CardBody>
     </Card>
