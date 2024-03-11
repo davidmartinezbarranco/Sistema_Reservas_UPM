@@ -10,9 +10,7 @@ function Index() {
         <main className="bg-azul text-foreground min-h-screen">
           <BarraNavegacion></BarraNavegacion>
           <PanelReservas></PanelReservas>
-          
         </main>
-        
       </NextUIProvider >
 
       
