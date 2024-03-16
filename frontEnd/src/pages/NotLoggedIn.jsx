@@ -1,10 +1,10 @@
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
 import React from "react";
-import "../styles2.css"
+import "../styles.css"
 
 
-function NotLoggedIn() {
+function NotLoggedIn({onToggle}) {
     return (
         <Card className="border-none bg-background/70 px-10 pb-5 pt-10">
             <CardHeader className="text-xl font-bold justify-center">
@@ -15,7 +15,7 @@ function NotLoggedIn() {
             <CardBody className="text-m justify-center">
                 <p> Inicia sesión para entrar en la página </p>
                 <br />
-                <Button>
+                <Button onClick={onToggle}>
                     Inicia sesión
                 </Button>
 

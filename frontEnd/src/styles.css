@@ -1,94 +1,36 @@
+/*NotRegistered*/
+#Not-registered-box{
+    height: 500px;
+    width: 250px;
+}
 
-/*
-
-.Inicio div{
+h1{
     display: flex;
-    justify-content: center;
-    align-self: center;
-   
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-.Back{
-   
-}
-
-.Front{
-    
-}
-
-.LoginBackBox{
-    margin: 5px;
-}
-
-.RegisterBackBox{
-    margin: 5px;
-}
-
-.LoginBox{
-    margin: 5px;
-}
-
-.RegisterBox{
-    margin: 5px;
-}
-
-
-
-
-
-
-*/
-
-
-
-
-
-/*
-.RegisterBox{
-    position: absolute;
-    top: -25px
-}
-.InicioBoxBack {
-    width: 100%;
-    padding: 10px 20px;
+h2{
     display: flex;
-    justify-content: center;
-
-    
+    text-align: center;
+    margin-bottom: 15px;
 }
 
-.InicioBoxBack div{
-    justify-self: center;
-    transition: all 500ms;
-    flex: 1;
-    display: 10px;
+
+/**/
+
+.oculto{
+    display: none
+
 }
 
-.boxBack{
-    flex: 1;
-    margin: 10px; 
-}
-
-.InicioBox{
+.visible{
     display: flex;
     align-items: center;
-    position: relative;
 }
 
-.InicioBox div{
-    justify-content: center;
-    justify-self: center;
+/*NotLoggedIn*/
+#Not-logged-in-box{
+    
 }
-
-.box {
-    flex: 1;
-    margin: 10px; 
-}
-
-
-.boxLogin {
-    position: relative;
-    top: -30px;
-}
-
-*/
