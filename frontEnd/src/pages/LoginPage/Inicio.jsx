@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import Login from "./Login";
-import RegisterBack from "./NotRegistered";
-import LoginBack from "./NotLoggedIn";
-import Register from "./Register";
-import "../styles.css";
+import Login from "./components/Login";
+import RegisterBack from "./components/NotRegistered";
+import LoginBack from "./components/NotLoggedIn";
+import Register from "./components/Register";
 import { NextUIProvider } from "@nextui-org/react";
-import NotRegistered from "./NotRegistered";
-import NotLoggedIn from "./NotLoggedIn";
+import NotRegistered from "./components/NotRegistered";
+import NotLoggedIn from "./components/NotLoggedIn";
 
 
 
@@ -17,36 +16,34 @@ function Inicio() {
         const toggleVisibilidad = () => {
                 setVisible(!visible);
         }
-        
+
         const mostrarRegistro = visible ? 'visible' : 'oculto';
         const mostarInicioSesion = visible ? 'oculto' : 'visible';
-        
+
 
         return (
                 <NextUIProvider>
-                        <main className=" bg-azul text-foreground min-h-screen grid place-content-center">      
+                        <main className="bg-azul min-h-screen inicio-custom-size">
                                 <html>
-                                        <head>
-                                                <link rel="stylesheet" href="styles2.css" />
-                                        </head>
                                         <body>
-                                                <div className="Inicio">
+                                                <div>
                                                         <div className={mostrarRegistro}>
-                                                                <div className="Not-registered-box">
-                                                                        <NotRegistered onToggle ={toggleVisibilidad}></NotRegistered>
+                                                                <div className="">
+                                                                        <NotRegistered onToggle={toggleVisibilidad}></NotRegistered>
                                                                 </div>
-                                                                <div className="Login-box">
+                                                                <div className="">
                                                                         <Login></Login>
                                                                 </div>
                                                         </div>
 
                                                         <div className={mostarInicioSesion}>
-                                                                <div className="Not-registered-box">
-                                                                        <NotLoggedIn onToggle ={toggleVisibilidad}></NotLoggedIn>
-                                                                </div>
-                                                                <div className="Login-box">
+                                                                <div className="">
                                                                         <Register></Register>
                                                                 </div>
+                                                                <div className="">
+                                                                        <NotLoggedIn onToggle={toggleVisibilidad}></NotLoggedIn>
+                                                                </div>
+
                                                         </div>
                                                 </div>
                                         </body>

@@ -1,17 +1,17 @@
 /*NotRegistered*/
-#Not-registered-box{
+#Not-registered-box {
     height: 500px;
     width: 250px;
 }
 
-h1{
+h1 {
     display: flex;
     text-align: center;
     font-weight: bold;
     margin-bottom: 10px;
 }
 
-h2{
+h2 {
     display: flex;
     text-align: center;
     margin-bottom: 15px;
@@ -20,12 +20,40 @@ h2{
 
 /**/
 
-.oculto{
+.oculto {
     display: none
-
 }
 
-.visible{
+.visible {
     display: flex;
     align-items: center;
+}
+
+
+/*Login.jsx*/
+.iniciar-sesion-card-body {
+    width: 300px;
+}
+
+
+/*Inicio.jsx*/
+
+.inicio-title {
+    display: flex;
+    justify-content: center;
+    color: aliceblue;
+    font-family: Open-Sans-Light, sans-serif;
+}
+
+.inicio-custom-size {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*NotLoggedIn.jsx*/
+
+.custom-border {
+    border-radius: 0;
+    overflow: hidden; 
 }

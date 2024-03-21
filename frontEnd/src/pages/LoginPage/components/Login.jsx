@@ -2,14 +2,14 @@ import React from "react";
 import { Input } from "@nextui-org/react";
 import { Button, ButtonGroup } from "@nextui-org/react";
 import { Card, CardHeader, CardBody } from "@nextui-org/react";
-import "../styles.css"
+import "/src/styles.css"
 import { Link } from "@nextui-org/react";
 
 function Login() {
   return (
-    <Card className="bg-background/90 px-10 pb-10 pt-5">
-      <CardHeader className="text-xl font-bold">
-        <div className="flex flex-col items-center justify-center">
+    <Card className="bg-background/90 px-10 pb-20 pt-20">
+      <CardHeader className="text-xl font-bold justify-center items-center">
+        <div className="flex flex-col items-center">
           <h1>RESERVA DE AULAS ETSISI</h1>
           <h2>Iniciar sesión</h2>
           <br />
@@ -20,7 +20,7 @@ function Login() {
           />
         </div>
       </CardHeader>
-      <CardBody className="space-y-2 px-7">
+      <CardBody className="space-y-2 iniciar-sesion-card-body">
         <Input
           color="#E5D9B6"
           type="email"
