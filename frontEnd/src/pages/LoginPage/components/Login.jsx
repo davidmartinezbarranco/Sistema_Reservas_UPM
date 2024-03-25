@@ -5,7 +5,43 @@ import { Card, CardHeader, CardBody } from "@nextui-org/react";
 import "/src/styles.css"
 import { Link } from "@nextui-org/react";
 
-function Login() {
+function Login({ onChildChange }) {
+
+  const inputsArray = [];
+
+  const obtenerInformacionInputs = () => {
+    const inputs = document.querySelectorAll('.login-form Input');
+    inputs.forEach((input) => {
+      const id = input.getAttribute('id');
+      const empty = true;
+      inputsArray.push({ id, empty });
+    });
+
+  };
+
+  obtenerInformacionInputs();
+  
+
+  const formIsEmpty = () => {
+    var empty = true;
+
+    inputsArray.forEach(i => {
+      if (i.empty === false) empty = false;
+    })
+    return empty;
+  }
+
+  const handleInputChange = (event) => {
+    updateForm(event.target, event.target.value.trim() === '');
+    onChildChange(formIsEmpty());
+  };
+
+  const updateForm = (input, changed) => {
+    inputsArray.forEach(i => {
+      if (i.id === input.id) i.empty = changed;
+    })
+  }
+
   return (
     <Card className="bg-background/90 px-10 pb-20 pt-20">
       <CardHeader className="text-xl font-bold justify-center items-center">
@@ -22,16 +58,22 @@ function Login() {
       </CardHeader>
       <CardBody className="space-y-2 iniciar-sesion-card-body">
         <Input
+          id="login-email"
+          className="login-form"
           color="#E5D9B6"
           type="email"
           label="Email"
           placeholder="Introduce tu email"
+          onChange={handleInputChange}
         />
         <Input
+          id="login-password"
+          className="login-form"
           color="#285430"
           type="password"
           label="Contraseña"
           placeholder="Introduce tu contraseña"
+          onChange={handleInputChange}
         />
         <ButtonGroup className="flex pt-2">
           <Link href="/Index" style={{ textDecoration: 'none', color: 'inherit' }}>

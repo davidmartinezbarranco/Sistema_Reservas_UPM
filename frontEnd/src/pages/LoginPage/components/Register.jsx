@@ -1,27 +1,56 @@
-import { React, useState, useEffect } from "react";
+import { React, useEffect } from "react";
 import { Input, Button, ButtonGroup, RadioGroup, Radio, Card, CardHeader, CardBody } from "@nextui-org/react";
 import "/src/styles.css"
 
-function Register() {
+function Register({ onChildChange }) {
+  const inputsArray = [];
 
-  const [formChanged, setFormChanged] = useState(false);
+  const obtenerInformacionInputs = () => {
+    const inputs = document.querySelectorAll('.sign-in-form Input');
+    inputs.forEach((input) => {
+      const id = input.getAttribute('id');
+      const empty = true; 
+      inputsArray.push({ id, empty });
+    });
+
+  };
+
+  obtenerInformacionInputs();
+
+  const formIsEmpty = () => {
+    var empty = true;
+
+    inputsArray.forEach(i => {
+      if (i.empty === false) empty = false;
+    })
+    return empty;
+  }
+  const handleInputChange = (event) => {
+    updateForm(event.target, event.target.value.trim() === '');
+    onChildChange(formIsEmpty());
+  };
+
+  const updateForm = (input, changed) => {
+    inputsArray.forEach(i => {
+      if (i.id === input.id) i.empty = changed;
+    })
+  }
+
 
   useEffect(() => {
     const handleBeforeUnload = (event) => {
-      if (formChanged) {
+      if (!formIsEmpty()) {
         event.preventDefault();
-        return ""; 
+        event.returnValue = '';
       }
     };
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener('beforeunload', handleBeforeUnload);
 
     return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, [formChanged]);
-
-
+  }, [formIsEmpty()]);
 
 
   return (
@@ -40,29 +69,41 @@ function Register() {
       </CardHeader>
       <CardBody className="space-y-2 iniciar-sesion-card-body">
         <Input
+          id="register-nombre"
+          className="sign-in-form"
           color="#E5D9B6"
           type="nombre"
           label="Nombre"
           placeholder="Introduce tu nombre"
-          onChange={() => setFormChanged(true)}
+          onChange={handleInputChange}
         />
         <Input
+          id="register-apellidos"
+          className="sign-in-form"
           color="#E5D9B6"
           type="apellido"
           label="Apellidos"
           placeholder="Introduce tus apellidos"
+          onChange={handleInputChange}
         />
         <Input
+          id="register-email"
+          className="sign-in-form"
           color="#E5D9B6"
           type="email"
           label="Email"
           placeholder="Introduce tu email"
+          onChange={handleInputChange}
+
         />
         <Input
+          id="register-password"
+          className="sign-in-form"
           color="#285430"
           type="password"
           label="Contraseña"
           placeholder="Introduce tu contraseña"
+          onChange={handleInputChange}
         />
 
         <div className="flex flex-col gap-3">

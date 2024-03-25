@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import Login from "./components/Login";
-import RegisterBack from "./components/NotRegistered";
-import LoginBack from "./components/NotLoggedIn";
 import Register from "./components/Register";
 import { NextUIProvider } from "@nextui-org/react";
 import NotRegistered from "./components/NotRegistered";
@@ -11,14 +9,50 @@ import NotLoggedIn from "./components/NotLoggedIn";
 
 
 function Inicio() {
-        const [visible, setVisible] = useState(true);
+        const [registerFormIsEmpty, setRegisterFormIsEmpty] = useState(true);
+        const [loginFormIsEmpty, setLoginFormIsEmpty] = useState(true);
+        const [mostrarInicioSesion, setMostrarInicioSesion] = useState(true);
+        const [mostrarRegistro, setMostrarRegistro] = useState(false);
+        
+        
 
-        const toggleVisibilidad = () => {
-                setVisible(!visible);
+        const handleRegisterChildChange = (changed) =>{
+                setRegisterFormIsEmpty(changed);
         }
 
-        const mostrarRegistro = visible ? 'visible' : 'oculto';
-        const mostarInicioSesion = visible ? 'oculto' : 'visible';
+        const handleLoginChildChange = (changed) =>{
+                setLoginFormIsEmpty(changed);
+        }
+
+        const cambiarALogin = () => {
+                if (registerFormIsEmpty){
+                        showLoginForm();
+                }
+                
+        }
+
+        const cambiarARegistro = () => {
+                if(loginFormIsEmpty){
+                        showRegisterForm();
+                }
+                
+        }
+
+        const showRegisterForm = () =>{
+                setMostrarInicioSesion(false);
+                setMostrarRegistro(true);
+        }
+
+        const showLoginForm = () =>{
+                setMostrarInicioSesion(true);
+                setMostrarRegistro(false);
+        }
+
+      
+        const showInicioSesion = mostrarInicioSesion ? 'visible' : 'oculto';
+        const showRegistro = mostrarRegistro ? 'visible' : 'oculto' ;
+
+       
 
 
         return (
@@ -27,21 +61,21 @@ function Inicio() {
                                 <html>
                                         <body>
                                                 <div>
-                                                        <div className={mostrarRegistro}>
+                                                        <div className={showInicioSesion}>
                                                                 <div className="">
-                                                                        <NotRegistered onToggle={toggleVisibilidad}></NotRegistered>
+                                                                        <NotRegistered onToggle={cambiarARegistro}></NotRegistered>
                                                                 </div>
                                                                 <div className="">
-                                                                        <Login></Login>
+                                                                        <Login onChildChange={handleLoginChildChange} ></Login>
                                                                 </div>
                                                         </div>
 
-                                                        <div className={mostarInicioSesion}>
+                                                        <div className={showRegistro}>
                                                                 <div className="">
-                                                                        <Register></Register>
+                                                                        <Register onChildChange={handleRegisterChildChange}></Register>
                                                                 </div>
                                                                 <div className="">
-                                                                        <NotLoggedIn onToggle={toggleVisibilidad}></NotLoggedIn>
+                                                                        <NotLoggedIn onToggle={cambiarALogin} ></NotLoggedIn>
                                                                 </div>
 
                                                         </div>
