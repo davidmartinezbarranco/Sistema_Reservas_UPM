@@ -1,4 +1,4 @@
-import { React, useEffect } from "react";
+import { React } from "react";
 import { Input, Button, ButtonGroup, RadioGroup, Radio, Card, CardHeader, CardBody } from "@nextui-org/react";
 import "/src/styles.css"
 
@@ -37,20 +37,6 @@ function Register({ onChildChange }) {
   }
 
 
-  useEffect(() => {
-    const handleBeforeUnload = (event) => {
-      if (!formIsEmpty()) {
-        event.preventDefault();
-        event.returnValue = '';
-      }
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, [formIsEmpty()]);
 
 
   return (

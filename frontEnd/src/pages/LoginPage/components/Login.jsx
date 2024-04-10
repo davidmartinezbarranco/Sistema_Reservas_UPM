@@ -1,9 +1,6 @@
 import React from "react";
-import { Input } from "@nextui-org/react";
-import { Button, ButtonGroup } from "@nextui-org/react";
-import { Card, CardHeader, CardBody } from "@nextui-org/react";
-import "/src/styles.css"
-import { Link } from "@nextui-org/react";
+import { Input, Button, ButtonGroup, Card, CardHeader, CardBody, Link } from "@nextui-org/react";
+import "/src/styles.css";
 
 function Login({ onChildChange }) {
 
@@ -20,7 +17,7 @@ function Login({ onChildChange }) {
   };
 
   obtenerInformacionInputs();
-  
+
 
   const formIsEmpty = () => {
     var empty = true;
@@ -37,11 +34,13 @@ function Login({ onChildChange }) {
   };
 
   const updateForm = (input, changed) => {
+    console.log(changed);
     inputsArray.forEach(i => {
       if (i.id === input.id) i.empty = changed;
     })
   }
 
+ 
   return (
     <Card className="bg-background/90 px-10 pb-20 pt-20">
       <CardHeader className="text-xl font-bold justify-center items-center">
@@ -80,7 +79,7 @@ function Login({ onChildChange }) {
             <Button color="#285430" className="flex-1 hover:bg-blue-600">
               Iniciar sesión
             </Button>
-          </Link>
+        </Link>
         </ButtonGroup>
       </CardBody>
     </Card>
