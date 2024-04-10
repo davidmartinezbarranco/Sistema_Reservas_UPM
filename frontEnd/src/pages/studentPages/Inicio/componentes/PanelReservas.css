@@ -1,11 +1,14 @@
-#title-panel {
+#panel-title {
     color: white;
     text-align: center;
+    font-size: xxx-large;
+    margin-top: 100px;
+    margin-bottom: 10px;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: 200px 200px;
+    grid-template-columns: 400px 400px 400px;
     justify-content: center;
     align-content: center;
 
@@ -24,5 +27,26 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    
+
+}
+
+.panel-images {
+    margin-top: 20px;
+}
+
+.large{
+    font-size: large;
+}
+
+.bold-text {
+    font-weight: bold;
+}
+
+.big-text {
+    font-size: 25px;
+}
+
+.panel-box{
+    margin: 20px;
+    padding: 30px;
 }
