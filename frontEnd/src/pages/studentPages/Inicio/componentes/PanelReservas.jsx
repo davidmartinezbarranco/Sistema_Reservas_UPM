@@ -39,8 +39,6 @@ function PanelReservas() {
                     </CardBody>
                     
                 </Card>
-
-            
             </div>
 
 
