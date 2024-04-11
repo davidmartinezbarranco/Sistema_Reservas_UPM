@@ -5,6 +5,8 @@ import "tailwindcss/tailwind.css";
 import { BrowserRouter, createBrowserRouter, RouterProvider } from "react-router-dom";
 import Index from "./pages/studentPages/Inicio/Index";
 import Inicio from "./pages/LoginPage/Inicio";
+import Reserva from "./pages/studentPages/Reserva/Reserva"
+
 
 const routes = createBrowserRouter([
   {
@@ -14,6 +16,10 @@ const routes = createBrowserRouter([
   {
     path: "/Index",
     element: <Index />,
+  },
+  {
+    path: "/Reserva",
+    element: <Reserva />,
   },
   
 ]);

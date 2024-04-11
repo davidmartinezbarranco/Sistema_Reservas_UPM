@@ -7,11 +7,12 @@ import {
 } from "@nextui-org/react";
 
 import { Button, Link } from "@nextui-org/react";
+import "./BarraNavegacion.css";
 
 
 function BarraNavegacion() {
   return (
-    <Navbar>
+    <Navbar className="nav-bar">
       <NavbarBrand>
         <img
           alt="Logo Sistema de Reserva"
@@ -22,13 +23,14 @@ function BarraNavegacion() {
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-          <Link href="/Reserva">
-            <Button color="primary">Inicio</Button>
+          <Link href="/Index">
+          
+            <Button color="primary">INICIO</Button>
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link href="/Reserva">
-            <p>Mis reservas</p>
+          <Link href="/MisReservas">
+          <Button color="primary">MIS RESERVAS</Button>
           </Link>
 
         </NavbarItem>
@@ -37,7 +39,7 @@ function BarraNavegacion() {
         <NavbarItem>
           <Link href="/">
             <Button color="primary" variant="flat">
-              Cerrar sesion
+              CERRAR SESIÓN
             </Button>
           </Link>
         </NavbarItem>
