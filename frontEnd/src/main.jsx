@@ -6,6 +6,7 @@ import { BrowserRouter, createBrowserRouter, RouterProvider } from "react-router
 import Index from "./pages/studentPages/Inicio/Index";
 import Inicio from "./pages/LoginPage/Inicio";
 import Reserva from "./pages/studentPages/Reserva/Reserva"
+import MisReservas from "./pages/studentPages/MisReservas/MisReservas"
 
 
 const routes = createBrowserRouter([
@@ -20,6 +21,10 @@ const routes = createBrowserRouter([
   {
     path: "/Reserva",
     element: <Reserva />,
+  },
+  {
+    path: "/MisReservas",
+    element: <MisReservas />,
   },
   
 ]);

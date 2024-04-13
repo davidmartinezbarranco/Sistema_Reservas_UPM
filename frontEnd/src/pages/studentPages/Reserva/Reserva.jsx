@@ -2,6 +2,8 @@ import BarraNavegacion from "./../Inicio/componentes/BarraNavegacion";
 import './Reserva.css';
 import { RadioGroup, Radio, cn } from "@nextui-org/react";
 import { ScheduleMeeting } from 'react-schedule-meeting';
+import React, { useState, useEffect } from 'react';
+
 
 
 export const CustomRadio = (props) => {
@@ -25,6 +27,26 @@ export const CustomRadio = (props) => {
 
 
 function Reserva() {
+
+  // Pidiendo datos al servidor
+  const [aulas, setDatos] = useState({});
+
+  useEffect(() => {
+    // Solicitar información al servidor usando Fetch API cuando el componente se monta
+    fetch('/aulas')
+      .then(response => response.json())
+      .then(data => {
+        setDatos(data);
+      })
+      .catch(error => console.error('Error:', error));
+  }, []);
+
+  const aulasDisponibles = aulas.aulasDisponibles;
+  const horasDisponibles = aulas.horasDisponibles;
+
+
+
+
   // en el array selecciono desde el día de hoy, qué días hay disponibles para reservar
   const availableTimeslots = [0, 1, 2, 3, 4, 14].map((id) => {
     return {
@@ -34,9 +56,9 @@ function Reserva() {
     };
   });
 
-  const horaSeleccionada = () =>{
+  const horaSeleccionada = () => {
     console.log("he llegado");
-    
+
   }
 
 

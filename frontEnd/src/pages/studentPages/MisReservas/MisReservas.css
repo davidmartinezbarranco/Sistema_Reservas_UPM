@@ -1,0 +1,45 @@
+#crear-reserva{
+    color: white;
+    font-size: 40px;
+    justify-content: center;
+} 
+
+.reserva-titles{
+    justify-content: center;
+    color: white;
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+
+
+.reserva{
+    margin-top: 50px;
+    margin-left: 150px;
+    margin-right: 150px;
+}
+.selectores{
+    margin-top: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    appearance: none; 
+    margin-bottom: 20px;
+  }
+
+  select:hover,
+  select:focus {
+    border-color: #999;
+  }
+
+  option {
+    padding: 10px;
+  }
