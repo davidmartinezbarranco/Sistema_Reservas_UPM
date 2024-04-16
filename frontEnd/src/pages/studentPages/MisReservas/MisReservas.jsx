@@ -1,7 +1,5 @@
 import BarraNavegacion from "../Inicio/componentes/BarraNavegacion";
 import './MisReservas.css';
-import { RadioGroup, Radio, cn } from "@nextui-org/react";
-import { ScheduleMeeting } from 'react-schedule-meeting';
 import React, { useState, useEffect } from 'react';
 
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, User, Chip, Tooltip, getKeyValue } from "@nextui-org/react";
@@ -10,7 +8,6 @@ import { DeleteIcon } from "./elements/DeleteIcon";
 import { EyeIcon } from "./elements/EyeIcon";
 import { columns, reservas } from "./elements/data";
 import { Link } from 'react-router-dom';
-
 
 
 const statusColorMap = {
@@ -41,51 +38,43 @@ function MisReservas() {
   const renderCell = React.useCallback((reserva, columnKey) => {
     const cellValue = reserva[columnKey];
 
+
     switch (columnKey) {
-      case "name":
+      case "nombreAula":
         return (
           <User
-            avatarProps={{ radius: "lg", src: reserva.avatar }}
-            description={reserva.email}
             name={cellValue}
+            description={reserva.aula}
           >
-            {reserva.email}
+            {reserva.nombreAula}
           </User>
-        );
-      case "role":
-        return (
-          <div className="flex flex-col">
-            <p className="text-bold text-sm capitalize">{cellValue}</p>
-            <p className="text-bold text-sm capitalize text-default-400">{reserva.team}</p>
-          </div>
-        );
-      case "status":
-        return (
-          <Chip className="capitalize" color={statusColorMap[reserva.status]} size="sm" variant="flat">
-            {cellValue}
-          </Chip>
         );
       case "actions":
         return (
           <div className="relative flex items-center gap-2">
-            <Link to="/Detalles">
-              <Tooltip content="Detalles">
+            <Link to={`/Detalles?id=${reserva.id}`}>
+              <Tooltip content="Detalles" >
                 <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
                   <EyeIcon />
                 </span>
               </Tooltip>
             </Link>
-            <Tooltip content="Editar reserva">
-              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                <EditIcon />
-              </span>
-            </Tooltip>
+
+            <Link to={`/Edicion?id=${reserva.id}`}>
+              <Tooltip content="Editar reserva">
+                <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                  <EditIcon />
+                </span>
+              </Tooltip>
+            </Link>
+
             <Tooltip color="danger" content="Cancelar reserva">
               <span className="text-lg text-danger cursor-pointer active:opacity-50">
                 <DeleteIcon />
               </span>
             </Tooltip>
-          </div>
+
+          </div >
         );
       default:
         return cellValue;
@@ -102,7 +91,7 @@ function MisReservas() {
         <div className="reserva">
           <h1 id="crear-reserva"> MIS RESERVAS </h1>
 
-          <Table aria-label="Example table with custom cells">
+          <Table>
             <TableHeader columns={columns}>
               {(column) => (
                 <TableColumn key={column.uid} align={column.uid === "actions" ? "center" : "start"}>
@@ -129,4 +118,3 @@ function MisReservas() {
 }
 
 export default MisReservas;
-
