@@ -6,7 +6,6 @@ import classNames from 'classnames';
 
 
 function PanelReservas() {
-
     const boxTitle = classNames(
         styles["center"],
         styles["bold-text"],
@@ -19,50 +18,31 @@ function PanelReservas() {
         styles.center,
         styles["panel-images"]
     );
-    
+
     return (
         <div>
             <p id={styles["panel-title"]}>PANEL DE RESERVAS</p>
             <div className={styles.grid}>
-                <Link to="/Reserva">
-
+                <Link to="/CrearReserva">
                     <Card className={styles["panel-box"]}>
                         <CardBody >
-                            <p className={boxTitle}>Realizar reserva</p>
+                            <p className={boxTitle}> Reservar aula </p>
                             <img src="/public/realizarReserva.png" alt="realizar-reserva-button" className={imageStyle} />
-
                         </CardBody>
 
                     </Card>
                 </Link>
                 <Link>
-
                     <Card className={styles["panel-box"]}>
                         <CardBody >
-                            <p className={boxTitle}>Modificar reserva</p>
-                            <img src="/public/modificarReserva.png" alt="realizar-reserva-button" className={imageStyle} />
-
-                        </CardBody>
-
-                    </Card>
-                </Link>
-                <Link>
-
-                    <Card className={styles["panel-box"]}>
-                        <CardBody>
-                            <p className={boxTitle}>Cancelar reserva</p>
-                            <img src="/public/cancelarReserva.png" alt="realizar-reserva-button" className={imageStyle} />
-
+                            <p className={boxTitle} > Consultar aulas </p>
+                            <img src="/public/consulta.png" alt="realizar-reserva-button" className={imageStyle} />
                         </CardBody>
 
                     </Card>
                 </Link>
             </div>
-
-
-
         </div>
-
     );
 }
 

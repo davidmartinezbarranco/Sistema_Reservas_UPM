@@ -40,7 +40,7 @@ function Register({ onChildChange }) {
 
 
   return (
-    <Card className="bg-background/90 px-10 pb-20 pt-20">
+    <Card className="bg-background/90 px-10 pb-10 pt-10 mt-10 mb-10 ml-5">
       <CardHeader className="text-xl font-bold justify-center items-center">
         <div className="flex flex-col items-center">
           <h1>RESERVA DE AULAS ETSISI</h1>

@@ -40,9 +40,9 @@ function Login({ onChildChange }) {
     })
   }
 
- 
+
   return (
-    <Card className="bg-background/90 px-10 pb-20 pt-20">
+    <Card className="bg-background/90 px-10 pb-20 pt-20 mt-10 mb-10">
       <CardHeader className="text-xl font-bold justify-center items-center">
         <div className="flex flex-col items-center">
           <h1>RESERVA DE AULAS ETSISI</h1>
@@ -79,7 +79,12 @@ function Login({ onChildChange }) {
             <Button color="#285430" className="flex-1 hover:bg-blue-600">
               Iniciar sesión
             </Button>
-        </Link>
+          </Link>
+          <Link href="/Indice" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Button color="#285430" className="flex-1 hover:bg-blue-600">
+              Iniciar sesión - profesor
+            </Button>
+          </Link>
         </ButtonGroup>
       </CardBody>
     </Card>

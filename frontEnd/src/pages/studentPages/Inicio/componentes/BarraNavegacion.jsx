@@ -7,12 +7,12 @@ import {
 } from "@nextui-org/react";
 
 import { Button, Link } from "@nextui-org/react";
-import "./BarraNavegacion.css";
+import styles from "./../../../styles/BarraNavegacion.module.css"
 
 
 function BarraNavegacion() {
   return (
-    <Navbar className="nav-bar">
+    <Navbar className={styles["nav-bar"]}>
       <NavbarBrand>
         <img
           alt="Logo Sistema de Reserva"

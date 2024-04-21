@@ -4,6 +4,7 @@ import Register from "./components/Register";
 import { NextUIProvider } from "@nextui-org/react";
 import NotRegistered from "./components/NotRegistered";
 import NotLoggedIn from "./components/NotLoggedIn";
+import styles from "./Inicio.module.css"
 
 
 
@@ -89,11 +90,8 @@ function Inicio() {
         }
 
 
-
-
-
         return (
-                <NextUIProvider>
+                <NextUIProvider >
 
                         <div className="bg-azul min-h-screen inicio-custom-size">
                                 <div className={showInicioSesion}>

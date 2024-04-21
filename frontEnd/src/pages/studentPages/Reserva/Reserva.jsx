@@ -1,5 +1,5 @@
 import BarraNavegacion from "./../Inicio/componentes/BarraNavegacion";
-import './Reserva.css';
+import styles from './Reserva.module.css';
 import { RadioGroup, Radio, cn } from "@nextui-org/react";
 import { ScheduleMeeting } from 'react-schedule-meeting';
 import React, { useState, useEffect } from 'react';
@@ -68,11 +68,11 @@ function Reserva() {
         <div>
           <BarraNavegacion></BarraNavegacion>
         </div>
-        <div className="reserva">
-          <h1 id="crear-reserva"> CREAR UNA RESERVA </h1>
+        <div className={styles.reserva}>
+          <h1 id={styles["crear-reserva"]}> CREAR UNA RESERVA </h1>
 
-          <h2 className="reserva-titles">Selecciona el aula a reservar:</h2>
-          <div className="selectores">
+          <h2 className={styles["reserva-titles"]}>Selecciona el aula a reservar:</h2>
+          <div className={styles.selectores}>
             <RadioGroup>
               <CustomRadio description="Bloque III" value="aula-1">
                 Aula 1
@@ -87,7 +87,7 @@ function Reserva() {
           </div>
 
 
-          <h2 className="reserva-titles" >Selecciona una fecha y una franja horaria: </h2>
+          <h2 className={styles["reserva-titles"]} >Selecciona una fecha y una franja horaria: </h2>
           <ScheduleMeeting
             borderRadius={10}
             primaryColor="#3f5b85"

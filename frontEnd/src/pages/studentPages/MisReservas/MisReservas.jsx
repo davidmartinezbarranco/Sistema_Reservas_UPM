@@ -1,7 +1,6 @@
 import BarraNavegacion from "../Inicio/componentes/BarraNavegacion";
-import './MisReservas.css';
+import styles from './MisReservas.module.css';
 import React, { useState, useEffect } from 'react';
-
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, User, Chip, Tooltip, getKeyValue } from "@nextui-org/react";
 import { EditIcon } from "./elements/EditIcon";
 import { DeleteIcon } from "./elements/DeleteIcon";
@@ -61,7 +60,7 @@ function MisReservas() {
             </Link>
 
             <Link to={`/Edicion?id=${reserva.id}`}>
-              <Tooltip content="Editar reserva">
+              <Tooltip content="Modificar reserva">
                 <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
                   <EditIcon />
                 </span>
@@ -88,8 +87,8 @@ function MisReservas() {
         <div>
           <BarraNavegacion></BarraNavegacion>
         </div>
-        <div className="reserva">
-          <h1 id="crear-reserva"> MIS RESERVAS </h1>
+        <div className={styles.reserva}>
+          <h1 id={styles["mis-reservas"]}> MIS RESERVAS </h1>
 
           <Table>
             <TableHeader columns={columns}>
