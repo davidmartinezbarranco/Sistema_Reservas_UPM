@@ -43,6 +43,5 @@ public class SecurityBeansInjector {
         return username -> userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
-
 }
 
