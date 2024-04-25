@@ -28,11 +28,11 @@ public class AuthenticationService {
 
     public AuthenticationResponse login(AuthenticationRequest authRequest) {
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                authRequest.getUsername(), authRequest.getPassword()
+                authRequest.getEmail(), authRequest.getPassword()
         );
         authenticationManager.authenticate(authToken);
 
-        User user = userRepository.findByUsername(authRequest.getUsername()).get();
+        User user = userRepository.findByUsername(authRequest.getEmail()).get();
 
         String jwt = jwtService.generateToken(user, generateExtraClaims(user));
 
