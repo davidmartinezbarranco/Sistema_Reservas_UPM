@@ -2,6 +2,7 @@ package com.sira.service;
 
 import com.sira.dto.AuthenticationRequest;
 import com.sira.dto.AuthenticationResponse;
+import com.sira.dto.RegisterRequest;
 import com.sira.model.User;
 import com.sira.repository.UserRepository;
 import com.sira.util.Role;
@@ -38,16 +39,15 @@ public class AuthenticationService {
         return new AuthenticationResponse(jwt);
     }
 
-    public AuthenticationResponse register(AuthenticationRequest authRequest) throws Exception {
-        if (userRepository.existsByUsername(authRequest.getUsername())) {
-            throw new Exception("El nombre de usuario ya está en uso");
+    public AuthenticationResponse register(RegisterRequest authRequest) throws Exception {
+        if (userRepository.existsByUsername(authRequest.getEmail())) {
+            throw new Exception("El email ya está en uso");
         }
 
         // Crear un nuevo usuario
-        User user = new User();
-        user.setUsername(authRequest.getUsername());
-        user.setPassword(passwordEncoder.encode(authRequest.getPassword()));
-        user.setRole(Role.ADMINISTRATOR);
+        User user = new User(authRequest.getName(), authRequest.getLastName(),
+                authRequest.getEmail(), passwordEncoder.encode(authRequest.getPassword()),
+                authRequest.getRole());
 
         // Guardar el usuario en la base de datos
         userRepository.save(user);

@@ -21,9 +21,8 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String email;
-
     private String name;
+    private String lastName;
     private String username;
     private String password;
     @Enumerated(EnumType.STRING)
@@ -31,9 +30,12 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Reservation> reservations;
 
-    public User (String username, String email){
+    public User(String name, String lastName, String username, String password, Role role) {
+        this.name = name;
+        this.lastName = lastName;
         this.username = username;
-        this.email = email;
+        this.password = password;
+        this.role = role;
     }
 
     @Override
