@@ -6,44 +6,46 @@ import {
   NavbarItem,
 } from "@nextui-org/react";
 
-import { Button } from "@nextui-org/react";
-import { Link } from "@nextui-org/react";
+import { Button, Link } from "@nextui-org/react";
+import styles from "./../../../styles/BarraNavegacion.module.css"
 
-function Index() {
+function BarraNavegacion() {
   return (
-    <Navbar className="fixed">
+    <Navbar className={styles["nav-bar"]}>
       <NavbarBrand>
         <img
           alt="Logo Sistema de Reserva"
-          src="\public\Logo.png"
+          src="/public/Logo.png"
           className="w-14 h-14"
         />
-        <p className="ml-2 font-bold text-inherit">SIRA</p>
+        <p className="ml-2 font-bold text-inherit">Sistema de reserva de aulas</p>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-          <Link href="/ConfiguracionAulas">
-            <Button color="primary">Configurar disponibilidad de aulas</Button>
+          <Link href="/Indice">
+          
+            <Button color="primary">INICIO</Button>
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <p>Modificar disponibilidad de aulas</p>
-        </NavbarItem>
-        <NavbarItem>
-          <p>Mis reservas</p>
+          <Link href="/EspaciosReservados">
+          <Button color="primary"> ESPACIOS RESERVADOS </Button>
+          </Link>
+
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          <Link href="/Inicio">
+          <Link href="/">
             <Button color="primary" variant="flat">
-              Cerrar sesion
+              CERRAR SESIÓN
             </Button>
           </Link>
         </NavbarItem>
       </NavbarContent>
     </Navbar>
+
   );
 }
 
-export default Index;
+export default BarraNavegacion;

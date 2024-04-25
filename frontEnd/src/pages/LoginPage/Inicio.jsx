@@ -89,11 +89,8 @@ function Inicio() {
         }
 
 
-
-
-
         return (
-                <NextUIProvider>
+                <NextUIProvider >
 
                         <div className="bg-azul min-h-screen inicio-custom-size">
                                 <div className={showInicioSesion}>
