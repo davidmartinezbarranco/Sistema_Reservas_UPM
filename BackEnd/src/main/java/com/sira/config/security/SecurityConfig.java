@@ -47,6 +47,7 @@ public class SecurityConfig {
     private static Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> builderRequestMatchers() {
         return authConfig -> {
             authConfig.requestMatchers(HttpMethod.POST, "/auth/authenticate").permitAll();
+            authConfig.requestMatchers(HttpMethod.POST, "/auth/register").permitAll();
             authConfig.requestMatchers(HttpMethod.GET, "/auth/public-access").permitAll();
             authConfig.requestMatchers("/error").permitAll();
             authConfig.requestMatchers(HttpMethod.GET, "/reservations").hasAuthority(Permission.READ_ALL_RESERVATIONS.name());
