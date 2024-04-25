@@ -35,25 +35,26 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         LOGGER.info("Config iniciada");
         http
-                .cors(cors -> cors.disable())
+                .cors((cors -> corsFilter()))
                 .csrf(csrfConfig -> csrfConfig.disable())
                 .sessionManagement(sessionMangConfig -> sessionMangConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
-                //.authorizeHttpRequests(builderRequestMatchers());
         return http.build();
     }
 
-    private static Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> builderRequestMatchers() {
-        return authConfig -> {
-            authConfig.requestMatchers(HttpMethod.POST, "/auth/authenticate").permitAll();
-            authConfig.requestMatchers(HttpMethod.POST, "/auth/register").permitAll();
-            authConfig.requestMatchers(HttpMethod.GET, "/auth/public-access").permitAll();
-            authConfig.requestMatchers("/error").permitAll();
-            authConfig.requestMatchers(HttpMethod.GET, "/reservations").hasAuthority(Permission.READ_ALL_RESERVATIONS.name());
-            authConfig.requestMatchers(HttpMethod.GET, "/users").hasAuthority(Permission.READ_ALL_USERS.name());
-            authConfig.anyRequest().denyAll();
-        };
+    @Bean
+    public CorsFilter corsFilter() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.addAllowedOrigin("*"); // Permitir solicitudes desde cualquier origen
+        corsConfiguration.addAllowedMethod("*"); // Permitir cualquier método (GET, POST, PUT, DELETE, etc.)
+        corsConfiguration.addAllowedHeader("*"); // Permitir cualquier encabezado
+        corsConfiguration.setAllowCredentials(true); // Permitir credenciales (por ejemplo, cookies)
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfiguration);
+
+        return new CorsFilter(source);
     }
 
     @Bean
