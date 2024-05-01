@@ -46,7 +46,7 @@ public class SecurityConfig {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOrigin("*"); // Permitir solicitudes desde cualquier origen
+        corsConfiguration.addAllowedOriginPattern("*"); // Permitir solicitudes desde cualquier origen
         corsConfiguration.addAllowedMethod("*"); // Permitir cualquier método (GET, POST, PUT, DELETE, etc.)
         corsConfiguration.addAllowedHeader("*"); // Permitir cualquier encabezado
         corsConfiguration.setAllowCredentials(true); // Permitir credenciales (por ejemplo, cookies)

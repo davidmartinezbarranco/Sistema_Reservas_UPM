@@ -40,7 +40,6 @@ function Login({ onChildChange }) {
     })
   }
 
-
   return (
     <Card className="bg-background/90 px-10 pb-20 pt-20 mt-10 mb-10">
       <CardHeader className="text-xl font-bold justify-center items-center">
@@ -76,7 +75,11 @@ function Login({ onChildChange }) {
         />
         <ButtonGroup className="flex pt-2">
           <Link href="/Index" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <Button color="#285430" className="flex-1 hover:bg-blue-600">
+            <Button 
+            color="#285430" 
+            className="flex-1 hover:bg-blue-600"
+
+            >
               Iniciar sesión
             </Button>
           </Link>
