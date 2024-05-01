@@ -92,10 +92,6 @@ function Register({ onChildChange }) {
 
   //
 
-  
-
-
-
 
   return (
     <Card className="bg-background/90 px-10 pb-10 pt-10 mt-10 mb-10 ml-5">

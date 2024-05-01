@@ -1,0 +1,29 @@
+#crear-reserva{
+    color: white;
+    font-size: 40px;
+    justify-content: center;
+} 
+
+.reserva-titles{
+    justify-content: center;
+    color: white;
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+
+
+.reserva{
+    margin-top: 50px;
+    margin-left: 100px;
+    margin-right: 10px;
+}
+.selectores{
+    margin-top: 10px;
+    margin-bottom: 20px;
+    display: flex;
+}
+
+.customRadio{
+    width: 300px;
+    margin: 10px;
+}

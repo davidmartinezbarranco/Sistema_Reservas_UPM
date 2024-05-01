@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Input, Button, ButtonGroup, Card, CardHeader, CardBody, Link } from "@nextui-org/react";
 import "/src/styles.css";
+import { setToken, getRole } from "../../../helpers";
 
 function Login({ onChildChange }) {
 
   const inputsArray = [];
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [incorrectCredentials, setIncorrectCredentials] = useState(false);
+
+
 
   const obtenerInformacionInputs = () => {
     const inputs = document.querySelectorAll('.login-form Input');
@@ -31,13 +37,63 @@ function Login({ onChildChange }) {
   const handleInputChange = (event) => {
     updateForm(event.target, event.target.value.trim() === '');
     onChildChange(formIsEmpty());
+    updateData(event);
   };
 
+  const updateData = (event) => {
+    switch (event.target.name) {
+      case "email":
+        setEmail(event.target.value);
+        break;
+      case "password":
+        setPassword(event.target.value);
+        break;
+    }
+  }
+
   const updateForm = (input, changed) => {
-    console.log(changed);
     inputsArray.forEach(i => {
       if (i.id === input.id) i.empty = changed;
     })
+  }
+
+  const iniciarSesion = () => {
+    fetch("http://localhost:8080/auth/authenticate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password
+      })
+    })
+      .then(response => {
+        if (response.ok) {
+          console.log("Todo OK");
+          
+          
+          return response.json();
+        } else {
+          console.log("No ha iniciado sesión");
+          setIncorrectCredentials(true);
+          throw new Error('Error de autenticación');
+        }
+      })
+      .then(data => {
+        console.log(data);
+        const jwt = data.jwt;
+        setToken(jwt);
+        const role = getRole(jwt);
+        if( role == "TEACHER"){
+          window.location.href = '/Indice';
+        }else if (role == "STUDENT"){
+          window.location.href = '/Index';
+        }
+      })
+      .catch(error => {
+        console.error();
+      })
   }
 
   return (
@@ -62,6 +118,7 @@ function Login({ onChildChange }) {
           type="email"
           label="Email"
           placeholder="Introduce tu email"
+          name="email"
           onChange={handleInputChange}
         />
         <Input
@@ -71,14 +128,16 @@ function Login({ onChildChange }) {
           type="password"
           label="Contraseña"
           placeholder="Introduce tu contraseña"
+          name="password"
           onChange={handleInputChange}
         />
+        {incorrectCredentials && <p style={{ color: 'red' }}>Las credenciales son incorrectas</p>}
         <ButtonGroup className="flex pt-2">
-          <Link href="/Index" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <Button 
-            color="#285430" 
-            className="flex-1 hover:bg-blue-600"
-
+          <Link style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Button
+              color="#285430"
+              className="flex-1 hover:bg-blue-600"
+              onClick={iniciarSesion}
             >
               Iniciar sesión
             </Button>
