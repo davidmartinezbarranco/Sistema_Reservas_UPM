@@ -3,11 +3,12 @@ import styles from './ReservaAula.module.css';
 import { RadioGroup, Radio, cn } from "@nextui-org/react";
 import { ScheduleMeeting } from 'react-schedule-meeting';
 import React, { useState, useEffect } from 'react';
-import { aulasData } from "./elements/data";
+import { aulasData, obtenerData } from "./elements/data";
 import ListaDatos from "./elements/ListaDatos";
 import { CustomRadio } from "./elements/CustomRadio";
 
 function Reserva() {
+  obtenerData();
 
 
   // Pidiendo datos al servidor

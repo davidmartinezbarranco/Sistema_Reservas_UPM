@@ -1,5 +1,21 @@
 
+const aulasData = [];
 
+function obtenerData() {
+    let url = "http://localhost:8080/classrooms";
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Error en la solicitud");
+            }
+            return response.json;
+        })
+        .then(data => {
+            console.log("Datos obtenidos de /clasrooms" + data);
+        })
+}
+
+/*
 const aulasData = [
     {
         id: 1,
@@ -21,7 +37,7 @@ const aulasData = [
         nombre: "Laboratorio Juniper Ejemplo",
         numero: "3004"
     },
-   
-];
 
-export {aulasData};
+];*/
+
+export { aulasData, obtenerData };
