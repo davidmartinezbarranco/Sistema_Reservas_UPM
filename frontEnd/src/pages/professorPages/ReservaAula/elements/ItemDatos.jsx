@@ -3,10 +3,10 @@ import { CustomRadio } from "./CustomRadio";
 import styles from './../ReservaAula.module.css';
 
 
-const ItemDatos = ({id, nombre, numero}) => {
+const ItemDatos = ({id, name, number, type}) => {
 return(
-    <CustomRadio className={styles.customRadio} description={numero} value={id} >
-                {nombre}
+    <CustomRadio className={styles.customRadio} description={number} value={id} >
+                {name}
     </CustomRadio>
 );
 }

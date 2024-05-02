@@ -2,27 +2,14 @@ import BarraNavegacion from "../Inicio/componentes/BarraNavegacion";
 import styles from './ReservaAula.module.css';
 import { RadioGroup, Radio, cn } from "@nextui-org/react";
 import { ScheduleMeeting } from 'react-schedule-meeting';
-import React, { useState, useEffect } from 'react';
-import { aulasData, obtenerData } from "./elements/data";
+import React, { useState } from 'react';
+import { data } from "./elements/data";
 import ListaDatos from "./elements/ListaDatos";
-import { CustomRadio } from "./elements/CustomRadio";
+  
 
 function Reserva() {
-  obtenerData();
-
-
   // Pidiendo datos al servidor
   const [aulas, setDatos] = useState({});
-
-  useEffect(() => {
-    // Solicitar información al servidor usando Fetch API cuando el componente se monta
-    fetch('/aulas')
-      .then(response => response.json())
-      .then(data => {
-        setDatos(data);
-      })
-      .catch(error => console.error('Error:', error));
-  }, []);
 
   const aulasDisponibles = aulas.aulasDisponibles;
   const horasDisponibles = aulas.horasDisponibles;
@@ -44,7 +31,7 @@ function Reserva() {
 
 
   return (
-    <div >
+    <div>
       <main className="bg-azul text-foreground min-h-screen">
         <div>
           <BarraNavegacion></BarraNavegacion>
@@ -55,10 +42,10 @@ function Reserva() {
           <h2 className={styles["reserva-titles"]}>Selecciona el aula a reservar:</h2>
           <div className={styles.selectores}>
             <RadioGroup orientation="horizontal">
-              <ListaDatos datos={aulasData} />
+              <ListaDatos datos={data} />
             </RadioGroup>
           </div>
-          
+
           <h2 className={styles["reserva-titles"]} >Selecciona una fecha y una franja horaria: </h2>
           <ScheduleMeeting
             borderRadius={10}
