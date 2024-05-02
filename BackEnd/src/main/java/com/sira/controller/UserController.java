@@ -34,17 +34,14 @@ public class UserController {
         return userRepository.findAll();
     }
 
+    @PreAuthorize("hasAuthority('READ_ALL_USERS')")
     @GetMapping("/users/{id}")
     public User getUserById(@PathVariable() Long id){
         return userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con el ID: " + id));
     }
 
-    @PostMapping("/user")
-    public User newUser(@RequestBody User user){
-        return userRepository.save(user);
-    }
-
+    @PreAuthorize("hasAuthority('READ_ALL_USERS')")
     @PatchMapping("/users/{id}")
     public User modifyUser(@PathVariable Long id, @RequestBody User user){
         return userRepository.findById(id)
