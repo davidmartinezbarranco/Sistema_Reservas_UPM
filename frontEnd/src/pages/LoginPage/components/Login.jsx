@@ -142,11 +142,6 @@ function Login({ onChildChange }) {
               Iniciar sesión
             </Button>
           </Link>
-          <Link href="/Indice" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <Button color="#285430" className="flex-1 hover:bg-blue-600">
-              Iniciar sesión - profesor
-            </Button>
-          </Link>
         </ButtonGroup>
       </CardBody>
     </Card>
