@@ -28,7 +28,7 @@ function BarraNavegacion() {
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link href="/EspaciosReservados">
+          <Link href="/AulasReservadas">
           <Button color="primary"> ESPACIOS RESERVADOS </Button>
           </Link>
 
