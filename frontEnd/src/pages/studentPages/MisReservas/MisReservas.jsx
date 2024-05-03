@@ -2,9 +2,9 @@ import BarraNavegacion from "../Inicio/componentes/BarraNavegacion";
 import styles from './MisReservas.module.css';
 import React, { useState, useEffect } from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, User, Chip, Tooltip, getKeyValue } from "@nextui-org/react";
-import { EditIcon } from "./elements/EditIcon";
-import { DeleteIcon } from "./elements/DeleteIcon";
-import { EyeIcon } from "./elements/EyeIcon";
+import { EditIcon } from "../../../assets/icons/EditIcon";
+import { DeleteIcon } from "../../../assets/icons/DeleteIcon";
+import { EyeIcon } from "../../../assets/icons/EyeIcon";
 import { columns, reservas } from "./elements/data";
 import { Link } from 'react-router-dom';
 
