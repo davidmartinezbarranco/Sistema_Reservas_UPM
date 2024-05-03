@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor
@@ -26,14 +25,21 @@ public class Reservation {
     private LocalDateTime endDate;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "classroom_id")
     private Classroom classroom;
+
+    public Reservation(LocalDateTime startDate, LocalDateTime endDate, User user, Classroom classroom) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.user = user;
+        this.classroom = classroom;
+    }
 
     public int getReservedHours(){
         return Duration.between(startDate, endDate).toHoursPart();
@@ -45,7 +51,7 @@ public class Reservation {
 
     public List<Integer> getIndividualReservedHours(){
         List<Integer> hoursList = new ArrayList<>();
-        for(int i = startDate.getHour(); i <= endDate.getHour(); i++){
+        for(int i = startDate.getHour(); i < endDate.getHour(); i++){
             hoursList.add(i);
         }
         return hoursList;

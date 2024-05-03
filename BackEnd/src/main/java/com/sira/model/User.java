@@ -1,7 +1,6 @@
 package com.sira.model;
 import com.sira.util.Role;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Null;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

@@ -47,7 +47,7 @@ public class ClassroomController {
         for (Reservation reservation : reservations){
             List<Integer> reservedHours = reservation.getIndividualReservedHours();
             for (int reservedHour : reservedHours){
-                availableHours[reservedHour] = false;
+                availableHours[reservedHour-9] = false;
             }
         }
         return availableHours;
