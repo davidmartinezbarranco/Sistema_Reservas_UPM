@@ -23,28 +23,60 @@ public class ClassroomController {
     @GetMapping("")
     List<Classroom> allReservations(){return this.classroomRepository.findAll();}
 
-    @GetMapping("/{id}/availability/{month}")
-    int[] classroomAvailabilityByMonth(@PathVariable Long id, @PathVariable int month){
-        int[] availabilityArray = initializeAvailableHoursMonth(month);
+    @GetMapping("/{id}/availability/{month}/{role}")
+    boolean[] classroomAvailabilityByMonth(@PathVariable Long id, @PathVariable int month, @PathVariable String role){
+        List<Reservation> classroomReservations = classroomRepository.findTeacherReservationsByMonthAndClassroomId(id, month);
 
-        List<Reservation> classroomReservations = classroomRepository.findReservationsByMonthAndClassroomId(id, month);
+        return setAvailableDays(classroomReservations, month, role);
+    }
+
+    private static boolean[] setAvailableDays(List<Reservation> classroomReservations, int month, String role) {
+        int[] availableHoursMonthPerDay = initializeAvailableHoursMonth(month);
+        boolean[] availableDays = new boolean[YearMonth.of(YearMonth.now().getYear(), month).lengthOfMonth()];
+
         for (Reservation reservation : classroomReservations){
-            availabilityArray[reservation.getReservedDay()] -= reservation.getReservedHours();
+            availableHoursMonthPerDay[reservation.getReservedDay()] -= reservation.getReservedHours();
+        }
+
+        if(role.equals("TEACHER")) {
+            for (int i = 0; i < availableHoursMonthPerDay.length; i++)
+                availableDays[i] = (availableHoursMonthPerDay[i] > 0) ? true : false;
+        }else{
+            for (int i = 0; i < availableHoursMonthPerDay.length; i++)
+                availableDays[i] = (availableHoursMonthPerDay[i] == 12) ? false : true;
+        }
+        return availableDays;
+    }
+
+    private static int[] initializeAvailableHoursMonth(int month) {
+        int[] availabilityArray = new int[YearMonth.of(YearMonth.now().getYear(), month).lengthOfMonth()];
+        for (int i = 0; i < availabilityArray.length; i++) {
+            availabilityArray[i] = 12;
         }
         return availabilityArray;
     }
 
-    @GetMapping("/{id}/availability/{month}/{day}")
-    boolean[] classroomAvailabilityByDay(@PathVariable Long id,  @PathVariable int month, @PathVariable int day){
-        boolean[] availableHours = initializeAvailableHoursDay();
+    @GetMapping("/{id}/availability/{month}/{day}/{role}")
+    boolean[] classroomAvailabilityByDay(@PathVariable Long id, @PathVariable int month, @PathVariable int day, @PathVariable String role){
+        boolean[] availableHours = initializeAvailableHoursDay(role);
 
-        List<Reservation> reservations = classroomRepository.findReservationsByDayAndClassroomId(id, month, day);
+        List<Reservation> teacherReservations = classroomRepository.findTeacherReservationsByDayAndClassroomId(id, month, day);
 
-        return setReservedHours(reservations, availableHours);
+        return role.equals("TEACHER") ? setTeacherReservedHours(teacherReservations, availableHours) : setStudentReservedHours(teacherReservations, availableHours);
     }
 
-    private static boolean[] setReservedHours(List<Reservation> reservations, boolean[] availableHours) {
-        for (Reservation reservation : reservations){
+    private boolean[] setStudentReservedHours(List<Reservation> teacherReservations, boolean[] availableHours) {
+        for (Reservation reservation : teacherReservations){
+            List<Integer> reservedHours = reservation.getIndividualReservedHours();
+            for (int reservedHour : reservedHours){
+                availableHours[reservedHour-9] = true;
+            }
+        }
+        return availableHours;
+    }
+
+    private static boolean[] setTeacherReservedHours(List<Reservation> teacherReservations, boolean[] availableHours) {
+        for (Reservation reservation : teacherReservations){
             List<Integer> reservedHours = reservation.getIndividualReservedHours();
             for (int reservedHour : reservedHours){
                 availableHours[reservedHour-9] = false;
@@ -52,18 +84,20 @@ public class ClassroomController {
         }
         return availableHours;
     }
-    private static boolean[] initializeAvailableHoursDay() {
+    private static boolean[] initializeAvailableHoursDay(String role) {
         boolean[] availableHours = new boolean[12];
         for (int i = 0; i < availableHours.length; i++) {
-            availableHours[i] = true;
+            availableHours[i] = role.equals("TEACHER") ? true : false;
         }
         return availableHours;
     }
 
-    private static int[] initializeAvailableHoursMonth(int month) {
-        int[] availabilityArray = new int[YearMonth.of(YearMonth.now().getYear(), month).lengthOfMonth()];
+    private static boolean[] initializeAvailableDaysMonth(int month, String role) {
+        boolean initialAvailability = role.equals("TEACHER") ? true : false;
+
+        boolean[] availabilityArray = new boolean[YearMonth.of(YearMonth.now().getYear(), month).lengthOfMonth()];
         for (int i = 0; i < availabilityArray.length; i++) {
-            availabilityArray[i] = 12;
+            availabilityArray[i] = initialAvailability;
         }
         return availabilityArray;
     }
