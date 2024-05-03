@@ -1,4 +1,7 @@
 .nav-bar {
     padding: 7px;
+    position: fixed;
 }
-
+.content{
+    padding-top: 100px;
+}
