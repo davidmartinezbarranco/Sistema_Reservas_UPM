@@ -30,6 +30,11 @@ public class ReservationController {
     @GetMapping("/reservations")
     List<Reservation> allReservations(){return this.reservationRepository.findAll();}
 
+    @GetMapping("/reservations/user/{id}")
+    List<Reservation> allReservations(@PathVariable Long id){
+        return this.reservationRepository.findAllByUserId(id);
+    }
+
     @PostMapping("/reservation")
     ReservationDto newReservation(@RequestBody ReservationDto reservationDto){
         User user = userRepository.findById(reservationDto.getUserId()).orElseThrow(() -> new EntityNotFoundException("Classroom with ID " + reservationDto.getClassroomId() + " not found"));
