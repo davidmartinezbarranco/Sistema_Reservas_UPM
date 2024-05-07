@@ -1,5 +1,5 @@
 import BarraNavegacion from "../Inicio/componentes/BarraNavegacion";
-import styles from './MisReservas.module.css';
+import styles from './AulasReservadas.module.css';
 import React, { useState, useEffect } from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, User, Chip, Tooltip, getKeyValue } from "@nextui-org/react";
 import { EditIcon } from "../../../assets/icons/EditIcon";
@@ -16,7 +16,7 @@ const statusColorMap = {
 };
 
 
-function MisReservas() {
+function AulasReservadas() {
 
   // Pidiendo datos al servidor
   const [aulas, setDatos] = useState({});
@@ -80,6 +80,7 @@ function MisReservas() {
     }
   }, []);
 
+  
 
   return (
     <div >
@@ -116,4 +117,4 @@ function MisReservas() {
   );
 }
 
-export default MisReservas;
+export default AulasReservadas;

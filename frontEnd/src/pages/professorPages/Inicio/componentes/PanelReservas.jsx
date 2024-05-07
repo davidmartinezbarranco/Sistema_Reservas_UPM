@@ -23,7 +23,7 @@ function PanelReservas() {
         <div>
             <p id={styles["panel-title"]}>PANEL DE RESERVAS</p>
             <div className={styles.grid}>
-                <Link to="/CrearReserva">
+                <Link to="/ReservaAula">
                     <Card className={styles["panel-box"]}>
                         <CardBody >
                             <p className={boxTitle}> Reservar aula </p>

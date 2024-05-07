@@ -1,6 +1,7 @@
-import { React, useState } from "react";
+import { React, useState, useRef } from "react";
 import { Input, Button, ButtonGroup, RadioGroup, Radio, Card, CardHeader, CardBody } from "@nextui-org/react";
 import "/src/styles.css"
+import CustomModal from "./CustomModal";
 
 function Register({ onChildChange }) {
 
@@ -10,6 +11,12 @@ function Register({ onChildChange }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [tipoUsuario, setTipoUsuario] = useState('');
+  const [registroCompletado, setRegistroCompletado] = useState(false);
+  const [registroFallido, setRegistroFallido] = useState(false);
+  const [warningMessage, setWarningMessage] = useState([]);
+  const [message, setMessage] = useState(["El registro se ha completado con éxito.", "Ya puede acceder a la plataforma."]);
+  const [recargarPagina, setRecargarPagina] = useState(false);
+
 
 
   const inputsArray = [];
@@ -26,13 +33,16 @@ function Register({ onChildChange }) {
 
   obtenerInformacionInputs();
 
-  const formIsEmpty = () => {
-    var empty = true;
+  const isEmpty = (input) => {
+    return (input === "");
+  }
 
-    inputsArray.forEach(i => {
-      if (i.empty === false) empty = false;
-    })
-    return empty;
+  const formIsEmpty = () => {
+    return isEmpty(nombre) && isEmpty(apellidos) && isEmpty(email) && isEmpty(password) && isEmpty(tipoUsuario);
+  }
+
+  const formIsFull = () => {
+    return !isEmpty(nombre) && !isEmpty(apellidos) && !isEmpty(email) && !isEmpty(password) && !isEmpty(tipoUsuario);
   }
   const handleInputChange = (event) => {
     updateForm(event.target, event.target.value.trim() === '');
@@ -41,17 +51,21 @@ function Register({ onChildChange }) {
   };
 
   const updateData = (e) => {
-    const name = e.target.name;
+    let name = e.target.name;
 
     switch (name) {
       case 'nombre':
         setNombre(e.target.value);
+        break;
       case 'apellidos':
         setApellidos(e.target.value);
+        break;
       case 'email':
         setEmail(e.target.value);
+        break;
       case 'password':
         setPassword(e.target.value);
+        break;
     }
   }
 
@@ -64,37 +78,50 @@ function Register({ onChildChange }) {
 
   const handleTipoUsuarioChange = (event) => {
     setTipoUsuario(event.target.value);
+
   };
 
-  // Handle registro
 
   const handleRegistro = async (e) => {
-    const role = tipoUsuario == "profesor" ? "TEACHER" : "STUDENT";
 
-    // const datos = { nombre, apellidos, email, password, role };
+    if (formIsFull()) {
+      const role = tipoUsuario == "profesor" ? "TEACHER" : "STUDENT";
 
-    e.preventDefault();
 
-    const res = fetch("http://localhost:8080/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },  
-      body: JSON.stringify({
-        name: nombre,
-        lastName: apellidos,
-        email: email,
-        password: password,
-        role: role
+      fetch("http://localhost:8080/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name: nombre,
+          lastName: apellidos,
+          email: email,
+          password: password,
+          role: role
+        })
       })
-    })
+        .then(response => {
+          if (response.ok) {
+            setMessage(["El registro se ha completado con éxito.", "Ya puede acceder a la plataforma."])
+            setRegistroCompletado(true);
+            setRecargarPagina(true);
+          } else {
+            setWarningMessage(["El usuario ya existe"]);
+            setRegistroFallido(true);
+          }
+        });
+
+    } else {
+      setWarningMessage(["No has rellenado todo el formulario"]);
+      setRegistroFallido(true);
+    }
+
   }
 
-  //
-
-  
-
-
+  const handleChange = (completado) => {
+    setRegistroFallido(completado);
+  };
 
 
   return (
@@ -111,7 +138,7 @@ function Register({ onChildChange }) {
           />
         </div>
       </CardHeader>
-      <CardBody className="space-y-2 iniciar-sesion-card-body">
+      <CardBody id="card-body" className="space-y-2 iniciar-sesion-card-body">
         <Input
           id="register-nombre"
           className="sign-in-form"
@@ -121,7 +148,7 @@ function Register({ onChildChange }) {
           name="nombre"
           placeholder="Introduce tu nombre"
           onChange={handleInputChange}
-          isRequired
+
         />
         <Input
           id="register-apellidos"
@@ -132,7 +159,7 @@ function Register({ onChildChange }) {
           name="apellidos"
           placeholder="Introduce tus apellidos"
           onChange={handleInputChange}
-          isRequired
+
         />
         <Input
           id="register-email"
@@ -143,7 +170,7 @@ function Register({ onChildChange }) {
           name="email"
           placeholder="Introduce tu email"
           onChange={handleInputChange}
-          isRequired
+
         />
         <Input
           id="register-password"
@@ -154,7 +181,7 @@ function Register({ onChildChange }) {
           name="password"
           placeholder="Introduce tu contraseña"
           onChange={handleInputChange}
-          isRequired
+
         />
 
         <div className="flex flex-col gap-3">
@@ -175,10 +202,16 @@ function Register({ onChildChange }) {
           >
             Registrarse
           </Button>
+
         </ButtonGroup>
+        {<CustomModal text={message} cargar={registroCompletado} onChange={null} recargarPagina={recargarPagina}/>}
+        {<CustomModal text={warningMessage} cargar={registroFallido} onChange={handleChange} recargarPagina={false}/>}
+
       </CardBody>
     </Card>
   );
 }
 
 export default Register;
+
+

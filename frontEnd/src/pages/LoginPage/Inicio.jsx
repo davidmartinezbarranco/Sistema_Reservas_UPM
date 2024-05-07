@@ -25,29 +25,11 @@ function Inicio() {
         }
 
         const cambiarALogin = () => {
-                if (registerFormIsEmpty) {
-                        showLoginForm();
-                } else {
-                        var confirmacion = confirm("¿Quiere ir a la ventana de inicio de sesión? Es posible que los cambios no se guarden.");
-                        if (confirmacion) {
-                                showLoginForm();
-                                vaciarRegistro();
-                        }
-                }
-
+                showLoginForm();
         }
 
         const cambiarARegistro = () => {
-                if (loginFormIsEmpty) {
-                        showRegisterForm();
-                } else {
-                        var confirmacion = confirm("¿Quiere ir a la ventana de registro? Es posible que los cambios no se guarden.");
-                        if (confirmacion) {
-                                showRegisterForm();
-                                vaciarLogin();
-                        }
-                }
-
+                showRegisterForm();
         }
 
         const showRegisterForm = () => {
@@ -67,7 +49,7 @@ function Inicio() {
         const showRegistro = mostrarRegistro ? 'visible' : 'oculto';
 
 
-
+        /*
         useEffect(() => {
                 const handleBeforeUnload = (event) => {
                         if (!loginFormIsEmpty || !registerFormIsEmpty) {
@@ -76,15 +58,15 @@ function Inicio() {
                         }
                 };
 
-                window.addEventListener('beforeunload', handleBeforeUnload);
+                // window.addEventListener('beforeunload', handleBeforeUnload);
 
                 return () => {
                         window.removeEventListener('beforeunload', handleBeforeUnload);
                 };
-        }, [loginFormIsEmpty, registerFormIsEmpty]);
+        }, [loginFormIsEmpty, registerFormIsEmpty]);*/
 
 
-        function vaciarLogin(){
+        function vaciarLogin() {
                 console.log("vaciar");
         }
 

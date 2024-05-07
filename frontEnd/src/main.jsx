@@ -9,7 +9,10 @@ import Reserva from "./pages/studentPages/Reserva/Reserva"
 import MisReservas from "./pages/studentPages/MisReservas/MisReservas"
 import Edicion from "./pages/studentPages/Edicion/Edicion";
 import Detalles from "./pages/studentPages/Detalles/Detalles";
+
 import Indice from "./pages/professorPages/Inicio/Indice";
+import ReservaAula from "./pages/professorPages/ReservaAula/ReservaAula";
+import AulasReservadas from "./pages/professorPages/AulasReservadas/AulasReservadas";
 
 
 const routes = createBrowserRouter([
@@ -40,6 +43,14 @@ const routes = createBrowserRouter([
   {
     path: "/Indice",
     element: <Indice />,
+  },
+  {
+    path: "/ReservaAula",
+    element: <ReservaAula />,
+  },
+  {
+    path: "/AulasReservadas",
+    element: <AulasReservadas />,
   },
   
 ]);

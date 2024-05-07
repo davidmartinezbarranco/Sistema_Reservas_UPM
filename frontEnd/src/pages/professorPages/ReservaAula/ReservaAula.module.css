@@ -21,5 +21,9 @@
     margin-top: 10px;
     margin-bottom: 20px;
     display: flex;
-    justify-content: center;
+}
+
+.customRadio{
+    width: 300px;
+    margin: 10px;
 }
