@@ -13,14 +13,23 @@
 
 
 .reserva{
-    margin-left: 150px;
-    margin-right: 150px;
     padding-top: 100px;
 }
+
 .selectores{
     margin-top: 10px;
     margin-bottom: 20px;
     display: flex;
+}
+
+.conjuntoAulas{
+    margin-left: 150px;
+    margin-right: 0px;
+}
+
+.calendario{
+    margin-left: 150px;
+    margin-right: 150px;
 }
 
 .customRadio{
