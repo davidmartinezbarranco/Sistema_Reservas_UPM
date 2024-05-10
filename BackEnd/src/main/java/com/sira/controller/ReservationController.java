@@ -43,6 +43,6 @@ public class ReservationController {
 
         Reservation newReservation = new Reservation(reservationDto.getStartDate(), reservationDto.getEndDate(), user, classroom);
         reservationRepository.save(newReservation);
-        return new ReservationDto(newReservation.getStartDate(), newReservation.getEndDate(), newReservation.getUser().getId(), newReservation.getClassroom().getId());
+        return new ReservationDto(newReservation.getStartDate(), newReservation.getEndDate(), newReservation.getClassroom().getId(),  newReservation.getUser().getId());
     }
 }

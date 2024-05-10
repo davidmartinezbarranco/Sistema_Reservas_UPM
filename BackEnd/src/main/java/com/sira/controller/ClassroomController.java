@@ -35,7 +35,7 @@ public class ClassroomController {
         boolean[] availableDays = new boolean[YearMonth.of(YearMonth.now().getYear(), month).lengthOfMonth()];
 
         for (Reservation reservation : classroomReservations){
-            availableHoursMonthPerDay[reservation.getReservedDay()] -= reservation.getReservedHours();
+            availableHoursMonthPerDay[reservation.getReservedDay()-1] -= reservation.getReservedHours();
         }
 
         if(role.equals("TEACHER")) {
@@ -90,15 +90,5 @@ public class ClassroomController {
             availableHours[i] = role.equals("TEACHER") ? true : false;
         }
         return availableHours;
-    }
-
-    private static boolean[] initializeAvailableDaysMonth(int month, String role) {
-        boolean initialAvailability = role.equals("TEACHER") ? true : false;
-
-        boolean[] availabilityArray = new boolean[YearMonth.of(YearMonth.now().getYear(), month).lengthOfMonth()];
-        for (int i = 0; i < availabilityArray.length; i++) {
-            availabilityArray[i] = initialAvailability;
-        }
-        return availabilityArray;
     }
 }
