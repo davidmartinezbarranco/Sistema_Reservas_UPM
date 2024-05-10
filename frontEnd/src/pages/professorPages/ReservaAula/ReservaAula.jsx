@@ -3,7 +3,6 @@ import styles from './ReservaAula.module.css';
 import { RadioGroup, Radio, cn } from "@nextui-org/react";
 import { ScheduleMeeting, timeSlotDifference } from 'react-schedule-meeting';
 import React, { useEffect, useState } from 'react';
-// import { data } from "./elements/data";
 import ListaDatos from "./elements/ListaDatos";
 import moment from 'moment-timezone';
 
@@ -37,23 +36,23 @@ function Reserva() {
   const handleSelectedOption = (idClase) => {
     setIdClase(idClase);
   }
- 
+
+
+  useEffect(() => {
+    availableTimeSlots.splice(0, availableTimeSlots.length);
+    calendar();
+  }, [idClase]);
+
 
 
   let [availableTimeSlots, setAvailableTimeSlots] = useState([]);
 
 
 
-  useEffect(() => {
-    availableTimeSlots.splice(0, availableTimeSlots.length);
-    calendar();
-
-
-  }, [idClase]);
 
 
   const pedirArrayMesAPI = (mes) => {
-    let id = idClase; 
+    let id = idClase;
     let month = mes;
     let url = "http://localhost:8080/classrooms/" + id + "/availability/" + month + "/TEACHER";
     let datos;
@@ -67,6 +66,8 @@ function Reserva() {
       })
       .then(data => {
         return data;
+      })
+      .catch(e => {
       });
   };
 
@@ -137,20 +138,24 @@ function Reserva() {
       startTime: inicio,
       endTime: fin
     }
-
-    availableTimeSlots.push(reserva);
-
+    setAvailableTimeSlots(prevSlots => prevSlots.concat(reserva));
   }
 
 
+  const [availableTimeSlotsLessUnavailableTimeSlots, setAvailableTimeSlotsLessUnavailableTimeSlots] = useState([]);
+
   useEffect(() => {
-    const availableTimeSlotsLessUnavailableTimeSlots = timeSlotDifference(availableTimeSlots, unavailableTimeSlots);
-  }, [availableTimeSlots])
+    const calculateAvailableTimeSlotsLessUnavailable = () => {
+      const newAvailableTimeSlotsLessUnavailable = timeSlotDifference(availableTimeSlots, unavailableTimeSlots);
+      setAvailableTimeSlotsLessUnavailableTimeSlots(newAvailableTimeSlotsLessUnavailable);
+    };
 
-  const availableTimeSlotsLessUnavailableTimeSlots = timeSlotDifference(availableTimeSlots, unavailableTimeSlots);
+    calculateAvailableTimeSlotsLessUnavailable();
+  }, [availableTimeSlots]);
 
 
-  const  [startTimeSelected, setStartTimeSelected] = useState();
+
+  const [startTimeSelected, setStartTimeSelected] = useState();
 
   const handleTimeslotClicked = (startTimeEventEmit) => {
     setStartTimeSelected(startTimeEventEmit.startTime);
@@ -190,7 +195,7 @@ function Reserva() {
               primaryColor="#3f5b85"
               eventDurationInMinutes={60}
               availableTimeslots={availableTimeSlotsLessUnavailableTimeSlots}
-             onStartTimeSelect={handleTimeslotClicked}
+              onStartTimeSelect={handleTimeslotClicked}
             />
 
           </div>
