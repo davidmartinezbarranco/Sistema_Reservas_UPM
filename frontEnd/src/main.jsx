@@ -7,7 +7,6 @@ import Index from "./pages/studentPages/Inicio/Index";
 import Inicio from "./pages/LoginPage/Inicio";
 import Reserva from "./pages/studentPages/Reserva/Reserva"
 import MisReservas from "./pages/studentPages/MisReservas/MisReservas"
-import Edicion from "./pages/studentPages/Edicion/Edicion";
 import Detalles from "./pages/studentPages/Detalles/Detalles";
 
 import Indice from "./pages/professorPages/Inicio/Indice";
@@ -31,10 +30,6 @@ const routes = createBrowserRouter([
   {
     path: "/MisReservas",
     element: <MisReservas />,
-  },
-  {
-    path: "/Edicion",
-    element: <Edicion />,
   },
   {
     path: "/Detalles",

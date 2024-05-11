@@ -9,10 +9,10 @@ import CustomModal from "../../LoginPage/components/CustomModal";
 
 
 
-function Reserva() {
+function ReservaAula() {
   const [datos, setDatos] = useState(null);
   const [idClase, setIdClase] = useState(null);
-  
+
   const [horasReservadas, setHorasReservadas] = useState(null);
   const [cantidadAlumnos, setCantidadAlumnos] = useState(null);
 
@@ -29,7 +29,7 @@ function Reserva() {
   let [availableTimeSlots, setAvailableTimeSlots] = useState([]);
   const [startTimeSelected, setStartTimeSelected] = useState();
 
-  
+
   const [maxHoras, setMaxHoras] = useState(5);
   const [cont, setCont] = useState(null);
   const [availableTimeSlotsLessUnavailableTimeSlots, setAvailableTimeSlotsLessUnavailableTimeSlots] = useState([]);
@@ -225,7 +225,7 @@ function Reserva() {
 
   const formatearHora = (date) => {
     const año = date.getFullYear();
-    const mes = String(date.getMonth() + 1).padStart(2, '0'); 
+    const mes = String(date.getMonth() + 1).padStart(2, '0');
     const dia = String(date.getDate()).padStart(2, '0');
     const horas = String(date.getHours()).padStart(2, '0');
     const minutos = String(date.getMinutes()).padStart(2, '0');
@@ -373,4 +373,4 @@ function Reserva() {
   );
 }
 
-export default Reserva;
+export default ReservaAula;

@@ -6,6 +6,7 @@ import { DeleteIcon } from "../../../assets/icons/DeleteIcon";
 import { EyeIcon } from "../../../assets/icons/EyeIcon";
 import { columns } from "./elements/data";
 import { Link } from 'react-router-dom';
+import CustomModal from "../../studentPages/MisReservas/elements/CustomModal";
 
 
 const statusColorMap = {
@@ -17,6 +18,11 @@ const statusColorMap = {
 
 function AulasReservadas() {
   const [reservas, setReservas] = useState([]);
+  const [title, setTitle] = useState("CANCELACIÓN DE RESERVA");
+  const [warningMessage, setWarningMessage] = useState(["¿Estás seguro de que deseas cancelar la reserva?"]);
+  const [cancelarReserva, setCancelarReserva] = useState(false);
+  const [cancelarReservaDecision, setCancelarReservaDecision] = useState(false);
+  const [idAEliminar, setIdAEliminar] = useState(null);
 
   const fetchData = () => {
     let id = 10;
@@ -82,6 +88,39 @@ function AulasReservadas() {
     return horaMinutos;
   }
 
+  const eliminarReserva = (id) => {
+    setCancelarReserva(true);
+    setIdAEliminar(id);
+  }
+
+  useEffect(() => {
+    if (cancelarReservaDecision) {
+      console.log("Eliminando reserva con id: " + idAEliminar);
+      fetch("http://localhost:8080/reservation/" + idAEliminar + "/delete", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then(respose => {
+        if (respose.ok) {
+          window.location.reload();
+        } else {
+          throw new Error("No se ha elimninado la reserva");
+        }
+      })
+
+    }
+  }, [cancelarReservaDecision]);
+
+  const handleChange = (completado) => {
+    setCancelarReserva(completado);
+  };
+
+  const cancelar = (decision) => {
+    setCancelarReservaDecision(decision);
+  }
+
+
 
 
   const renderCell = React.useCallback((reserva, columnKey) => {
@@ -108,11 +147,13 @@ function AulasReservadas() {
                 </span>
               </Tooltip>
             </Link>
-            <Tooltip color="danger" content="Cancelar reserva">
-              <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                <DeleteIcon />
-              </span>
-            </Tooltip>
+            <div onClick={() => eliminarReserva(reserva.id)}>
+              <Tooltip color="danger" content="Cancelar reserva" >
+                <span className="text-lg text-danger cursor-pointer active:opacity-50">
+                  <DeleteIcon />
+                </span>
+              </Tooltip>
+            </div>
 
           </div >
         );
@@ -151,6 +192,7 @@ function AulasReservadas() {
 
 
         </div>
+        {<CustomModal titulo={title} text={warningMessage} cargar={cancelarReserva} onChange={handleChange} recargarPagina={false} setCancelar={cancelar} />}
 
       </main>
     </div>
