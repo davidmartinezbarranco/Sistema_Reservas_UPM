@@ -24,6 +24,8 @@ public class Reservation {
     private LocalDateTime startDate;
     @NotNull
     private LocalDateTime endDate;
+    @Transient
+    private int capacity;
 
     @JsonIgnore
     @NotNull
@@ -42,6 +44,7 @@ public class Reservation {
         this.endDate = endDate;
         this.user = user;
         this.classroom = classroom;
+        this.capacity = 4;
     }
 
     public int getReservedHours(){
