@@ -1,5 +1,6 @@
 package com.sira.controller;
 
+import com.sira.dto.ReservationAndClassroomDto;
 import com.sira.dto.ReservationDto;
 import com.sira.model.Classroom;
 import com.sira.model.Reservation;
@@ -11,6 +12,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.websocket.server.PathParam;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,8 +35,12 @@ public class ReservationController {
     List<Reservation> allReservations(){return this.reservationRepository.findAll();}
 
     @GetMapping("/reservations/user/{id}")
-    List<Reservation> allReservations(@PathVariable Long id){
-        return this.reservationRepository.findAllByUserId(id);
+    List<ReservationAndClassroomDto> allReservations(@PathVariable Long id){
+        List<ReservationAndClassroomDto> reservationAndClassroomDtos = new ArrayList<>();
+        List<Reservation> reservations = reservationRepository.findAllByUserId(id);
+        for(Reservation reservation : reservations)
+            reservationAndClassroomDtos.add(new ReservationAndClassroomDto(reservation));
+        return reservationAndClassroomDtos;
     }
 
     @PostMapping("/reservation")
