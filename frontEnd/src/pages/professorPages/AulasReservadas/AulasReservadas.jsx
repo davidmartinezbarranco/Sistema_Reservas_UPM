@@ -140,7 +140,7 @@ function AulasReservadas() {
       case "actions":
         return (
           <div className="relative flex items-center gap-2">
-            <Link to={`/Detalles?id=${reserva.id}`}>
+            <Link to={`/DetallesReserva?id=${reserva.id}`}>
               <Tooltip content="Detalles" >
                 <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
                   <EyeIcon />

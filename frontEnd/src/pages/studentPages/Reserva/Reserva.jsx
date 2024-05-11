@@ -13,10 +13,6 @@ function Reserva() {
   const [datos, setDatos] = useState(null);
   const [idClase, setIdClase] = useState(null);
 
-  const [horasReservadas, setHorasReservadas] = useState(null);
-  const [cantidadAlumnos, setCantidadAlumnos] = useState(null);
-
-
   const [warningMessage, setWarningMessage] = useState([]);
   const [message, setMessage] = useState([]);
 
@@ -30,8 +26,7 @@ function Reserva() {
   const [startTimeSelected, setStartTimeSelected] = useState();
 
 
-  const [maxHoras, setMaxHoras] = useState(5);
-  const [cont, setCont] = useState(null);
+
   const [availableTimeSlotsLessUnavailableTimeSlots, setAvailableTimeSlotsLessUnavailableTimeSlots] = useState([]);
   const [variableCambio, setVariableCambio] = useState(false);
 
@@ -41,7 +36,6 @@ function Reserva() {
   const unavailableTimeSlots = [
 
   ];
-
 
 
 
@@ -128,7 +122,6 @@ function Reserva() {
 
 
   const obtenerFechas = (year, mes, arrayMes) => {
-    let arrayDia = null;
     let hoy = new Date().getDate();
     let month = new Date().getMonth() + 1;
 
@@ -181,42 +174,8 @@ function Reserva() {
 
 
 
-
-  const calcularHoras = (hora, dia, mes) => {
-    pedirArrayDiaAPI(mes + 1, dia).then(arrayDia => {
-      setCont(contarTruesDesdeIndice(arrayDia, hora - 9));
-    });
-
-  }
-
-  const contarTruesDesdeIndice = (array, indice) => {
-    let contador = 0;
-    if (indice >= 0 && indice < array.length) {
-      while (array[indice] === true) {
-        contador++;
-        indice++;
-        if (indice >= array.length) {
-          break;
-        }
-      }
-    }
-    return contador;
-  }
-
-  useEffect(() => {
-    setCont(0);
-    calcularHoras(startTimeSelected?.getHours(), startTimeSelected?.getDate(), startTimeSelected?.getMonth());
-  }, [startTimeSelected]);
-
-
-  useEffect(() => {
-    setMaxHoras(cont);
-  }, [cont])
-
   useEffect(() => {
     setVariableCambio(!variableCambio);
-
-
   }, [startTimeSelected])
 
 
@@ -241,14 +200,13 @@ function Reserva() {
 
   useEffect(() => {
     cambiarHoraFin();
-  }, [horasReservadas])
+  }, [startTimeSelected])
 
   const realizarReserva = () => {
     if (idClase != null && startTimeSelected != null) {
 
       let fechaInicio = formatearHora(startTimeSelected);
       let fechaFin = formatearHora(fechaFinReserva);
-
 
 
       fetch("http://localhost:8080/reservation", {
@@ -285,7 +243,7 @@ function Reserva() {
 
   const cambiarHoraFin = () => {
     const date = new Date(startTimeSelected);
-    date.setHours(date.getHours() + horasReservadas);
+    date.setHours(date.getHours() + 1);
     setFechaFinReserva(date);
   }
 

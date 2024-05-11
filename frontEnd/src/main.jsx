@@ -12,6 +12,7 @@ import Detalles from "./pages/studentPages/Detalles/Detalles";
 import Indice from "./pages/professorPages/Inicio/Indice";
 import ReservaAula from "./pages/professorPages/ReservaAula/ReservaAula";
 import AulasReservadas from "./pages/professorPages/AulasReservadas/AulasReservadas";
+import DetallesReserva from "./pages/professorPages/Detalles/DetallesReserva";
 
 
 const routes = createBrowserRouter([
@@ -46,6 +47,10 @@ const routes = createBrowserRouter([
   {
     path: "/AulasReservadas",
     element: <AulasReservadas />,
+  },
+  {
+    path: "/DetallesReserva",
+    element: <DetallesReserva />,
   },
   
 ]);

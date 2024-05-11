@@ -32,15 +32,6 @@ function PanelReservas() {
 
                     </Card>
                 </Link>
-                <Link>
-                    <Card className={styles["panel-box"]}>
-                        <CardBody >
-                            <p className={boxTitle} > Consultar aulas </p>
-                            <img src="/public/consulta.png" alt="realizar-reserva-button" className={imageStyle} />
-                        </CardBody>
-
-                    </Card>
-                </Link>
             </div>
         </div>
     );

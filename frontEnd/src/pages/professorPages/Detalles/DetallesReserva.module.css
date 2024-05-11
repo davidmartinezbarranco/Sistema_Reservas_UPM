@@ -1,0 +1,40 @@
+.reserva {
+    margin-left: 150px;
+    margin-right: 150px;
+    padding-top: 100px;
+    padding-bottom: 50px;
+}
+
+.title-reserva {
+    color: aliceblue;
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.card {
+    background-color: #ff0000;
+}
+
+
+
+.cardBodyContent {
+    padding-left: 100px;
+}
+
+.detailItem {
+    margin-bottom: 10px;
+}
+
+.detailTitle {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 30px;
+}
+
+.detailValue {
+    margin-left: 10px;
+    font-size: 20px;
+}
