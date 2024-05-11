@@ -2,10 +2,9 @@ import BarraNavegacion from "../Inicio/componentes/BarraNavegacion";
 import styles from './AulasReservadas.module.css';
 import React, { useState, useEffect } from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, User, Chip, Tooltip, getKeyValue } from "@nextui-org/react";
-import { EditIcon } from "../../../assets/icons/EditIcon";
 import { DeleteIcon } from "../../../assets/icons/DeleteIcon";
 import { EyeIcon } from "../../../assets/icons/EyeIcon";
-import { columns, reservas } from "./elements/data";
+import { columns } from "./elements/data";
 import { Link } from 'react-router-dom';
 
 
@@ -17,22 +16,73 @@ const statusColorMap = {
 
 
 function AulasReservadas() {
+  const [reservas, setReservas] = useState([]);
 
-  // Pidiendo datos al servidor
-  const [aulas, setDatos] = useState({});
+  const fetchData = () => {
+    let id = 10;
+    return fetch("http://localhost:8080/reservations/user/" + id)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("No se han obtenido los datos.");
+        }
+        return response.json();
+      })
+      .then(data => {
+        data.map((reserva) => {
+          let fechaFormatoDia = obtenerFechaFormateada(reserva.startDate);
+          let horaInicioFormateada = obtenerHoraMinutos(reserva.startDate);
+          let horaFinFormateada = obtenerHoraMinutos(reserva.endDate);
+
+          let r = {
+            id: reserva.id,
+            nombreAula: reserva.classroom.name,
+            aula: reserva.classroom.number,
+            fecha: fechaFormatoDia,
+            horaInicio: horaInicioFormateada,
+            horaFin: horaFinFormateada
+          }
+  
+          setReservas(reservas => reservas.concat(r));
+  
+        })
+
+      })
+  }
 
   useEffect(() => {
-    // Solicitar información al servidor usando Fetch API cuando el componente se monta
-    fetch('/aulas')
-      .then(response => response.json())
-      .then(data => {
-        setDatos(data);
-      })
-      .catch(error => console.error('Error:', error));
+    setReservas([]);
+    fetchData();
   }, []);
 
-  const aulasDisponibles = aulas.aulasDisponibles;
-  const horasDisponibles = aulas.horasDisponibles;
+  function obtenerFechaFormateada(fechaString) {
+    const fecha = new Date(fechaString);
+  
+    const meses = [
+      "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+      "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    ];
+  
+    const dia = fecha.getDate();
+    const mes = meses[fecha.getMonth()]; 
+  
+   
+    const fechaFormateada = `${dia} de ${mes}`;
+  
+    return fechaFormateada;
+  }
+
+  function obtenerHoraMinutos(fechaString) {
+    const fecha = new Date(fechaString);
+  
+    const horas = fecha.getHours();
+    const minutos = fecha.getMinutes();
+  
+    const horaMinutos = `${horas < 10 ? '0' : ''}${horas}:${minutos < 10 ? '0' : ''}${minutos}`;
+  
+    return horaMinutos;
+  }
+
+
 
   const renderCell = React.useCallback((reserva, columnKey) => {
     const cellValue = reserva[columnKey];
@@ -58,15 +108,6 @@ function AulasReservadas() {
                 </span>
               </Tooltip>
             </Link>
-
-            <Link to={`/Edicion?id=${reserva.id}`}>
-              <Tooltip content="Modificar reserva">
-                <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                  <EditIcon />
-                </span>
-              </Tooltip>
-            </Link>
-
             <Tooltip color="danger" content="Cancelar reserva">
               <span className="text-lg text-danger cursor-pointer active:opacity-50">
                 <DeleteIcon />
@@ -80,7 +121,7 @@ function AulasReservadas() {
     }
   }, []);
 
-  
+
 
   return (
     <div >
