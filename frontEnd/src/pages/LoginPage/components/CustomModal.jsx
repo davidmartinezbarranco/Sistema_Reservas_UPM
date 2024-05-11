@@ -3,6 +3,7 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDi
 
 export default function CustomModal({ titulo, text, cargar, onChange, recargarPagina }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const [isRecargarPagina, setIsRecargarPagina] = useState(recargarPagina == "recargar");
     useEffect(() => {
         if (cargar) {
             onOpen();
@@ -12,8 +13,10 @@ export default function CustomModal({ titulo, text, cargar, onChange, recargarPa
     }, [cargar]);
 
     const alCerrar = () => {
-        if (recargarPagina === true) {
+        if (isRecargarPagina) {
             window.location.reload();
+        }else if (recargarPagina != false ){
+            window.location.href= recargarPagina;
         }
         onClose();
         onChange(false);

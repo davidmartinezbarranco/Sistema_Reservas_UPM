@@ -15,7 +15,7 @@ function Register({ onChildChange }) {
   const [registroFallido, setRegistroFallido] = useState(false);
   const [warningMessage, setWarningMessage] = useState([]);
   const [message, setMessage] = useState(["El registro se ha completado con éxito.", "Ya puede acceder a la plataforma."]);
-  const [recargarPagina, setRecargarPagina] = useState(false);
+  const [recargarPagina, setRecargarPagina] = useState("recargar");
   const [title, setTitle] = useState("INFORMACIÓN DEL REGISTRO");
 
 
@@ -106,7 +106,6 @@ function Register({ onChildChange }) {
           if (response.ok) {
             setMessage(["El registro se ha completado con éxito.", "Ya puede acceder a la plataforma."])
             setRegistroCompletado(true);
-            setRecargarPagina(true);
           } else {
             setWarningMessage(["El usuario ya existe"]);
             setRegistroFallido(true);

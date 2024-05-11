@@ -7,8 +7,9 @@
 .reserva-titles{
     justify-content: center;
     color: white;
-    margin-bottom: 5px;
+    margin-bottom: 40px;
     font-size: 20px;
+
 }
 
 
@@ -35,4 +36,38 @@
 .customRadio{
     width: 300px;
     margin: 10px;
+}
+
+.slider{
+   
+    color: aliceblue;
+    font-size: 100px;
+    font-weight: 100px;
+}
+
+.submit{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+}
+
+.cantidad-alumnos{
+  margin-right: 30%;
+  margin-left: 30%;
+}
+
+.horas-aforo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.item1{
+    margin-right: 50px;
+}
+
+.item2{
+    margin-left: 50px;
 }

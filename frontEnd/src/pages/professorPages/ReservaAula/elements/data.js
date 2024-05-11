@@ -63,6 +63,7 @@ const aulasData = [
     */
 
 // FUNCIONAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 1
+/*
 import moment from 'moment-timezone';
 import  {  useState } from 'react';
 
@@ -158,8 +159,19 @@ function generarFecha(year, mes, dia, hora) {
     arrayDates.push(reserva);
 
 }
-
+*/
 // calendar();
 // console.log(arrayDates.length);
 
 // FIN FUNCIONAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 1
+
+
+let url = "http://localhost:8080/classrooms/" + 6 + "/availability/" + 5 + "/" + 23 + "/TEACHER";
+
+fetch(url)
+    .then(response => {
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+    });

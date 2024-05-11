@@ -1,16 +1,47 @@
 import BarraNavegacion from "../Inicio/componentes/BarraNavegacion";
 import styles from './ReservaAula.module.css';
-import { RadioGroup, Radio, cn } from "@nextui-org/react";
+import { RadioGroup, Slider, Button, Input } from "@nextui-org/react";
 import { ScheduleMeeting, timeSlotDifference } from 'react-schedule-meeting';
 import React, { useEffect, useState } from 'react';
 import ListaDatos from "./elements/ListaDatos";
 import moment from 'moment-timezone';
+import CustomModal from "../../LoginPage/components/CustomModal";
 
 
 
 function Reserva() {
   const [datos, setDatos] = useState(null);
   const [idClase, setIdClase] = useState(null);
+  
+  const [horasReservadas, setHorasReservadas] = useState(null);
+  const [cantidadAlumnos, setCantidadAlumnos] = useState(null);
+
+
+  const [warningMessage, setWarningMessage] = useState([]);
+  const [message, setMessage] = useState([]);
+
+  const [reservaCompletada, setReservaCompletada] = useState(false);
+  const [reservaFallida, setReservaFallida] = useState(false);
+
+  const [title, setTitle] = useState("INFORMACIÓN DE LA RESERVA");
+  const [fechaFinReserva, setFechaFinReserva] = useState(null);
+  const [recargarPagina, setRecargarPagina] = useState("/Indice");
+  let [availableTimeSlots, setAvailableTimeSlots] = useState([]);
+  const [startTimeSelected, setStartTimeSelected] = useState();
+
+  
+  const [maxHoras, setMaxHoras] = useState(5);
+  const [cont, setCont] = useState(null);
+  const [availableTimeSlotsLessUnavailableTimeSlots, setAvailableTimeSlotsLessUnavailableTimeSlots] = useState([]);
+  const [variableCambio, setVariableCambio] = useState(false);
+
+
+
+
+  const unavailableTimeSlots = [
+
+  ];
+
 
 
 
@@ -28,10 +59,6 @@ function Reserva() {
   }, []);
 
 
-  const unavailableTimeSlots = [
-
-  ];
-
 
   const handleSelectedOption = (idClase) => {
     setIdClase(idClase);
@@ -45,17 +72,10 @@ function Reserva() {
 
 
 
-  let [availableTimeSlots, setAvailableTimeSlots] = useState([]);
-
-
-
-
-
   const pedirArrayMesAPI = (mes) => {
     let id = idClase;
     let month = mes;
     let url = "http://localhost:8080/classrooms/" + id + "/availability/" + month + "/TEACHER";
-    let datos;
 
     return fetch(url)
       .then(response => {
@@ -142,7 +162,6 @@ function Reserva() {
   }
 
 
-  const [availableTimeSlotsLessUnavailableTimeSlots, setAvailableTimeSlotsLessUnavailableTimeSlots] = useState([]);
 
   useEffect(() => {
     const calculateAvailableTimeSlotsLessUnavailable = () => {
@@ -155,14 +174,120 @@ function Reserva() {
 
 
 
-  const [startTimeSelected, setStartTimeSelected] = useState();
 
   const handleTimeslotClicked = (startTimeEventEmit) => {
     setStartTimeSelected(startTimeEventEmit.startTime);
-    console.log(startTimeEventEmit.startTime);
   };
 
 
+
+
+  const calcularHoras = (hora, dia, mes) => {
+    pedirArrayDiaAPI(mes + 1, dia).then(arrayDia => {
+      setCont(contarTruesDesdeIndice(arrayDia, hora - 9));
+    });
+
+  }
+
+  const contarTruesDesdeIndice = (array, indice) => {
+    let contador = 0;
+    if (indice >= 0 && indice < array.length) {
+      while (array[indice] === true) {
+        contador++;
+        indice++;
+        if (indice >= array.length) {
+          break;
+        }
+      }
+    }
+    return contador;
+  }
+
+  useEffect(() => {
+    setCont(0);
+    calcularHoras(startTimeSelected?.getHours(), startTimeSelected?.getDate(), startTimeSelected?.getMonth());
+  }, [startTimeSelected]);
+
+
+  useEffect(() => {
+    setMaxHoras(cont);
+  }, [cont])
+
+  useEffect(() => {
+    setVariableCambio(!variableCambio);
+
+
+  }, [startTimeSelected])
+
+
+
+
+
+  const formatearHora = (date) => {
+    const año = date.getFullYear();
+    const mes = String(date.getMonth() + 1).padStart(2, '0'); 
+    const dia = String(date.getDate()).padStart(2, '0');
+    const horas = String(date.getHours()).padStart(2, '0');
+    const minutos = String(date.getMinutes()).padStart(2, '0');
+    const segundos = String(date.getSeconds()).padStart(2, '0');
+    const cadenaFormateada = `${año}-${mes}-${dia}T${horas}:${minutos}:${segundos}`;
+
+    return cadenaFormateada;
+  }
+
+
+
+
+
+  useEffect(() => {
+    cambiarHoraFin();
+  }, [horasReservadas])
+
+  const realizarReserva = () => {
+    if (idClase != null && startTimeSelected != null && horasReservadas > 0 && cantidadAlumnos > 0) {
+
+      let fechaInicio = formatearHora(startTimeSelected);
+      let fechaFin = formatearHora(fechaFinReserva);
+
+
+
+      fetch("http://localhost:8080/reservation", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          startDate: fechaInicio,
+          endDate: fechaFin,
+          userId: 10,
+          classroomId: idClase
+        })
+      }).then(response => {
+        if (response.ok) {
+          setMessage(["La reserva se ha realizado correctamente"]);
+          setReservaCompletada(true);
+        } else {
+          setWarningMessage(["La reserva no se ha realizado"]);
+          setReservaFallida(true);
+        }
+      });
+
+    } else {
+      setWarningMessage(["Alguno de los datos ingresados es incorrecto"]);
+      setReservaFallida(true);
+    }
+  }
+
+  const handleChange = (completado) => {
+    setReservaFallida(completado);
+  };
+
+
+  const cambiarHoraFin = () => {
+    const date = new Date(startTimeSelected);
+    date.setHours(date.getHours() + horasReservadas);
+    setFechaFinReserva(date);
+  }
 
 
 
@@ -174,12 +299,10 @@ function Reserva() {
           <BarraNavegacion></BarraNavegacion>
         </div>
         <div className={styles.reserva}>
+          <h1 id={styles["crear-reserva"]}> CREAR UNA RESERVA </h1>
+
+          <h2 className={styles["reserva-titles"]}>Seleccione el aula a reservar</h2>
           <div className={styles.conjuntoAulas}>
-
-
-            <h1 id={styles["crear-reserva"]}> CREAR UNA RESERVA </h1>
-
-            <h2 className={styles["reserva-titles"]}>Selecciona el aula a reservar:</h2>
             <div className={styles.selectores}>
               <RadioGroup orientation="horizontal">
                 <ListaDatos datos={datos} onSelectedOptionChange={handleSelectedOption} />
@@ -188,8 +311,9 @@ function Reserva() {
           </div>
           <div className={styles.calendario}>
 
-
-            <h2 className={styles["reserva-titles"]} >Selecciona una fecha y una franja horaria: </h2>
+            <br />
+            <br />
+            <h2 className={styles["reserva-titles"]} >Seleccione una fecha y la hora de inicio de reserva </h2>
             <ScheduleMeeting
               borderRadius={10}
               primaryColor="#3f5b85"
@@ -197,9 +321,51 @@ function Reserva() {
               availableTimeslots={availableTimeSlotsLessUnavailableTimeSlots}
               onStartTimeSelect={handleTimeslotClicked}
             />
+          </div>
+          <br />
+          <br />
+
+          <div className={styles["horas-aforo"]}>
+            <div className={styles["item1"]}>
+              <h2 className={styles["reserva-titles"]}>Seleccione la cantidad <br />de horas a reservar </h2>
+              <div className={styles["slider"]}>
+                <Slider
+                  label="Horas a reservar"
+                  step={1}
+                  maxValue={maxHoras}
+                  minValue={0}
+                  defaultValue={1}
+                  className="max-w-md"
+                  key={variableCambio ? 'slider-on' : 'slider-off'}
+                  onChange={(horas) => setHorasReservadas(horas)}
+                />
+              </div>
+            </div>
+            <div className={styles["item2"]}>
+              <h2 className={styles["reserva-titles"]}>Seleccione la cantidad de alumnos <br />que pueden acceder al aula </h2>
+
+              <div className={styles["cantidad-alumnos"]}>
+                <Input
+                  type="number"
+                  label=""
+                  placeholder="0"
+                  labelPlacement="outside"
+                  onValueChange={(cantidad) => setCantidadAlumnos(cantidad)}
+                ></Input>
+              </div>
+            </div>
 
           </div>
+
+          <div className={styles["submit"]} >
+            <Button
+              size="xl"
+              onClick={realizarReserva}
+            >Realizar reserva de aula</Button>
+          </div>
         </div>
+        {<CustomModal titulo={title} text={message} cargar={reservaCompletada} onChange={null} recargarPagina={recargarPagina} />}
+        {<CustomModal titulo={title} text={warningMessage} cargar={reservaFallida} onChange={handleChange} recargarPagina={false} />}
 
       </main>
     </div>
