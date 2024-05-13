@@ -1,10 +1,10 @@
 import { Input, Button, ButtonGroup, Card, CardHeader, CardBody, Link } from "@nextui-org/react";
-import styles from './Detalles.module.css';
+import styles from './DetallesReserva.module.css';
 import BarraNavegacion from "../Inicio/componentes/BarraNavegacion";
 import { useEffect, useState } from "react";
 
 
-function Detalles() {
+function DetallesReserva() {
 
     const [reserva, setReserva] = useState(null);
     const [idReserva, setIdReserva] = useState(obtenerID());
@@ -132,7 +132,7 @@ function Detalles() {
     );
 }
 
-export default Detalles;
+export default DetallesReserva;
 
 function obtenerID() {
     const urlParams = new URLSearchParams(window.location.search);

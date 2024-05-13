@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 
-export default function CustomModal({ titulo, text, cargar, onChange, recargarPagina }) {
+export default function CustomModal({ titulo, text, cargar, onChange, recargarPagina, setCancelar }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [isRecargarPagina, setIsRecargarPagina] = useState(recargarPagina == "recargar");
     useEffect(() => {
@@ -12,20 +12,23 @@ export default function CustomModal({ titulo, text, cargar, onChange, recargarPa
         }
     }, [cargar]);
 
-    const alCerrar = () => {
-        if (isRecargarPagina) {
-            window.location.reload();
-        }else if (recargarPagina != false ){
-            window.location.href= recargarPagina;
-        }
+    const cancelar = () => {
+        setCancelar(true);
+        onClose();
+        onChange(false); 
+    }
+
+    const noCancelar = () => {
+        setCancelar(false);
         onClose();
         onChange(false);
     }
+    
 
     return (
         <>
 
-            <Modal backdrop="blur" isOpen={isOpen} onClose={alCerrar} >
+            <Modal backdrop="blur" isOpen={isOpen} onClose={noCancelar} >
                 <ModalContent>
                     <>
                         <ModalHeader className="flex flex-col gap-1">{titulo}</ModalHeader>
@@ -39,8 +42,11 @@ export default function CustomModal({ titulo, text, cargar, onChange, recargarPa
                             }
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="primary" onPress={alCerrar}>
-                                De acuerdo
+                            <Button color="primary" variant="light" onPress={noCancelar}>
+                                No quiero cancelar
+                            </Button>
+                            <Button color="danger" onPress={cancelar}>
+                                Cancelar reserva
                             </Button>
                         </ModalFooter>
                     </>

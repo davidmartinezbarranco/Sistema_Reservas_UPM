@@ -7,12 +7,12 @@ import Index from "./pages/studentPages/Inicio/Index";
 import Inicio from "./pages/LoginPage/Inicio";
 import Reserva from "./pages/studentPages/Reserva/Reserva"
 import MisReservas from "./pages/studentPages/MisReservas/MisReservas"
-import Edicion from "./pages/studentPages/Edicion/Edicion";
 import Detalles from "./pages/studentPages/Detalles/Detalles";
 
 import Indice from "./pages/professorPages/Inicio/Indice";
 import ReservaAula from "./pages/professorPages/ReservaAula/ReservaAula";
 import AulasReservadas from "./pages/professorPages/AulasReservadas/AulasReservadas";
+import DetallesReserva from "./pages/professorPages/Detalles/DetallesReserva";
 
 
 const routes = createBrowserRouter([
@@ -33,10 +33,6 @@ const routes = createBrowserRouter([
     element: <MisReservas />,
   },
   {
-    path: "/Edicion",
-    element: <Edicion />,
-  },
-  {
     path: "/Detalles",
     element: <Detalles />,
   },
@@ -51,6 +47,10 @@ const routes = createBrowserRouter([
   {
     path: "/AulasReservadas",
     element: <AulasReservadas />,
+  },
+  {
+    path: "/DetallesReserva",
+    element: <DetallesReserva />,
   },
   
 ]);

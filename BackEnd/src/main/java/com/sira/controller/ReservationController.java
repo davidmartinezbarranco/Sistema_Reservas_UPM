@@ -43,7 +43,7 @@ public class ReservationController {
             reservationAndClassroomDtos.add(new ReservationAndClassroomDto(reservation));
         return reservationAndClassroomDtos;
     }
-
+    
     @PostMapping("/reservation")
     ReservationDto newReservation(@RequestBody ReservationDto reservationDto){
         User user = userRepository.findById(reservationDto.getUserId()).orElseThrow(() -> new EntityNotFoundException("Classroom with ID " + reservationDto.getClassroomId() + " not found"));

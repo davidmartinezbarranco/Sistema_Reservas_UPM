@@ -8,8 +8,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Data
 public class ReservationDto {
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
-    private Long classroomId;
-    private Long userId;
+        private LocalDateTime startDate;
+        private LocalDateTime endDate;
+        private Long classroomId;
+        private Long userId;
 }
+    
