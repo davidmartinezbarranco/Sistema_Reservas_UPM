@@ -36,7 +36,7 @@ public class AuthenticationService {
 
         String jwt = jwtService.generateToken(user, generateExtraClaims(user));
 
-        return new AuthenticationResponse(jwt);
+        return new AuthenticationResponse(user.getId(),jwt);
     }
 
     public AuthenticationResponse register(RegisterRequest authRequest) throws Exception {
@@ -54,7 +54,7 @@ public class AuthenticationService {
 
         String jwt = jwtService.generateToken(user, generateExtraClaims(user));
 
-        return new AuthenticationResponse(jwt);
+        return new AuthenticationResponse(user.getId(), jwt);
     }
 
     private Map<String, Object> generateExtraClaims(User user) {

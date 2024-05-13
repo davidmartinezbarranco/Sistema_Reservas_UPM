@@ -24,7 +24,6 @@ public class Reservation {
     private LocalDateTime startDate;
     @NotNull
     private LocalDateTime endDate;
-    @Transient
     private int capacity;
 
     @JsonIgnore
@@ -61,5 +60,13 @@ public class Reservation {
             hoursList.add(i);
         }
         return hoursList;
+    }
+
+    public void decrementCapacity() {
+        this.capacity--;
+    }
+
+    public void incrementCapacity() {
+        this.capacity++;
     }
 }

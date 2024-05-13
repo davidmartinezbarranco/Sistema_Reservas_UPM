@@ -23,7 +23,7 @@ public class AuthController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping("/authenticate")
+    @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody @Valid AuthenticationRequest authRequest){
         AuthenticationResponse jwtDto = authenticationService.login(authRequest);
         return ResponseEntity.ok(jwtDto);

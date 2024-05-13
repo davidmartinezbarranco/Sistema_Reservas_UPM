@@ -28,7 +28,7 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @PreAuthorize("hasAuthority('READ_ALL_USERS')")
+    //@PreAuthorize("hasAuthority('READ_ALL_USERS')")
     @GetMapping("/users")
     public List<User> getUsers() {
         return userRepository.findAll();
