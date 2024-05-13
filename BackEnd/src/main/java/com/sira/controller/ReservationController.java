@@ -54,9 +54,9 @@ public class ReservationController {
             Reservation teacherReservation = reservationRepository.findByStartDateAndEndDateAndTeacherRole(reservationDto.getStartDate(), reservationDto.getEndDate());
             teacherReservation.decrementCapacity();
         }
-        Reservation newReservation = new Reservation(reservationDto.getStartDate(), reservationDto.getEndDate(), user, classroom);
+        Reservation newReservation = new Reservation(reservationDto.getStartDate(), reservationDto.getEndDate(), user, classroom, reservationDto.getCapacity());
         reservationRepository.save(newReservation);
-        return new ReservationDto(newReservation.getStartDate(), newReservation.getEndDate(), newReservation.getClassroom().getId(),  newReservation.getUser().getId());
+        return new ReservationDto(newReservation.getStartDate(), newReservation.getEndDate(), newReservation.getClassroom().getId(),  newReservation.getUser().getId(), newReservation.getCapacity());
     }
 
     @DeleteMapping("/reservation/{id}/delete")

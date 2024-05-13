@@ -12,5 +12,6 @@ public class ReservationDto {
         private LocalDateTime endDate;
         private Long classroomId;
         private Long userId;
+        private int capacity;
 }
     

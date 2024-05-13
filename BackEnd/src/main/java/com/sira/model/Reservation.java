@@ -38,12 +38,12 @@ public class Reservation {
     @JoinColumn(name = "classroom_id")
     private Classroom classroom;
 
-    public Reservation(LocalDateTime startDate, LocalDateTime endDate, User user, Classroom classroom) {
+    public Reservation(LocalDateTime startDate, LocalDateTime endDate, User user, Classroom classroom, int capacity) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.user = user;
         this.classroom = classroom;
-        this.capacity = 4;
+        this.capacity = capacity;
     }
 
     public int getReservedHours(){
