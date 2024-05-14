@@ -58,7 +58,7 @@ function Login({ onChildChange }) {
   }
 
   const iniciarSesion = () => {
-    fetch("http://localhost:8080/auth/authenticate", {
+    fetch("http://localhost:8080/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -81,7 +81,9 @@ function Login({ onChildChange }) {
         }
       })
       .then(data => {
-        console.log(data);
+        const id = data.id;
+        localStorage.setItem("id", id);
+        
         const jwt = data.jwt;
         setToken(jwt);
         const role = getRole(jwt);

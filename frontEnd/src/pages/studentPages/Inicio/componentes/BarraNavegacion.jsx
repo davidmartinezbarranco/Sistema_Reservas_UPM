@@ -14,6 +14,7 @@ import { deleteToken } from "../../../../helpers";
 function BarraNavegacion() {
   const cerrarSesion = () => {
     deleteToken();
+    localStorage.removeItem("id");
     window.location.href = "/";
   };
 

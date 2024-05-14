@@ -8,8 +8,17 @@ import {
 
 import { Button, Link } from "@nextui-org/react";
 import styles from "./../../../styles/BarraNavegacion.module.css"
+import { deleteToken } from "../../../../helpers";
+
 
 function BarraNavegacion() {
+
+  const cerrarSesion = () => {
+    deleteToken();
+    localStorage.removeItem("id");
+    window.location.href = "/";
+  };
+
   return (
     <Navbar className={styles["nav-bar"]}>
       <NavbarBrand>
@@ -37,9 +46,13 @@ function BarraNavegacion() {
       <NavbarContent justify="end">
         <NavbarItem>
           <Link href="/">
-            <Button color="primary" variant="flat">
-              CERRAR SESIÓN
-            </Button>
+          <Button
+            color="primary"
+            variant="flat"
+            onClick={cerrarSesion}
+          >
+            CERRAR SESIÓN
+          </Button>
           </Link>
         </NavbarItem>
       </NavbarContent>
