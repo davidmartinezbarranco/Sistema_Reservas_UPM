@@ -81,7 +81,9 @@ function Login({ onChildChange }) {
         }
       })
       .then(data => {
-        console.log(data);
+        const id = data.id;
+        localStorage.setItem("id", id);
+        
         const jwt = data.jwt;
         setToken(jwt);
         const role = getRole(jwt);
