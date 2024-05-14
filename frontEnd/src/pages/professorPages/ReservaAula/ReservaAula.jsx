@@ -351,6 +351,7 @@ function ReservaAula() {
                   placeholder="0"
                   labelPlacement="outside"
                   onValueChange={(cantidad) => setCantidadAlumnos(cantidad)}
+                  min={0}
                 ></Input>
               </div>
             </div>
