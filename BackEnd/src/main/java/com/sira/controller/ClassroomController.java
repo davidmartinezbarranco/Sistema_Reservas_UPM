@@ -35,7 +35,8 @@ public class ClassroomController {
         boolean[] availableDays = new boolean[YearMonth.of(YearMonth.now().getYear(), month).lengthOfMonth()];
 
         for (Reservation reservation : classroomReservations){
-            availableHoursMonthPerDay[reservation.getReservedDay()-1] -= reservation.getReservedHours();
+            if(role.equals("TEACHER") || reservation.getCapacity() > 0)
+                availableHoursMonthPerDay[reservation.getReservedDay()-1] -= reservation.getReservedHours();
         }
 
         if(role.equals("TEACHER")) {
@@ -66,10 +67,12 @@ public class ClassroomController {
     }
 
     private boolean[] setStudentReservedHours(List<Reservation> teacherReservations, boolean[] availableHours) {
-        for (Reservation reservation : teacherReservations){
-            List<Integer> reservedHours = reservation.getIndividualReservedHours();
-            for (int reservedHour : reservedHours){
-                availableHours[reservedHour-9] = true;
+        for (Reservation teacherReservation : teacherReservations){
+            if(teacherReservation.getCapacity() > 0){
+                List<Integer> reservedHours = teacherReservation.getIndividualReservedHours();
+                for (int reservedHour : reservedHours){
+                    availableHours[reservedHour-9] = true;
+                }
             }
         }
         return availableHours;
