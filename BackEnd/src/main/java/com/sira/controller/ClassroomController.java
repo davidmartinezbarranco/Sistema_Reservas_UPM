@@ -1,7 +1,6 @@
 package com.sira.controller;
 
 import com.sira.model.Classroom;
-import com.sira.model.Reservation;
 import com.sira.service.ClassroomService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

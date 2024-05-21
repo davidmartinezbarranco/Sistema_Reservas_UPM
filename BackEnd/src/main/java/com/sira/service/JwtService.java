@@ -28,7 +28,7 @@ public class JwtService {
         Date expiration = new Date(issuedAt.getTime() + (EXPIRATION_MINUTES * 60 * 100));
         return Jwts.builder()
                 .setClaims(extraClaims)
-                .setSubject(user.getUsername())
+                .setSubject(user.getEmail())
                 .setIssuedAt(issuedAt)
                 .setExpiration(expiration)
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
@@ -41,7 +41,7 @@ public class JwtService {
         return Keys.hmacShaKeyFor(secretAsBytes);
     }
 
-    public String extractUsername(String jwt) {
+    public String extractEmail(String jwt) {
         return extractAllClaims(jwt).getSubject();
     }
 

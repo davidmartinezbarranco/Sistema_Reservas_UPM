@@ -22,7 +22,7 @@ public class User implements UserDetails {
     private Long id;
     private String name;
     private String lastName;
-    private String username;
+    private String email;
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -32,7 +32,7 @@ public class User implements UserDetails {
     public User(String name, String lastName, String username, String password, Role role) {
         this.name = name;
         this.lastName = lastName;
-        this.username = username;
+        this.email = username;
         this.password = password;
         this.role = role;
     }
@@ -46,6 +46,11 @@ public class User implements UserDetails {
 
         authorities.add(new SimpleGrantedAuthority("ROLE_" + role.name()));
         return authorities;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
     }
 
     @Override

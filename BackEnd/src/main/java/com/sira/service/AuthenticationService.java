@@ -5,8 +5,6 @@ import com.sira.dto.AuthenticationResponse;
 import com.sira.dto.RegisterRequest;
 import com.sira.model.User;
 import com.sira.repository.UserRepository;
-import com.sira.util.Role;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,14 +15,17 @@ import java.util.Map;
 
 @Service
 public class AuthenticationService {
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private JwtService jwtService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
+    private final JwtService jwtService;
+    private final PasswordEncoder passwordEncoder;
+
+    public AuthenticationService(AuthenticationManager authenticationManager, UserRepository userRepository, JwtService jwtService, PasswordEncoder passwordEncoder) {
+        this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
+        this.jwtService = jwtService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public AuthenticationResponse login(AuthenticationRequest authRequest) {
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
@@ -32,7 +33,7 @@ public class AuthenticationService {
         );
         authenticationManager.authenticate(authToken);
 
-        User user = userRepository.findByUsername(authRequest.getEmail()).get();
+        User user = userRepository.findByEmail(authRequest.getEmail()).get();
 
         String jwt = jwtService.generateToken(user, generateExtraClaims(user));
 
@@ -40,7 +41,7 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse register(RegisterRequest authRequest) throws Exception {
-        if (userRepository.existsByUsername(authRequest.getEmail())) {
+        if (userRepository.existsByEmail(authRequest.getEmail())) {
             throw new Exception("El email ya está en uso");
         }
 

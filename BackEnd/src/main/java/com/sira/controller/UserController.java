@@ -46,8 +46,8 @@ public class UserController {
     public User modifyUser(@PathVariable Long id, @RequestBody User user){
         return userRepository.findById(id)
                 .map(updatedUser -> {
-                    if (updatedUser.getUsername() != null) {
-                        user.setUsername(updatedUser.getUsername());
+                    if (updatedUser.getEmail() != null) {
+                        user.setEmail(updatedUser.getEmail());
                     }
                     //TODO
                     // Actualizar otros campos según vayamos desarrolando

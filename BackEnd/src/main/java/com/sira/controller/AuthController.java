@@ -3,13 +3,10 @@ package com.sira.controller;
 import com.sira.dto.AuthenticationRequest;
 import com.sira.dto.AuthenticationResponse;
 import com.sira.dto.RegisterRequest;
-import com.sira.model.User;
 import com.sira.repository.UserRepository;
 import com.sira.service.AuthenticationService;
-import com.sira.util.Role;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

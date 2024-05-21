@@ -17,12 +17,12 @@ public class JwtUtil {
     @Value("${jwt.expiration}")
     private int expiration;
 
-    public String generateToken(String username) {
+    public String generateToken(String email) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expiration);
 
         Map<String, Object> claims = new HashMap<>();
-        claims.put("sub", username);
+        claims.put("sub", email);
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -32,7 +32,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String getUsernameFromToken(String token) {
+    public String getEmailFromToken(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(secret)
                 .parseClaimsJws(token)

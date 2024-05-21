@@ -7,7 +7,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -17,15 +16,12 @@ import java.io.IOException;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+    private final UserRepository userRepository;
+    private final JwtService jwtService;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private JwtService jwtService;
-
-    public JwtAuthenticationFilter(UserRepository userRepository) {
+    public JwtAuthenticationFilter(UserRepository userRepository, JwtService jwtService) {
         this.userRepository = userRepository;
+        this.jwtService = jwtService;
     }
 
     @Override
@@ -40,12 +36,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         //2. Obtener jwt desde el header
         String jwt = authHeader.split(" ")[1];
 
-        //3. Obtener subject/username desde el jwt
-        String username = jwtService.extractUsername(jwt);
+        //3. Obtener subject/email desde el jwt
+        String email = jwtService.extractEmail(jwt);
 
         //4. Setear un objeto Authentication dentro de SecurityContext
-        User user = userRepository.findByUsername(username).get();
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, null, user.getAuthorities());
+        User user = userRepository.findByEmail(email).get();
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email, null, user.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authToken);
 
         //5. Ejecutar el resto de filtros

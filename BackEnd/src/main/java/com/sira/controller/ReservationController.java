@@ -4,16 +4,12 @@ import com.sira.dto.ReservationAndClassroomDto;
 import com.sira.dto.ProfessorReservationDto;
 import com.sira.dto.StudentReservationDto;
 import com.sira.model.ProfessorReservation;
-import com.sira.model.Reservation;
 import com.sira.model.StudentReservation;
 import com.sira.service.ProfessorReservationService;
 import com.sira.service.StudentReservationService;
-import com.sira.util.Role;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class ReservationController {
