@@ -12,7 +12,7 @@ function DetallesReserva() {
 
     const fetchData = () => {
         let id = localStorage.getItem("id");
-        return fetch("http://localhost:8080/reservations/user/" + id)
+        return fetch("http://localhost:8080/reservations-professor/user/" + id)
             .then(response => {
                 if (!response.ok) {
                     throw new Error("No se han obtenido los datos.");

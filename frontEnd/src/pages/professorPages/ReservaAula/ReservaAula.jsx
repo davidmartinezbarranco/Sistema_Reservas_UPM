@@ -72,10 +72,10 @@ function ReservaAula() {
 
 
 
-  const pedirArrayMesAPI = (mes) => {
+  const pedirArrayMesAPI = (mes, year) => {
     let id = idClase;
     let month = mes;
-    let url = "http://localhost:8080/classrooms/" + id + "/availability/" + month + "/TEACHER";
+    let url = "http://localhost:8080/classrooms/" + id + "/availability-professor/" + month + "/"+ year + "";
 
     return fetch(url)
       .then(response => {
@@ -91,11 +91,11 @@ function ReservaAula() {
       });
   };
 
-  const pedirArrayDiaAPI = (mes, dia) => {
+  const pedirArrayDiaAPI = (year, mes, dia) => {
     let id = idClase;
     let month = mes;
     let day = dia;
-    let url = "http://localhost:8080/classrooms/" + id + "/availability/" + month + "/" + day + "/TEACHER";
+    let url = "http://localhost:8080/classrooms/" + id + "/availability-professor/" + day + "/" + month + "/" + year +"";
 
     return fetch(url)
       .then(response => {
@@ -114,11 +114,11 @@ function ReservaAula() {
     for (let i = mesActual; i < mesActual + cantidadMesesACargar; i++) {
       if (i > 12) {
         let mesYearSiguiente = i - 12;
-        pedirArrayMesAPI(mesYearSiguiente).then(data => {
+        pedirArrayMesAPI(mesYearSiguiente, year + 1).then(data => {
           obtenerFechas(year + 1, mesYearSiguiente, data);
         });
       } else {
-        pedirArrayMesAPI(i).then(data => {
+        pedirArrayMesAPI(i, year).then(data => {
           obtenerFechas(year, i, data);
         })
       }
@@ -136,7 +136,7 @@ function ReservaAula() {
       if (dia == true && ((index + 1 >= hoy && mes == month) || (mes != month))) {
         let diaReal;
         diaReal = index + 1;
-        pedirArrayDiaAPI(mes, diaReal).then(arrayDia => {
+        pedirArrayDiaAPI(year, mes, diaReal).then(arrayDia => {
           arrayDia?.map((hora, index) => {
             let horaReal;
             if (hora == true) {
@@ -182,8 +182,8 @@ function ReservaAula() {
 
 
 
-  const calcularHoras = (hora, dia, mes) => {
-    pedirArrayDiaAPI(mes + 1, dia).then(arrayDia => {
+  const calcularHoras = ( year, hora, dia, mes) => {
+    pedirArrayDiaAPI(year, mes + 1, dia).then(arrayDia => {
       setCont(contarTruesDesdeIndice(arrayDia, hora - 9));
     });
 
@@ -205,7 +205,7 @@ function ReservaAula() {
 
   useEffect(() => {
     setCont(0);
-    calcularHoras(startTimeSelected?.getHours(), startTimeSelected?.getDate(), startTimeSelected?.getMonth());
+    calcularHoras(startTimeSelected?.getFullYear(), startTimeSelected?.getHours(), startTimeSelected?.getDate(), startTimeSelected?.getMonth());
   }, [startTimeSelected]);
 
 
@@ -250,7 +250,7 @@ function ReservaAula() {
       let fechaFin = formatearHora(fechaFinReserva);
       let userId = localStorage.getItem("id");
 
-      fetch("http://localhost:8080/reservation", {
+      fetch("http://localhost:8080/reservation-professor", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -259,7 +259,8 @@ function ReservaAula() {
           startDate: fechaInicio,
           endDate: fechaFin,
           userId: userId,
-          classroomId: idClase
+          classroomId: idClase,
+          capacity: cantidadAlumnos
         })
       }).then(response => {
         if (response.ok) {
