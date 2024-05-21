@@ -1,6 +1,6 @@
 package com.sira.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -12,46 +12,46 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
+@Inheritance
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-@Entity
-public class Reservation {
+public abstract class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotNull
     private LocalDateTime startDate;
+
     @NotNull
     private LocalDateTime endDate;
-    private int capacity;
 
-    @JsonIgnore
     @NotNull
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
-    @JsonIgnore
     @NotNull
     @ManyToOne
     @JoinColumn(name = "classroom_id")
     private Classroom classroom;
 
-    public Reservation(LocalDateTime startDate, LocalDateTime endDate, User user, Classroom classroom, int capacity) {
+    public Reservation(LocalDateTime startDate, LocalDateTime endDate, User user, Classroom classroom) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.user = user;
         this.classroom = classroom;
-        this.capacity = capacity;
     }
 
-    public int getReservedHours(){
-        return Duration.between(startDate, endDate).toHoursPart();
-    }
-
-    public int getReservedDay(){
+    public int getReservedDay() {
         return startDate.getDayOfMonth();
+    }
+
+    public int getReservedHours() {
+        return Duration.between(startDate, endDate).toHoursPart();
     }
 
     public List<Integer> getIndividualReservedHours(){
@@ -60,13 +60,5 @@ public class Reservation {
             hoursList.add(i);
         }
         return hoursList;
-    }
-
-    public void decrementCapacity() {
-        this.capacity--;
-    }
-
-    public void incrementCapacity() {
-        this.capacity++;
     }
 }

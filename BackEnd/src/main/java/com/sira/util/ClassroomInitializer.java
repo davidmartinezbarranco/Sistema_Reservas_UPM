@@ -40,5 +40,5 @@ public class ClassroomInitializer implements CommandLineRunner {
 
         System.out.println("Aulas precargadas en la base de datos.");
     }
-}
-*/
+}*/
+
