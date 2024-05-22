@@ -41,13 +41,14 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @PreAuthorize("hasAuthority('READ_ALL_USERS')")
+    @PreAuthorize("hasAuthority('READ_USER_BY_ID')")
     @GetMapping("/users/{id}")
     public User getUserById(@PathVariable() Long id){
         return userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con el ID: " + id));
     }
 
+    @PreAuthorize("hasAuthority('MODIFY_USER_BY_ID')")
     @PatchMapping("/user/{id}")
     public ModifyUserDto modifyUser(@PathVariable Long id, @RequestBody User user){
         return userRepository.findById(id)
@@ -69,6 +70,7 @@ public class UserController {
                         .NOT_FOUND, "Usuario no encontrado con el ID: " + id));
     }
 
+    @PreAuthorize("hasAuthority('DELETE_USER_BY_ID')")
     @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable Long id){
         userRepository.deleteById(id);

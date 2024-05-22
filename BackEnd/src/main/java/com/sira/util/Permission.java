@@ -1,10 +1,7 @@
 package com.sira.util;
 
 public enum Permission {
-    //TODO aqui van los permisos que se les dará a cada rol
-
-    READ_ALL_USERS,
-    READ_ALL_RESERVATIONS,
-    CREATE_ONE_RESERVATION,
-    SAVE_ONE_ROOM;
+    READ_USER_BY_ID,
+    MODIFY_USER_BY_ID,
+    DELETE_USER_BY_ID;
 }
