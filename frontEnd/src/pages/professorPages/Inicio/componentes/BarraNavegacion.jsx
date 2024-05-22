@@ -9,7 +9,7 @@ import {
 import { Button, Link } from "@nextui-org/react";
 import styles from "./../../../styles/BarraNavegacion.module.css"
 import { deleteToken } from "../../../../helpers";
-
+import { UserIcon } from "../../../../../public/UserIcon";
 
 function BarraNavegacion() {
 
@@ -18,6 +18,10 @@ function BarraNavegacion() {
     localStorage.removeItem("id");
     window.location.href = "/";
   };
+
+  const goToProfilePage = () => {
+    window.location.href = "/Profile";
+  }
 
   return (
     <Navbar className={styles["nav-bar"]}>
@@ -32,27 +36,32 @@ function BarraNavegacion() {
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
           <Link href="/Indice">
-          
+
             <Button color="primary">INICIO</Button>
           </Link>
         </NavbarItem>
         <NavbarItem>
           <Link href="/AulasReservadas">
-          <Button color="primary"> ESPACIOS RESERVADOS </Button>
+            <Button color="primary"> ESPACIOS RESERVADOS </Button>
           </Link>
 
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          <Link href="/">
-          <Button
-            color="primary"
-            variant="flat"
-            onClick={cerrarSesion}
-          >
-            CERRAR SESIÓN
+          <Button color="primary" variant="bordered" startContent={<UserIcon />} onClick={goToProfilePage}>
+            Mi perfil
           </Button>
+        </NavbarItem>
+        <NavbarItem>
+          <Link href="/">
+            <Button
+              color="primary"
+              variant="flat"
+              onClick={cerrarSesion}
+            >
+              CERRAR SESIÓN
+            </Button>
           </Link>
         </NavbarItem>
       </NavbarContent>

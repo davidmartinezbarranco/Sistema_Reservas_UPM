@@ -9,6 +9,7 @@ import {
 import { Button, Link } from "@nextui-org/react";
 import styles from "./../../../styles/BarraNavegacion.module.css"
 import { deleteToken } from "../../../../helpers";
+import { UserIcon } from "../../../../../public/UserIcon";
 
 
 function BarraNavegacion() {
@@ -17,6 +18,10 @@ function BarraNavegacion() {
     localStorage.removeItem("id");
     window.location.href = "/";
   };
+
+  const goToProfilePage = () => {
+    window.location.href = "/Profile";
+  }
 
   return (
     <Navbar className={styles["nav-bar"]}>
@@ -43,6 +48,11 @@ function BarraNavegacion() {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
+      <NavbarItem>
+          <Button color="primary" variant="bordered" startContent={<UserIcon />} onClick={goToProfilePage}>
+            Mi perfil
+          </Button>
+        </NavbarItem>
         <NavbarItem>
           <Button
             color="primary"
