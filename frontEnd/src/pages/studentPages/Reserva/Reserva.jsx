@@ -66,10 +66,10 @@ function Reserva() {
 
 
 
-  const pedirArrayMesAPI = (mes) => {
+  const pedirArrayMesAPI = (mes, year) => {
     let id = idClase;
     let month = mes;
-    let url = "http://localhost:8080/classrooms/" + id + "/availability/" + month + "/STUDENT";
+    let url = "http://localhost:8080/classrooms/" + id + "/availability-student/" + month + "/" + year + "";
 
     return fetch(url)
       .then(response => {
@@ -85,11 +85,11 @@ function Reserva() {
       });
   };
 
-  const pedirArrayDiaAPI = (mes, dia) => {
+  const pedirArrayDiaAPI = (year, mes, dia) => {
     let id = idClase;
     let month = mes;
     let day = dia;
-    let url = "http://localhost:8080/classrooms/" + id + "/availability/" + month + "/" + day + "/STUDENT";
+    let url = "http://localhost:8080/classrooms/" + id + "/availability-student/" + day + "/" + month + "/" + year + "";
 
     return fetch(url)
       .then(response => {
@@ -108,11 +108,11 @@ function Reserva() {
     for (let i = mesActual; i < mesActual + cantidadMesesACargar; i++) {
       if (i > 12) {
         let mesYearSiguiente = i - 12;
-        pedirArrayMesAPI(mesYearSiguiente).then(data => {
+        pedirArrayMesAPI(mesYearSiguiente, year + 1).then(data => {
           obtenerFechas(year + 1, mesYearSiguiente, data);
         });
       } else {
-        pedirArrayMesAPI(i).then(data => {
+        pedirArrayMesAPI(i, year).then(data => {
           obtenerFechas(year, i, data);
         })
       }
@@ -129,7 +129,7 @@ function Reserva() {
       if (dia == true && ((index + 1 >= hoy && mes == month) || (mes != month))) {
         let diaReal;
         diaReal = index + 1;
-        pedirArrayDiaAPI(mes, diaReal).then(arrayDia => {
+        pedirArrayDiaAPI(year, mes, diaReal).then(arrayDia => {
           arrayDia?.map((hora, index) => {
             let horaReal;
             if (hora == true) {
@@ -209,8 +209,14 @@ function Reserva() {
       let fechaFin = formatearHora(fechaFinReserva);
       let userId = localStorage.getItem("id");
 
+      console.log(fechaInicio);
+      console.log(fechaFin);
+      console.log(typeof userId);
+      console.log(idClase);
 
-      fetch("http://localhost:8080/reservation", {
+
+
+      fetch("http://localhost:8080/reservation-student", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

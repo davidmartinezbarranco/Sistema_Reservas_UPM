@@ -86,7 +86,7 @@ function Register({ onChildChange }) {
   const handleRegistro = async (e) => {
 
     if (formIsFull()) {
-      const role = tipoUsuario == "profesor" ? "TEACHER" : "STUDENT";
+      const role = tipoUsuario == "profesor" ? "PROFESSOR" : "STUDENT";
 
 
       fetch("http://localhost:8080/auth/register", {

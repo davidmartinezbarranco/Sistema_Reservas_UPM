@@ -72,7 +72,6 @@ function Login({ onChildChange }) {
         if (response.ok) {
           console.log("Todo OK");
           
-          
           return response.json();
         } else {
           console.log("No ha iniciado sesión");
@@ -87,7 +86,7 @@ function Login({ onChildChange }) {
         const jwt = data.jwt;
         setToken(jwt);
         const role = getRole(jwt);
-        if( role == "TEACHER"){
+        if( role == "PROFESSOR"){
           window.location.href = '/Indice';
         }else if (role == "STUDENT"){
           window.location.href = '/Index';
