@@ -5,7 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sira.dto.ModifyUserDto;
+import com.sira.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -22,10 +25,14 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 public class UserController {
     private final UserRepository userRepository;
+    private final AuthenticationService authenticationService;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public UserController(UserRepository userRepository){
+    public UserController(UserRepository userRepository, AuthenticationService authenticationService, ModelMapper modelMapper){
         this.userRepository = userRepository;
+        this.authenticationService = authenticationService;
+        this.modelMapper = modelMapper;
     }
 
     //@PreAuthorize("hasAuthority('READ_ALL_USERS')")
@@ -41,17 +48,23 @@ public class UserController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con el ID: " + id));
     }
 
-    @PreAuthorize("hasAuthority('READ_ALL_USERS')")
-    @PatchMapping("/users/{id}")
-    public User modifyUser(@PathVariable Long id, @RequestBody User user){
+    @PatchMapping("/user/{id}")
+    public ModifyUserDto modifyUser(@PathVariable Long id, @RequestBody User user){
         return userRepository.findById(id)
                 .map(updatedUser -> {
-                    if (updatedUser.getEmail() != null) {
-                        user.setEmail(updatedUser.getEmail());
+                    if (user.getEmail() != null) {
+                        updatedUser.setEmail(user.getEmail());
                     }
-                    //TODO
-                    // Actualizar otros campos según vayamos desarrolando
-                    return userRepository.save(user);
+                    if (user.getName() != null) {
+                        updatedUser.setName(user.getName());
+                    }
+                    if (user.getLastName() != null) {
+                        updatedUser.setLastName(user.getLastName());
+                    }
+                    if (user.getPassword() != null) {
+                        authenticationService.modifyPassword(user.getPassword(), updatedUser);
+                    }
+                    return modelMapper.map(userRepository.save(updatedUser), ModifyUserDto.class);
                 }).orElseThrow(() -> new ResponseStatusException(HttpStatus
                         .NOT_FOUND, "Usuario no encontrado con el ID: " + id));
     }

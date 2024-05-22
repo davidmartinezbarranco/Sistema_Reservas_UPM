@@ -65,4 +65,8 @@ public class AuthenticationService {
         extraClaims.put("permissions", user.getAuthorities());
         return extraClaims;
     }
+
+    public void modifyPassword(String newPassword, User user){
+        user.setPassword(passwordEncoder.encode(newPassword));
+    }
 }

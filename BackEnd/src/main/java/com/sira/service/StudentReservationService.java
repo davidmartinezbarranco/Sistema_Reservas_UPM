@@ -46,7 +46,7 @@ public class StudentReservationService {
 
     public StudentReservationDto createReservation(StudentReservationDto studentRequest) throws Exception {
         ProfessorReservation professorReservation = professorReservationRepository
-                .findOverlappingReservations(studentRequest.getStartDate(), studentRequest.getEndDate())
+                .findOverlappingReservations(studentRequest.getStartDate())
                 .orElseThrow(() -> new EntityNotFoundException("Theres no professor reservation at that hour"));
 
         if (!professorReservation.isHourAvailable(studentRequest.getHour())) {
