@@ -42,7 +42,7 @@ public class ClassroomService {
     }
 
     public boolean[] getClassroomStudentAvailabilityByMonth(Long classroomId, int month, int year) {
-        int[] availableHoursMonthPerDay = new int[12];
+        int[] availableHoursMonthPerDay = new int[YearMonth.of(year, month).lengthOfMonth()];
         Arrays.fill(availableHoursMonthPerDay, 0);
         boolean[] availableDays = new boolean[YearMonth.of(year, month).lengthOfMonth()];
 
