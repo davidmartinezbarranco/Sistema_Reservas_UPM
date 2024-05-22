@@ -26,7 +26,7 @@ function MisReservas() {
 
   const fetchData = () => {
     let id = localStorage.getItem("id");
-    return fetch("http://localhost:8080/reservations/user/" + id)
+    return fetch("http://localhost:8080/reservations-student/user/" + id)
       .then(response => {
         if (!response.ok) {
           throw new Error("No se han obtenido los datos.");
@@ -96,7 +96,7 @@ function MisReservas() {
   useEffect(() => {
     if (cancelarReservaDecision) {
       console.log("Eliminando reserva con id: " + idAEliminar);
-      fetch("http://localhost:8080/reservation/" + idAEliminar + "/delete", {
+      fetch("http://localhost:8080/reservation-student/" + idAEliminar + "/delete", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json"

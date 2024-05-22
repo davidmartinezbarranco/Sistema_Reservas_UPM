@@ -260,7 +260,7 @@ function ReservaAula() {
           endDate: fechaFin,
           userId: userId,
           classroomId: idClase,
-          capacity: cantidadAlumnos
+          totalCapacity: cantidadAlumnos
         })
       }).then(response => {
         if (response.ok) {
