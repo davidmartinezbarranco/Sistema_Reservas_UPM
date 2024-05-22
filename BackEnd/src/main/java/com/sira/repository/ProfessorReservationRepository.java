@@ -15,8 +15,9 @@ public interface ProfessorReservationRepository extends JpaRepository<ProfessorR
     List<ProfessorReservation> findAllByUserId(Long userId);
     @Query("SELECT pr FROM ProfessorReservation pr " +
             "WHERE pr.startDate <= :startDate " +
-            "AND pr.endDate > :startDate")
-    Optional<ProfessorReservation> findOverlappingReservations(@Param("startDate") LocalDateTime startDate);
+            "AND pr.endDate > :startDate " +
+            "AND pr.classroom.id = :classroomId")
+    Optional<ProfessorReservation> findOverlappingReservations(@Param("startDate") LocalDateTime startDate, Long classroomId);
 
     @Query("SELECT pr FROM ProfessorReservation pr " +
             "WHERE pr.classroom.id = :classroomId " +

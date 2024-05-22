@@ -35,7 +35,7 @@ public class UserController {
         this.modelMapper = modelMapper;
     }
 
-    //@PreAuthorize("hasAuthority('READ_ALL_USERS')")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     @GetMapping("/users")
     public List<User> getUsers() {
         return userRepository.findAll();
