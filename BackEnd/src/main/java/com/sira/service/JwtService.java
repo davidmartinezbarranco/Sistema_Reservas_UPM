@@ -25,7 +25,7 @@ public class JwtService {
 
     public String generateToken(User user, Map<String, Object> extraClaims) {
         Date issuedAt = new Date(System.currentTimeMillis());
-        Date expiration = new Date(issuedAt.getTime() + (EXPIRATION_MINUTES * 60 * 100));
+        Date expiration = new Date(issuedAt.getTime() + (EXPIRATION_MINUTES * 60000));
         return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(user.getEmail())

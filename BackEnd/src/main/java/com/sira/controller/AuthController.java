@@ -18,7 +18,6 @@ public class AuthController {
 
     private final AuthenticationService authenticationService;
 
-    private final UserRepository userRepository;
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody @Valid AuthenticationRequest authRequest){
@@ -29,7 +28,6 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody @Valid RegisterRequest authRequest) throws Exception {
         AuthenticationResponse jwtDto = authenticationService.register(authRequest);
-
         return ResponseEntity.ok(jwtDto);
     }
 }
