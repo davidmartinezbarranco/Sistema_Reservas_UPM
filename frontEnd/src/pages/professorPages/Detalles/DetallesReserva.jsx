@@ -2,6 +2,7 @@ import { Input, Button, ButtonGroup, Card, CardHeader, CardBody, Link } from "@n
 import styles from './DetallesReserva.module.css';
 import BarraNavegacion from "../Inicio/componentes/BarraNavegacion";
 import { useEffect, useState } from "react";
+import { getToken } from "../../../helpers";
 
 
 function DetallesReserva() {
@@ -11,8 +12,15 @@ function DetallesReserva() {
     const [mostrarDatos, setMostrarDatos] = useState(false);
 
     const fetchData = () => {
+        let token = "Bearer " + getToken();
         let id = localStorage.getItem("id");
-        return fetch("http://localhost:8080/reservations-professor/user/" + id)
+        return fetch("http://localhost:8080/reservations-professor/user/" + id + "",{
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": token
+            }
+          })
             .then(response => {
                 if (!response.ok) {
                     throw new Error("No se han obtenido los datos.");

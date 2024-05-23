@@ -6,10 +6,13 @@ import React, { useEffect, useState } from 'react';
 import ListaDatos from "./elements/ListaDatos";
 import moment from 'moment-timezone';
 import CustomModal from "../../LoginPage/components/CustomModal";
+import { getToken } from "../../../helpers";
 
 
 
 function ReservaAula() {
+  const token = "Bearer " + getToken();
+
   const [datos, setDatos] = useState(null);
   const [idClase, setIdClase] = useState(null);
 
@@ -46,7 +49,13 @@ function ReservaAula() {
 
 
   useEffect(() => {
-    fetch("http://localhost:8080/classrooms")
+    fetch("http://localhost:8080/classrooms",{
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      }
+    })
       .then(response => {
         if (!response.ok) {
           throw new Error("No se han obtenido los datos.");
@@ -66,8 +75,10 @@ function ReservaAula() {
 
 
   useEffect(() => {
-    availableTimeSlots.splice(0, availableTimeSlots.length);
-    calendar();
+    if(idClase != null){
+      availableTimeSlots.splice(0, availableTimeSlots.length);
+      calendar();
+    }
   }, [idClase]);
 
 
@@ -77,7 +88,13 @@ function ReservaAula() {
     let month = mes;
     let url = "http://localhost:8080/classrooms/" + id + "/availability-professor/" + month + "/"+ year + "";
 
-    return fetch(url)
+    return fetch(url,{
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      }
+    })
       .then(response => {
         if (!response.ok) {
           throw new Error("Error en la solicitud");
@@ -97,7 +114,13 @@ function ReservaAula() {
     let day = dia;
     let url = "http://localhost:8080/classrooms/" + id + "/availability-professor/" + day + "/" + month + "/" + year +"";
 
-    return fetch(url)
+    return fetch(url,{
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      }
+    })
       .then(response => {
         return response.json();
       })
@@ -110,16 +133,15 @@ function ReservaAula() {
     let mesActual = new Date().getMonth() + 1;
     let year = new Date().getFullYear();
     let cantidadMesesACargar = 1;
-
     for (let i = mesActual; i < mesActual + cantidadMesesACargar; i++) {
       if (i > 12) {
         let mesYearSiguiente = i - 12;
         pedirArrayMesAPI(mesYearSiguiente, year + 1).then(data => {
-          obtenerFechas(year + 1, mesYearSiguiente, data);
+          if(idClase != null) obtenerFechas(year + 1, mesYearSiguiente, data);
         });
       } else {
         pedirArrayMesAPI(i, year).then(data => {
-          obtenerFechas(year, i, data);
+          if(idClase != null)  obtenerFechas(year, i, data);
         })
       }
     }
@@ -183,7 +205,7 @@ function ReservaAula() {
 
 
   const calcularHoras = ( year, hora, dia, mes) => {
-    pedirArrayDiaAPI(year, mes + 1, dia).then(arrayDia => {
+    if(idClase != null) pedirArrayDiaAPI(year, mes + 1, dia).then(arrayDia => {
       setCont(contarTruesDesdeIndice(arrayDia, hora - 9));
     });
 
@@ -253,7 +275,8 @@ function ReservaAula() {
       fetch("http://localhost:8080/reservation-professor", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": token
         },
         body: JSON.stringify({
           startDate: fechaInicio,

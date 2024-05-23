@@ -7,6 +7,7 @@ import { EyeIcon } from "../../../assets/icons/EyeIcon";
 import { columns } from "./elements/data";
 import { Link } from 'react-router-dom';
 import CustomModal from "../../studentPages/MisReservas/elements/CustomModal";
+import { getToken } from "../../../helpers";
 
 
 const statusColorMap = {
@@ -17,6 +18,7 @@ const statusColorMap = {
 
 
 function AulasReservadas() {
+  const token = "Bearer " + getToken();
   const [reservas, setReservas] = useState([]);
   const [title, setTitle] = useState("CANCELACIÓN DE RESERVA");
   const [warningMessage, setWarningMessage] = useState(["¿Estás seguro de que deseas cancelar la reserva?"]);
@@ -26,7 +28,13 @@ function AulasReservadas() {
 
   const fetchData = () => {
     let id = localStorage.getItem("id");
-    return fetch("http://localhost:8080/reservations-professor/user/" + id)
+    return fetch("http://localhost:8080/reservations-professor/user/" + id, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      }
+    })
       .then(response => {
         if (!response.ok) {
           throw new Error("No se han obtenido los datos.");
@@ -99,7 +107,8 @@ function AulasReservadas() {
       fetch("http://localhost:8080/reservation-professor/" + idAEliminar + "/delete", {
         method: "DELETE",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization" : token
         }
       }).then(respose => {
         if (respose.ok) {

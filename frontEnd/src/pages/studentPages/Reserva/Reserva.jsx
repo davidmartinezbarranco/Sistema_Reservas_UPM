@@ -6,10 +6,12 @@ import React, { useEffect, useState } from 'react';
 import ListaDatos from "../../professorPages/ReservaAula/elements/ListaDatos";
 import moment from 'moment-timezone';
 import CustomModal from "../../LoginPage/components/CustomModal";
+import { getToken } from "../../../helpers";
 
 
 
 function Reserva() {
+  const token = "Bearer " + getToken();
   const [datos, setDatos] = useState(null);
   const [idClase, setIdClase] = useState(null);
 
@@ -40,7 +42,13 @@ function Reserva() {
 
 
   useEffect(() => {
-    fetch("http://localhost:8080/classrooms")
+    fetch("http://localhost:8080/classrooms", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      }
+    })
       .then(response => {
         if (!response.ok) {
           throw new Error("No se han obtenido los datos.");
@@ -60,8 +68,10 @@ function Reserva() {
 
 
   useEffect(() => {
-    availableTimeSlots.splice(0, availableTimeSlots.length);
-    calendar();
+    if(idClase != null){
+      availableTimeSlots.splice(0, availableTimeSlots.length);
+      calendar();
+    }
   }, [idClase]);
 
 
@@ -71,7 +81,13 @@ function Reserva() {
     let month = mes;
     let url = "http://localhost:8080/classrooms/" + id + "/availability-student/" + month + "/" + year + "";
 
-    return fetch(url)
+    return fetch(url,{
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      }
+    })
       .then(response => {
         if (!response.ok) {
           throw new Error("Error en la solicitud");
@@ -91,7 +107,13 @@ function Reserva() {
     let day = dia;
     let url = "http://localhost:8080/classrooms/" + id + "/availability-student/" + day + "/" + month + "/" + year + "";
 
-    return fetch(url)
+    return fetch(url,{
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      }
+    })
       .then(response => {
         return response.json();
       })
@@ -219,7 +241,8 @@ function Reserva() {
       fetch("http://localhost:8080/reservation-student", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": token
         },
         body: JSON.stringify({
           startDate: fechaInicio,

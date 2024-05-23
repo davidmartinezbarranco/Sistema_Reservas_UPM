@@ -2,14 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Input, Button, ButtonGroup, Card, CardHeader, CardBody, Link } from "@nextui-org/react";
 import BarraNavegacionProfessor from "../professorPages/Inicio/componentes/BarraNavegacion";
 import BarraNavegacionStudent from "../studentPages/Inicio/componentes/BarraNavegacion";
-import { getRole } from "../../helpers";
+import { getRole, getToken } from "../../helpers";
 import styles from "./Profile.module.css";
 import CustomModal from "../LoginPage/components/CustomModal";
 
 
 
 function Profile() {
+    const token = "Bearer " + getToken();
     const role = getRole(localStorage.getItem("token"));
+    const id = localStorage.getItem("id");
 
     const [editMode, setEditMode] = useState(false);
     const [name, setName] = useState("");
@@ -76,12 +78,30 @@ function Profile() {
     }, [])
 
     const fetchData = () => {
-        let p = {
-            nombre: "Brian",
-            apellidos: "Pardo",
-            email: "b@gmail.com",
-        }
-        setPerfil(p);
+        
+
+        fetch("http://localhost:8080/users/" + id, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": token
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+            })
+            .then(data => {
+                let p = {
+                    nombre: data.name,
+                    apellidos: data.lastName,
+                    email: data.email,
+                }
+                setPerfil(p);
+            });
+
+
     }
 
 
@@ -98,7 +118,7 @@ function Profile() {
                     email: email ? email : perfil.email,
                     password: password
                 }
-                
+
                 enviarDatos(dataToSend);
             } else {
                 let dataToSend = {
@@ -114,8 +134,23 @@ function Profile() {
     const enviarDatos = (data) => {
         console.log(data);
         // enviar datos
-        setMessage(["Las modificaciones se han realizado correctamente"]);
-        setGuardadoPerfilCompletado(true);
+        fetch("http://localhost:8080/user/" + id, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": token
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log("TODO OK");
+                    setMessage(["Las modificaciones se han realizado correctamente"]);
+                    setGuardadoPerfilCompletado(true);
+                }
+            })
+
+
     }
 
     const handleChange = (completado) => {
@@ -205,7 +240,8 @@ function Profile() {
                                                 label="Confirme contraseña"
                                                 onChange={handleConfirmedPasswordChange}
                                             />
-                                            <p>Si decides no hacer cambios en algún campo, los datos actuales permanecerán intactos</p>
+                                            <br />
+                                            <p>Si decides no hacer cambios en algún campo, los datos actuales permanecerán intactos.</p>
                                         </div>
                                         <div style={savingButtonsStyle}>
                                             <Button
