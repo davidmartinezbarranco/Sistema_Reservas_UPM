@@ -4,9 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Role {
-    STUDENT(Arrays.asList(Permission.READ_USER_BY_ID, Permission.MODIFY_USER_BY_ID, Permission.DELETE_USER_BY_ID)),
-    PROFESSOR(Arrays.asList(Permission.READ_USER_BY_ID, Permission.MODIFY_USER_BY_ID, Permission.DELETE_USER_BY_ID)),
-    ADMINISTRATOR(Arrays.asList(Permission.READ_USER_BY_ID, Permission.MODIFY_USER_BY_ID, Permission.DELETE_USER_BY_ID));
+    STUDENT(Arrays.asList(Permission.READ_USER_BY_ID, Permission.MODIFY_USER_BY_ID, Permission.DELETE_USER_BY_ID, Permission.READ_ALL_CLASSROOMS)),
+    PROFESSOR(Arrays.asList(Permission.READ_USER_BY_ID, Permission.MODIFY_USER_BY_ID, Permission.DELETE_USER_BY_ID, Permission.READ_ALL_CLASSROOMS)),
+    ADMINISTRATOR(Arrays.asList(Permission.READ_USER_BY_ID, Permission.MODIFY_USER_BY_ID, Permission.DELETE_USER_BY_ID, Permission.READ_ALL_CLASSROOMS));
 
     private List<Permission> permissions;
 

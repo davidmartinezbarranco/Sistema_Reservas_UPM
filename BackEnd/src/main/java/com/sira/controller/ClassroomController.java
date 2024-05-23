@@ -19,9 +19,9 @@ public class ClassroomController {
         this.classroomService = classroomService;
     }
 
-    @PreAuthorize("hasRole('ADMINISTRATOR')")
+    @PreAuthorize("hasAuthority('READ_ALL_CLASSROOMS')")
     @GetMapping("")
-    List<Classroom> allReservations(){return this.classroomService.getAllReservations();}
+    List<Classroom> allClassroom(){return this.classroomService.getAllReservations();}
 
     @PreAuthorize("hasRole('PROFESSOR')")
     @GetMapping("/{classroomId}/availability-professor/{month}/{year}")
