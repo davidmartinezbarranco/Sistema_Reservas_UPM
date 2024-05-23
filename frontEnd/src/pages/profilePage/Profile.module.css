@@ -34,3 +34,28 @@
     margin-right: 10%;
 }
 
+
+.deleteAccountDiv {
+    display: flex;
+    justify-content: center;
+}
+
+.centeredCardWrapper {
+    width: 40%; 
+    margin: 0 auto;
+    padding-bottom: 10%; 
+}
+
+.customCard {
+    margin-top: 10%; 
+    padding: 20px;
+}
+
+.deleteButtonDiv {
+    text-align: center;
+}
+
+.deleteButtonDiv p {
+    margin-bottom: 1rem;
+}
+

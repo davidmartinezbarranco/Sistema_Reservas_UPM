@@ -5,6 +5,7 @@ import BarraNavegacionStudent from "../studentPages/Inicio/componentes/BarraNave
 import { getRole, getToken } from "../../helpers";
 import styles from "./Profile.module.css";
 import CustomModal from "../LoginPage/components/CustomModal";
+import CustomModalDeleteUser from "./elements/CustomModal"
 
 
 
@@ -78,7 +79,7 @@ function Profile() {
     }, [])
 
     const fetchData = () => {
-        
+
 
         fetch("http://localhost:8080/users/" + id, {
             method: "GET",
@@ -132,8 +133,6 @@ function Profile() {
     }
 
     const enviarDatos = (data) => {
-        console.log(data);
-        // enviar datos
         fetch("http://localhost:8080/user/" + id, {
             method: "PATCH",
             headers: {
@@ -157,6 +156,45 @@ function Profile() {
         setGuardadoPerfilFallido(completado);
     };
 
+    const [deleteAccount, setDeleteAccount] = useState(false);
+    const [deleteAccountDecision, setDeleteAccountDecision] = useState(false);
+
+    const cancelar = (decision) => {
+        setDeleteAccountDecision(decision);
+    }
+
+    const handleChangeDeleteAccount = (completado) => {
+        setDeleteAccount(completado);
+    }
+
+
+    useEffect(() => {
+        if (deleteAccountDecision) {
+            console.log("AHora si");
+            fetch("http://localhost:8080/users/" + id, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": token
+                }
+            })
+            .then(response => {
+                if(response.ok){
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("id");
+                    window.location.href = "/";
+                }
+            })
+
+        } else {
+            console.log("AHora no");
+        }
+    }, [deleteAccountDecision]);
+
+    const eliminarCuenta = () => {
+        setWarningMessage(["¿Estás seguro de que quieres eliminar la cuenta?", "Perderás todos los datos asociados a ella."]);
+        setDeleteAccount(true);
+    }
 
 
     return (
@@ -242,11 +280,11 @@ function Profile() {
                                             />
                                             <br />
                                             <p>Si decides no hacer cambios en algún campo, los datos actuales permanecerán intactos.</p>
+
                                         </div>
                                         <div style={savingButtonsStyle}>
                                             <Button
                                                 style={discardButtonStyle}
-                                                color="danger"
                                                 onClick={() => {
                                                     setEditMode(false);
                                                     window.location.reload();
@@ -270,11 +308,31 @@ function Profile() {
 
                             </CardBody>
                         </Card>
+
+                        {editMode &&
+                            <div className={styles.deleteAccountDiv}>
+                                <div className={styles.centeredCardWrapper}>
+                                    <Card className={styles.customCard}>
+                                        <div className={styles.deleteButtonDiv}>
+                                            <p>Opción sensible</p>
+                                            <Button
+                                                color="danger"
+                                                onClick={eliminarCuenta}
+                                            >
+                                                Eliminar cuenta
+                                            </Button>
+                                        </div>
+                                    </Card>
+                                </div>
+                            </div>
+
+                        }
                     </div>
 
                 </div>
                 {<CustomModal titulo={title} text={message} cargar={guardadoPerfilCompletado} onChange={null} recargarPagina={recargarPagina} />}
                 {<CustomModal titulo={title} text={warningMessage} cargar={guardadoPerfilFallido} onChange={handleChange} recargarPagina={false} />}
+                {<CustomModalDeleteUser titulo={title} text={warningMessage} cargar={deleteAccount} onChange={handleChangeDeleteAccount} recargarPagina={false} setCancelar={cancelar} />}
 
             </main>
         </div>
