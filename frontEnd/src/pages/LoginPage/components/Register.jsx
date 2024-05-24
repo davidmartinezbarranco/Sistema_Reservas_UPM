@@ -132,14 +132,12 @@ function Register({ onChildChange }) {
 
 
   return (
-    <Card className="bg-background/90 px-10 pb-10 pt-10 mt-10 mb-10 ml-5">
-      <CardHeader className="text-xl font-bold justify-center items-center">
+    <Card className="bg-background/90 px-5 pb-3 pt-3 mt-5 mb-5 ml-2.5">
+      <CardHeader className="text-l font-bold justify-center items-center">
         <div className="flex flex-col items-center">
-          <h1>RESERVA DE AULAS ETSISI</h1>
-          <h2>Registro</h2>
-          <br />
+          <h1>Registro en Reserva de Aulas ETSISI</h1>
           <img
-            className="w-36 h-36 object-center"
+            className="w-24 h-24 object-center"
             src="/public/Logo.png"
             alt="Imagen logo web"
           />
@@ -148,7 +146,7 @@ function Register({ onChildChange }) {
       <CardBody id="card-body" className="space-y-2 iniciar-sesion-card-body">
         <Input
           id="register-nombre"
-          className="sign-in-form"
+          className="sign-in-form text-sm"
           color="#E5D9B6"
           type="nombre"
           label="Nombre"
@@ -159,7 +157,7 @@ function Register({ onChildChange }) {
         />
         <Input
           id="register-apellidos"
-          className="sign-in-form"
+          className="sign-in-form text-sm"
           color="#E5D9B6"
           type="apellido"
           label="Apellidos"
@@ -170,7 +168,7 @@ function Register({ onChildChange }) {
         />
         <Input
           id="register-email"
-          className="sign-in-form"
+          className="sign-in-form text-sm"
           color="#E5D9B6"
           type="email"
           label="Email"
@@ -181,7 +179,7 @@ function Register({ onChildChange }) {
         />
         <Input
           id="register-password"
-          className="sign-in-form"
+          className="sign-in-form text-sm"
           color="#285430"
           type="password"
           label="Contraseña"
@@ -207,6 +205,8 @@ function Register({ onChildChange }) {
             label="Tipo de usuario"
             value={tipoUsuario}
             onChange={handleTipoUsuarioChange}
+            size= "sm"
+            orientation= "horizontal"
           >
             <Radio value="profesor">Profesor</Radio>
             <Radio value="alumno">Alumno</Radio>
@@ -214,7 +214,6 @@ function Register({ onChildChange }) {
         </div>
         <ButtonGroup className="flex pt-2">
           <Button
-            color="#285430"
             className=" flex-1 hover:bg-green-600"
             onClick={handleRegistro}
           >
