@@ -8,6 +8,5 @@ public class ModifiedUserDto {
     private String name;
     private String lastName;
     private String email;
-    private Role role;
     private String jwt;
 }

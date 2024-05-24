@@ -8,6 +8,7 @@ import java.util.Map;
 import com.sira.dto.AuthenticationRequest;
 import com.sira.dto.ModifiedUserDto;
 import com.sira.service.AuthenticationService;
+import com.sira.service.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -27,13 +28,11 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserController {
     private final UserRepository userRepository;
     private final AuthenticationService authenticationService;
-    private final ModelMapper modelMapper;
 
     @Autowired
-    public UserController(UserRepository userRepository, AuthenticationService authenticationService, ModelMapper modelMapper){
+    public UserController(UserRepository userRepository, AuthenticationService authenticationService){
         this.userRepository = userRepository;
         this.authenticationService = authenticationService;
-        this.modelMapper = modelMapper;
     }
 
     @PreAuthorize("hasRole('ADMINISTRATOR')")
@@ -52,48 +51,12 @@ public class UserController {
     @PreAuthorize("hasAuthority('MODIFY_USER_BY_ID')")
     @PatchMapping("/user/{id}")
     public ModifiedUserDto modifyUser(@PathVariable Long id, @RequestBody User user){
-        ModifiedUserDto modifiedUserDto;
-                User updatedUser =  userRepository.findById(id)
-                .map(modifiedUser -> {
-                    if (user.getEmail() != null) {
-                        modifiedUser.setEmail(user.getEmail());
-                    }
-                    if (user.getName() != null) {
-                        modifiedUser.setName(user.getName());
-                    }
-                    if (user.getLastName() != null) {
-                        modifiedUser.setLastName(user.getLastName());
-                    }
-                    if (user.getPassword() != null) {
-                        authenticationService.modifyPassword(user.getPassword(), modifiedUser);
-                    }
-                    return modifiedUser;
-                }).orElseThrow(() -> new ResponseStatusException(HttpStatus
-                        .NOT_FOUND, "Usuario no encontrado con el ID: " + id));
-        modifiedUserDto = modelMapper.map(userRepository.save(updatedUser), ModifiedUserDto.class);
-        modifiedUserDto.setJwt(authenticationService.login( new AuthenticationRequest(updatedUser.getEmail(), updatedUser.getPassword())).getJwt());
-        return modifiedUserDto;
+        return authenticationService.modifyUserAndGetJwt(id, user);
     }
 
     @PreAuthorize("hasAuthority('DELETE_USER_BY_ID')")
     @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable Long id){
         userRepository.deleteById(id);
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, String>> handleGeneriException(Exception exception, HttpServletRequest request){
-        Map<String, String> apiError = new HashMap<>();
-        apiError.put("message", exception.getLocalizedMessage());
-        apiError.put("timestamp", new Date().toString());
-        apiError.put("url", request.getRequestURL().toString());
-        apiError.put("http-method", request.getMethod());
-
-        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        if(exception instanceof AccessDeniedException){
-            status = HttpStatus.FORBIDDEN;
-        }
-        return ResponseEntity.status(status).body(apiError);
-
     }
 }
