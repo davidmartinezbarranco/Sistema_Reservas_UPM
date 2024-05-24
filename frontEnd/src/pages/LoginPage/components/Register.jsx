@@ -10,6 +10,7 @@ function Register({ onChildChange }) {
   const [apellidos, setApellidos] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmedPassword, setConfirmedPassword] = useState('');
   const [tipoUsuario, setTipoUsuario] = useState('');
   const [registroCompletado, setRegistroCompletado] = useState(false);
   const [registroFallido, setRegistroFallido] = useState(false);
@@ -43,7 +44,7 @@ function Register({ onChildChange }) {
   }
 
   const formIsFull = () => {
-    return !isEmpty(nombre) && !isEmpty(apellidos) && !isEmpty(email) && !isEmpty(password) && !isEmpty(tipoUsuario);
+    return !isEmpty(nombre) && !isEmpty(apellidos) && !isEmpty(email) && !isEmpty(password) && !isEmpty(tipoUsuario) && !isEmpty(confirmedPassword);
   }
   const handleInputChange = (event) => {
     updateForm(event.target, event.target.value.trim() === '');
@@ -67,6 +68,9 @@ function Register({ onChildChange }) {
       case 'password':
         setPassword(e.target.value);
         break;
+      case 'confirmedPassword':
+        setConfirmedPassword(e.target.value);
+        break;
     }
   }
 
@@ -85,7 +89,7 @@ function Register({ onChildChange }) {
 
   const handleRegistro = async (e) => {
 
-    if (formIsFull()) {
+    if (formIsFull() && password == confirmedPassword) {
       const role = tipoUsuario == "profesor" ? "PROFESSOR" : "STUDENT";
 
 
@@ -112,8 +116,11 @@ function Register({ onChildChange }) {
           }
         });
 
-    } else {
-      setWarningMessage(["No has rellenado todo el formulario"]);
+    } else if (!formIsFull()) {
+      setWarningMessage(["No has rellenado todo el formulario."]);
+      setRegistroFallido(true);
+    } else if (password != confirmedPassword) {
+      setWarningMessage(["Las contraseñas no coinciden."]);
       setRegistroFallido(true);
     }
 
@@ -183,6 +190,17 @@ function Register({ onChildChange }) {
           onChange={handleInputChange}
 
         />
+        <Input
+          id="register-confirmedPassword"
+          className="sign-in-form"
+          color="#285430"
+          type="password"
+          label="Confirme contraseña"
+          name="confirmedPassword"
+          placeholder="Introduce tu contraseña"
+          onChange={handleInputChange}
+
+        />
 
         <div className="flex flex-col gap-3">
           <RadioGroup
@@ -204,8 +222,8 @@ function Register({ onChildChange }) {
           </Button>
 
         </ButtonGroup>
-        {<CustomModal titulo={title} text={message} cargar={registroCompletado} onChange={null} recargarPagina={recargarPagina}/>}
-        {<CustomModal titulo={title} text={warningMessage} cargar={registroFallido} onChange={handleChange} recargarPagina={false}/>}
+        {<CustomModal titulo={title} text={message} cargar={registroCompletado} onChange={null} recargarPagina={recargarPagina} />}
+        {<CustomModal titulo={title} text={warningMessage} cargar={registroFallido} onChange={handleChange} recargarPagina={false} />}
 
       </CardBody>
     </Card>
