@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.sira.dto.ModifyUserDto;
+import com.sira.dto.AuthenticationRequest;
+import com.sira.dto.ModifiedUserDto;
 import com.sira.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.modelmapper.ModelMapper;
@@ -50,24 +51,28 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('MODIFY_USER_BY_ID')")
     @PatchMapping("/user/{id}")
-    public ModifyUserDto modifyUser(@PathVariable Long id, @RequestBody User user){
-        return userRepository.findById(id)
-                .map(updatedUser -> {
+    public ModifiedUserDto modifyUser(@PathVariable Long id, @RequestBody User user){
+        ModifiedUserDto modifiedUserDto;
+                User updatedUser =  userRepository.findById(id)
+                .map(modifiedUser -> {
                     if (user.getEmail() != null) {
-                        updatedUser.setEmail(user.getEmail());
+                        modifiedUser.setEmail(user.getEmail());
                     }
                     if (user.getName() != null) {
-                        updatedUser.setName(user.getName());
+                        modifiedUser.setName(user.getName());
                     }
                     if (user.getLastName() != null) {
-                        updatedUser.setLastName(user.getLastName());
+                        modifiedUser.setLastName(user.getLastName());
                     }
                     if (user.getPassword() != null) {
-                        authenticationService.modifyPassword(user.getPassword(), updatedUser);
+                        authenticationService.modifyPassword(user.getPassword(), modifiedUser);
                     }
-                    return modelMapper.map(userRepository.save(updatedUser), ModifyUserDto.class);
+                    return modifiedUser;
                 }).orElseThrow(() -> new ResponseStatusException(HttpStatus
                         .NOT_FOUND, "Usuario no encontrado con el ID: " + id));
+        modifiedUserDto = modelMapper.map(userRepository.save(updatedUser), ModifiedUserDto.class);
+        modifiedUserDto.setJwt(authenticationService.login( new AuthenticationRequest(updatedUser.getEmail(), updatedUser.getPassword())).getJwt());
+        return modifiedUserDto;
     }
 
     @PreAuthorize("hasAuthority('DELETE_USER_BY_ID')")

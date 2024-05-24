@@ -66,7 +66,8 @@ public class AuthenticationService {
         return extraClaims;
     }
 
-    public void modifyPassword(String newPassword, User user){
+    public String modifyPassword(String newPassword, User user){
         user.setPassword(passwordEncoder.encode(newPassword));
+        return this.login(new AuthenticationRequest(user.getEmail(), user.getPassword())).getJwt();
     }
 }
