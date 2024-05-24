@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Input, Button, ButtonGroup, Card, CardHeader, CardBody, Link } from "@nextui-org/react";
 import BarraNavegacionProfessor from "../professorPages/Inicio/componentes/BarraNavegacion";
 import BarraNavegacionStudent from "../studentPages/Inicio/componentes/BarraNavegacion";
-import { getRole, getToken } from "../../helpers";
+import { getRole, getToken, setToken } from "../../helpers";
 import styles from "./Profile.module.css";
 import CustomModal from "../LoginPage/components/CustomModal";
 import CustomModalDeleteUser from "./elements/CustomModal"
@@ -10,7 +10,7 @@ import CustomModalDeleteUser from "./elements/CustomModal"
 
 
 function Profile() {
-    const token = "Bearer " + getToken();
+    let token = "Bearer " + getToken();
     const role = getRole(localStorage.getItem("token"));
     const id = localStorage.getItem("id");
 
@@ -112,23 +112,15 @@ function Profile() {
             setGuardadoPerfilFallido(true);
 
         } else {
-            if (password != "") {
-                let dataToSend = {
-                    name: name ? name : perfil.nombre,
-                    lastName: lastName ? lastName : perfil.apellidos,
-                    email: email ? email : perfil.email,
-                    password: password
-                }
+            let dataToSend = {};
 
-                enviarDatos(dataToSend);
-            } else {
-                let dataToSend = {
-                    name: name ? name : perfil.nombre,
-                    lastName: lastName ? lastName : perfil.apellidos,
-                    email: email ? email : perfil.email,
-                }
-                enviarDatos(dataToSend);
-            }
+            if(name) dataToSend.name = name;
+            if(lastName) dataToSend.lastName = lastName;
+            if(email) dataToSend.email = email;
+            if(password) dataToSend.password = password;
+
+            enviarDatos(dataToSend);
+        
         }
     }
 
@@ -143,10 +135,16 @@ function Profile() {
         })
             .then(response => {
                 if (response.ok) {
-                    console.log("TODO OK");
-                    setMessage(["Las modificaciones se han realizado correctamente"]);
-                    setGuardadoPerfilCompletado(true);
+                    return response.json();
+
                 }
+            })
+            .then(data => {
+                if(data != null){
+                    setToken(data.jwt);
+                }
+                setMessage(["Las modificaciones se han realizado correctamente"]);
+                setGuardadoPerfilCompletado(true);
             })
 
 
@@ -170,7 +168,6 @@ function Profile() {
 
     useEffect(() => {
         if (deleteAccountDecision) {
-            console.log("AHora si");
             fetch("http://localhost:8080/users/" + id, {
                 method: "DELETE",
                 headers: {
@@ -178,16 +175,13 @@ function Profile() {
                     "Authorization": token
                 }
             })
-            .then(response => {
-                if(response.ok){
-                    localStorage.removeItem("token");
-                    localStorage.removeItem("id");
-                    window.location.href = "/";
-                }
-            })
-
-        } else {
-            console.log("AHora no");
+                .then(response => {
+                    if (response.ok) {
+                        localStorage.removeItem("token");
+                        localStorage.removeItem("id");
+                        window.location.href = "/";
+                    }
+                })
         }
     }, [deleteAccountDecision]);
 
