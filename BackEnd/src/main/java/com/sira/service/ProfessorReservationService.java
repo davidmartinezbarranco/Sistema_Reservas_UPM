@@ -10,7 +10,9 @@ import com.sira.repository.ProfessorReservationRepository;
 import com.sira.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,16 +58,20 @@ public class ProfessorReservationService {
         return professorReservationDto;
     }
 
-    public ProfessorReservation deleteReservation(Long id){
+    public ProfessorReservation deleteReservation(Long id, String email){
         ProfessorReservation professorReservation = professorReservationRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Reserva no encontrada"));
+
+        if(professorReservation.getUser().getEmail().equals(email))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "No puede borrar una reserva que no le pertenezca");
+
         professorReservationRepository.deleteById(id);
         return professorReservation;
     }
 
-    public List<ReservationAndClassroomDto> getReservationsByUserId(Long userId) {
+    public List<ReservationAndClassroomDto> getReservationsByUserId(String email) {
         List<ReservationAndClassroomDto> reservationAndClassroomDtos = new ArrayList<>();
-        List<ProfessorReservation> reservations = professorReservationRepository.findAllByUserId(userId);
+        List<ProfessorReservation> reservations = professorReservationRepository.findAllByUserEmail(email);
         for (ProfessorReservation reservation : reservations)
             reservationAndClassroomDtos.add(new ReservationAndClassroomDto(reservation));
         return reservationAndClassroomDtos;

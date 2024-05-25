@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface ProfessorReservationRepository extends JpaRepository<ProfessorReservation, Long> {
-    List<ProfessorReservation> findAllByUserId(Long userId);
+    List<ProfessorReservation> findAllByUserEmail(String email);
     @Query("SELECT pr FROM ProfessorReservation pr " +
             "WHERE pr.startDate <= :startDate " +
             "AND pr.endDate > :startDate " +

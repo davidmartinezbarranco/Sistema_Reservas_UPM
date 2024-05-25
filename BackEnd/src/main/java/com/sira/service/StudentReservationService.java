@@ -12,7 +12,9 @@ import com.sira.repository.StudentReservationRepository;
 import com.sira.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,23 +68,27 @@ public class StudentReservationService {
         if (reservation.reserveHour()) {
             return modelMapper.map(studentReservationRepository.save(reservation), StudentReservationDto.class);
         } else {
-            throw new Exception("Capacity exceeded");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Capacidad de reserva excedida");
         }
     }
 
-    public List<ReservationAndClassroomDto> getReservationsByUserId(Long userId) {
+    public List<ReservationAndClassroomDto> getReservationsByUserEmail(String email) {
         List<ReservationAndClassroomDto> reservationAndClassroomDtos = new ArrayList<>();
-        List<StudentReservation> reservations = studentReservationRepository.findAllByUserId(userId);
+        List<StudentReservation> reservations = studentReservationRepository.findAllByUserEmail(email);
         for (StudentReservation reservation : reservations)
             reservationAndClassroomDtos.add(new ReservationAndClassroomDto(reservation));
         return reservationAndClassroomDtos;
     }
 
-    public StudentReservation deleteReservation(Long id) {
-        StudentReservation reservation = studentReservationRepository.findById(id)
+    public StudentReservation deleteReservation(Long reservationId, String email) {
+        StudentReservation reservation = studentReservationRepository.findById(reservationId)
                 .orElseThrow(() -> new EntityNotFoundException("Reservation not found"));
+
+        if(reservation.getUser().getEmail().equals(email))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "No puede borrar una reserva que no le pertenezca");
+
         reservation.releaseHour();
-        studentReservationRepository.deleteById(id);
+        studentReservationRepository.deleteById(reservationId);
         return reservation;
     }
 }

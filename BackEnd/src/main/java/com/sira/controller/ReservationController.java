@@ -5,6 +5,7 @@ import com.sira.dto.ProfessorReservationDto;
 import com.sira.dto.StudentReservationDto;
 import com.sira.model.ProfessorReservation;
 import com.sira.model.StudentReservation;
+import com.sira.service.JwtService;
 import com.sira.service.ProfessorReservationService;
 import com.sira.service.StudentReservationService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,11 +18,13 @@ public class ReservationController {
 
     private final ProfessorReservationService professorReservationService;
     private final StudentReservationService studentReservationService;
+    private final JwtService jwtService;
 
     public ReservationController(ProfessorReservationService professorReservationService,
-                                 StudentReservationService studentReservationService) {
+                                 StudentReservationService studentReservationService, JwtService jwtService) {
         this.professorReservationService = professorReservationService;
         this.studentReservationService = studentReservationService;
+        this.jwtService = jwtService;
     }
 
     @PreAuthorize("hasRole('ADMINISTRATOR')")
@@ -31,9 +34,10 @@ public class ReservationController {
     }
 
     @PreAuthorize("hasRole('PROFESSOR')")
-    @GetMapping("/reservations-professor/user/{id}")
-    List<ReservationAndClassroomDto> allProfessorReservationsByUserId(@PathVariable Long id) {
-        return professorReservationService.getReservationsByUserId(id);
+    @GetMapping("/reservations-professor/user")
+    List<ReservationAndClassroomDto> allProfessorReservationsByUser(@RequestHeader("Authorization") String authorizationHeader) {
+        String email = jwtService.extractEmail(authorizationHeader.substring(7));
+        return professorReservationService.getReservationsByUserId(email);
     }
 
     @PreAuthorize("hasRole('PROFESSOR')")
@@ -49,9 +53,10 @@ public class ReservationController {
     }
 
     @PreAuthorize("hasRole('STUDENT')")
-    @GetMapping("/reservations-student/user/{id}")
-    List<ReservationAndClassroomDto> allStudentReservationsByUserId(@PathVariable Long id) {
-        return studentReservationService.getReservationsByUserId(id);
+    @GetMapping("/reservations-student/user")
+    List<ReservationAndClassroomDto> allStudentReservationsByUserId(@RequestHeader("Authorization") String authorizationHeader) {
+        String email = jwtService.extractEmail(authorizationHeader.substring(7));
+        return studentReservationService.getReservationsByUserEmail(email);
     }
 
     @PreAuthorize("hasRole('STUDENT')")
@@ -62,13 +67,15 @@ public class ReservationController {
 
     @PreAuthorize("hasRole('STUDENT')")
     @DeleteMapping("/reservation-student/{id}/delete")
-    StudentReservation deleteStudentReservation(@PathVariable Long id) {
-        return studentReservationService.deleteReservation(id);
+    StudentReservation deleteStudentReservation(@PathVariable Long id, @RequestHeader("Authorization") String authorizationHeader) {
+        String email = jwtService.extractEmail(authorizationHeader.substring(7));
+        return studentReservationService.deleteReservation(id, email);
     }
 
     @PreAuthorize("hasRole('PROFESSOR')")
     @DeleteMapping("/reservation-professor/{id}/delete")
-    ProfessorReservation deleteProfessorReservation(@PathVariable Long id){
-        return professorReservationService.deleteReservation(id);
+    ProfessorReservation deleteProfessorReservation(@PathVariable Long id, @RequestHeader("Authorization") String authorizationHeader){
+        String email = jwtService.extractEmail(authorizationHeader.substring(7));
+        return professorReservationService.deleteReservation(id, email);
     }
 }

@@ -39,7 +39,7 @@ public class AuthenticationService {
         );
         authenticationManager.authenticate(authToken);
 
-        User user = userRepository.findByEmail(authRequest.getEmail()).get();
+        User user = userRepository.findByEmail(authRequest.getEmail()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email no existente"));
 
         String jwt = jwtService.generateToken(user, generateExtraClaims(user));
 
@@ -51,12 +51,10 @@ public class AuthenticationService {
             throw new Exception("El email ya está en uso");
         }
 
-        // Crear un nuevo usuario
         User user = new User(authRequest.getName(), authRequest.getLastName(),
                 authRequest.getEmail(), passwordEncoder.encode(authRequest.getPassword()),
                 authRequest.getRole());
 
-        // Guardar el usuario en la base de datos
         userRepository.save(user);
 
         String jwt = jwtService.generateToken(user, generateExtraClaims(user));
