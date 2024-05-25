@@ -77,9 +77,7 @@ function Reserva() {
 
 
   const pedirArrayMesAPI = (mes, year) => {
-    let id = idClase;
-    let month = mes;
-    let url = "http://localhost:8080/classrooms/" + id + "/availability-student/" + month + "/" + year + "";
+    let url = "http://localhost:8080/classrooms/" + idClase + "/availability-student/" + mes + "/" + year + "";
 
     return fetch(url,{
       method: "GET",
@@ -102,10 +100,7 @@ function Reserva() {
   };
 
   const pedirArrayDiaAPI = (year, mes, dia) => {
-    let id = idClase;
-    let month = mes;
-    let day = dia;
-    let url = "http://localhost:8080/classrooms/" + id + "/availability-student/" + day + "/" + month + "/" + year + "";
+    let url = "http://localhost:8080/classrooms/" + idClase + "/availability-student/" + dia + "/" + mes + "/" + year + "";
 
     return fetch(url,{
       method: "GET",

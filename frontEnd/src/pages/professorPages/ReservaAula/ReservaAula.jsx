@@ -49,7 +49,7 @@ function ReservaAula() {
 
 
   useEffect(() => {
-    fetch("http://localhost:8080/classrooms",{
+    fetch("http://localhost:8080/classrooms", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -75,7 +75,7 @@ function ReservaAula() {
 
 
   useEffect(() => {
-    if(idClase != null){
+    if (idClase != null) {
       availableTimeSlots.splice(0, availableTimeSlots.length);
       calendar();
     }
@@ -84,11 +84,9 @@ function ReservaAula() {
 
 
   const pedirArrayMesAPI = (mes, year) => {
-    let id = idClase;
-    let month = mes;
-    let url = "http://localhost:8080/classrooms/" + id + "/availability-professor/" + month + "/"+ year + "";
+    let url = "http://localhost:8080/classrooms/" + idClase + "/availability-professor/" + mes + "/" + year + "";
 
-    return fetch(url,{
+    return fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -109,12 +107,9 @@ function ReservaAula() {
   };
 
   const pedirArrayDiaAPI = (year, mes, dia) => {
-    let id = idClase;
-    let month = mes;
-    let day = dia;
-    let url = "http://localhost:8080/classrooms/" + id + "/availability-professor/" + day + "/" + month + "/" + year +"";
+    let url = "http://localhost:8080/classrooms/" + idClase + "/availability-professor/" + dia + "/" + mes + "/" + year + "";
 
-    return fetch(url,{
+    return fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -137,11 +132,11 @@ function ReservaAula() {
       if (i > 12) {
         let mesYearSiguiente = i - 12;
         pedirArrayMesAPI(mesYearSiguiente, year + 1).then(data => {
-          if(idClase != null) obtenerFechas(year + 1, mesYearSiguiente, data);
+          if (idClase != null) obtenerFechas(year + 1, mesYearSiguiente, data);
         });
       } else {
         pedirArrayMesAPI(i, year).then(data => {
-          if(idClase != null)  obtenerFechas(year, i, data);
+          if (idClase != null) obtenerFechas(year, i, data);
         })
       }
     }
@@ -150,7 +145,7 @@ function ReservaAula() {
 
 
   const obtenerFechas = (year, mes, arrayMes) => {
-    let arrayDia = null;
+    // let arrayDia = null;
     let hoy = new Date().getDate();
     let month = new Date().getMonth() + 1;
 
@@ -204,8 +199,8 @@ function ReservaAula() {
 
 
 
-  const calcularHoras = ( year, hora, dia, mes) => {
-    if(idClase != null) pedirArrayDiaAPI(year, mes + 1, dia).then(arrayDia => {
+  const calcularHoras = (year, hora, dia, mes) => {
+    if (idClase != null) pedirArrayDiaAPI(year, mes + 1, dia).then(arrayDia => {
       setCont(contarTruesDesdeIndice(arrayDia, hora - 9));
     });
 
