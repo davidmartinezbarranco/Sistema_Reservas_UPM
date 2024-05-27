@@ -27,8 +27,8 @@ function MisReservas() {
 
 
   const fetchData = () => {
-    let id = localStorage.getItem("id");
-    return fetch("http://localhost:8080/reservations-student/user/" + id, {
+    // let id = localStorage.getItem("id");
+    return fetch("http://localhost:8080/reservations-student/user", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
