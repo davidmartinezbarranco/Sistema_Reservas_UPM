@@ -1,6 +1,5 @@
 package com.sira.dto;
 
-import com.sira.util.Role;
 import lombok.Data;
 
 @Data

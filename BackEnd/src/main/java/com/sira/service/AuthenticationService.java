@@ -46,9 +46,9 @@ public class AuthenticationService {
         return new AuthenticationResponse(user.getId(),jwt);
     }
 
-    public AuthenticationResponse register(RegisterRequest authRequest) throws Exception {
+    public AuthenticationResponse register(RegisterRequest authRequest) {
         if (userRepository.existsByEmail(authRequest.getEmail())) {
-            throw new Exception("El email ya está en uso");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El email ya está en uso");
         }
 
         User user = new User(authRequest.getName(), authRequest.getLastName(),
@@ -62,15 +62,15 @@ public class AuthenticationService {
         return new AuthenticationResponse(user.getId(), jwt);
     }
 
-    public ModifiedUserDto modifyUserAndGetJwt(Long id, User user) {
+    public ModifiedUserDto modifyUserAndGetJwt(String email, User user) {
         ModifiedUserDto modifiedUserDto;
-        User updatedUser =  userRepository.findById(id)
+        User updatedUser =  userRepository.findByEmail(email)
                 .map(modifiedUser -> {
                     if (user.getEmail() != null) {
                         if(!userRepository.existsByEmail(user.getEmail())){
                             modifiedUser.setEmail(user.getEmail());
                         }else{
-                            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ya existe un usuario con ese email");
+                            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El email ya está en uso");
                         }
                     }
                     if (user.getName() != null) {
@@ -84,7 +84,7 @@ public class AuthenticationService {
                     }
                     return modifiedUser;
                 }).orElseThrow(() -> new ResponseStatusException(HttpStatus
-                        .NOT_FOUND, "Usuario no encontrado con el ID: " + id));
+                        .NOT_FOUND, "Usuario no encontrado con el email: " + email));
 
         modifiedUserDto = modelMapper.map(userRepository.save(updatedUser), ModifiedUserDto.class);
         modifiedUserDto.setJwt(jwtService.generateToken(updatedUser, generateExtraClaims(updatedUser)));

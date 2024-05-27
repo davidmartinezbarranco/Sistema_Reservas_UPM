@@ -3,7 +3,6 @@ package com.sira.controller;
 import com.sira.dto.AuthenticationRequest;
 import com.sira.dto.AuthenticationResponse;
 import com.sira.dto.RegisterRequest;
-import com.sira.repository.UserRepository;
 import com.sira.service.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

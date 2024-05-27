@@ -46,12 +46,12 @@ public class StudentReservationService {
         return studentReservationRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Reservation not found"));
     }
 
-    public StudentReservationDto createReservation(StudentReservationDto studentRequest) throws Exception {
+    public StudentReservationDto createReservation(StudentReservationDto studentRequest) {
         ProfessorReservation professorReservation = professorReservationRepository
                 .findOverlappingReservations(studentRequest.getStartDate(), studentRequest.getClassroomId())
-                .orElseThrow(() -> new EntityNotFoundException("Theres no professor reservation at that hour"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No hay reservas de profesor a esa hora"));
         if (!professorReservation.isHourAvailable(studentRequest.getHour())) {
-            throw new Exception("Hour not available");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Hora no disponible");
         }
         User requestUser = userRepository.findById(studentRequest.getUserId()).orElseThrow(() -> new EntityNotFoundException("Classroom with ID " + studentRequest.getClassroomId() + " not found"));
         Classroom requestClassroom = classroomRepository.findById(studentRequest.getClassroomId()).orElseThrow(() -> new EntityNotFoundException("Classroom with ID " + studentRequest.getClassroomId() + " not found"));

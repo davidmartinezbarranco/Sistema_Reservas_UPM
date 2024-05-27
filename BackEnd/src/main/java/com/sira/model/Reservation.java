@@ -39,7 +39,7 @@ public abstract class Reservation {
     @JoinColumn(name = "classroom_id")
     private Classroom classroom;
 
-    public Reservation(LocalDateTime startDate, LocalDateTime endDate, User user, Classroom classroom) {
+    protected Reservation(LocalDateTime startDate, LocalDateTime endDate, User user, Classroom classroom) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.user = user;

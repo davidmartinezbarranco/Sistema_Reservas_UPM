@@ -18,14 +18,14 @@ import java.util.Map;
 public class JwtService {
 
     @Value("${security.jwt.expiration-minutes}")
-    private long EXPIRATION_MINUTES;
+    private long expirationMinutes;
 
     @Value("${security.jwt.secret-key}")
-    private String SECRET_KEY;
+    private String secretKey;
 
     public String generateToken(User user, Map<String, Object> extraClaims) {
         Date issuedAt = new Date(System.currentTimeMillis());
-        Date expiration = new Date(issuedAt.getTime() + (EXPIRATION_MINUTES * 60000));
+        Date expiration = new Date(issuedAt.getTime() + (expirationMinutes * 60000));
         return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(user.getEmail())
@@ -37,7 +37,7 @@ public class JwtService {
     }
 
     private Key generateKey(){
-        byte[] secretAsBytes = Decoders.BASE64.decode(SECRET_KEY);
+        byte[] secretAsBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(secretAsBytes);
     }
 
