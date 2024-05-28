@@ -84,7 +84,7 @@ public class StudentReservationService {
         StudentReservation reservation = studentReservationRepository.findById(reservationId)
                 .orElseThrow(() -> new EntityNotFoundException("Reservation not found"));
 
-        if(reservation.getUser().getEmail().equals(email))
+        if(!reservation.getUser().getEmail().equals(email))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "No puede borrar una reserva que no le pertenezca");
 
         reservation.releaseHour();
