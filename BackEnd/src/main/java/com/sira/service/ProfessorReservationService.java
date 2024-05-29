@@ -62,7 +62,7 @@ public class ProfessorReservationService {
         ProfessorReservation professorReservation = professorReservationRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Reserva no encontrada"));
 
-        if(professorReservation.getUser().getEmail().equals(email))
+        if(!professorReservation.getUser().getEmail().equals(email))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "No puede borrar una reserva que no le pertenezca");
 
         professorReservationRepository.deleteById(id);
