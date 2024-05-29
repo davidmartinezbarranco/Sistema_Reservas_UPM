@@ -27,7 +27,6 @@ function MisReservas() {
 
 
   const fetchData = () => {
-    // let id = localStorage.getItem("id");
     return fetch("http://localhost:8080/reservations-student/user", {
       method: "GET",
       headers: {
@@ -100,7 +99,7 @@ function MisReservas() {
     setCancelarReserva(true);
     setIdAEliminar(id);
   }
-  
+
   useEffect(() => {
     if (cancelarReservaDecision) {
       console.log("Eliminando reserva con id: " + idAEliminar);

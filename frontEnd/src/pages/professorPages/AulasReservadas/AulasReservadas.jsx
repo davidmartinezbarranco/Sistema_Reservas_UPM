@@ -27,7 +27,6 @@ function AulasReservadas() {
   const [idAEliminar, setIdAEliminar] = useState(null);
 
   const fetchData = () => {
-    // let id = localStorage.getItem("id");
     return fetch("http://localhost:8080/reservations-professor/user", {
       method: "GET",
       headers: {

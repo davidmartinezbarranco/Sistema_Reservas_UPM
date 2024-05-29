@@ -127,7 +127,7 @@ function ReservaAula() {
   const calendar = () => {
     let mesActual = new Date().getMonth() + 1;
     let year = new Date().getFullYear();
-    let cantidadMesesACargar = 1;
+    let cantidadMesesACargar = 6;
     for (let i = mesActual; i < mesActual + cantidadMesesACargar; i++) {
       if (i > 12) {
         let mesYearSiguiente = i - 12;

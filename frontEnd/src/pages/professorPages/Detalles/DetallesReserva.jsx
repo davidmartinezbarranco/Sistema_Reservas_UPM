@@ -13,8 +13,7 @@ function DetallesReserva() {
 
     const fetchData = () => {
         let token = "Bearer " + getToken();
-        let id = localStorage.getItem("id");
-        return fetch("http://localhost:8080/reservations-professor/user/" + id + "",{
+        return fetch("http://localhost:8080/reservations-professor/user",{
             method: "GET",
             headers: {
               "Content-Type": "application/json",
