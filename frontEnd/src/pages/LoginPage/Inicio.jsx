@@ -49,27 +49,6 @@ function Inicio() {
         const showRegistro = mostrarRegistro ? 'visible' : 'oculto';
 
 
-        /*
-        useEffect(() => {
-                const handleBeforeUnload = (event) => {
-                        if (!loginFormIsEmpty || !registerFormIsEmpty) {
-                                event.preventDefault();
-                                event.returnValue = '';
-                        }
-                };
-
-                // window.addEventListener('beforeunload', handleBeforeUnload);
-
-                return () => {
-                        window.removeEventListener('beforeunload', handleBeforeUnload);
-                };
-        }, [loginFormIsEmpty, registerFormIsEmpty]);*/
-
-
-        function vaciarLogin() {
-                console.log("vaciar");
-        }
-
 
         return (
                 <NextUIProvider >

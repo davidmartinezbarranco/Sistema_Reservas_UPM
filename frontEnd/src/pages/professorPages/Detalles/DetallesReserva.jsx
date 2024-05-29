@@ -37,16 +37,14 @@ function DetallesReserva() {
                         id: reservaEncontrada.id,
                         nombreAula: reservaEncontrada.classroom.name,
                         aula: reservaEncontrada.classroom.number,
-                        fecha: fechaFormatoDia, // <- Aquí necesitas proporcionar valores adecuados para fechaFormatoDia, horaInicioFormateada y horaFinFormateada
+                        fecha: fechaFormatoDia, 
                         horaInicio: horaInicioFormateada,
                         horaFin: horaFinFormateada
                     };
-                    console.log(re);
                     setReserva(re);
                 }
             })
             .catch(error => {
-                console.error("Error al obtener los datos:", error);
             });
     }
 

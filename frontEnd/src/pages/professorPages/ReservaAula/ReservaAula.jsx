@@ -145,7 +145,6 @@ function ReservaAula() {
 
 
   const obtenerFechas = (year, mes, arrayMes) => {
-    // let arrayDia = null;
     let hoy = new Date().getDate();
     let month = new Date().getMonth() + 1;
 

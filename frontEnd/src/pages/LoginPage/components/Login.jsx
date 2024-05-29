@@ -69,12 +69,9 @@ function Login({ onChildChange }) {
       })
     })
       .then(response => {
-        if (response.ok) {
-          console.log("Todo OK");
-          
+        if (response.ok) {          
           return response.json();
         } else {
-          console.log("No ha iniciado sesión");
           setIncorrectCredentials(true);
           throw new Error('Error de autenticación');
         }
@@ -91,9 +88,6 @@ function Login({ onChildChange }) {
         }else if (role == "STUDENT"){
           window.location.href = '/Index';
         }
-      })
-      .catch(error => {
-        console.error();
       })
   }
 

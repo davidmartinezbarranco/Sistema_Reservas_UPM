@@ -102,7 +102,6 @@ function AulasReservadas() {
 
   useEffect(() => {
     if (cancelarReservaDecision) {
-      console.log("Eliminando reserva con id: " + idAEliminar);
       fetch("http://localhost:8080/reservation-professor/" + idAEliminar + "/delete", {
         method: "DELETE",
         headers: {

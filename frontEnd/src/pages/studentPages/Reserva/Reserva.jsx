@@ -212,9 +212,6 @@ function Reserva() {
   }
 
 
-
-
-
   useEffect(() => {
     cambiarHoraFin();
   }, [startTimeSelected])
@@ -225,13 +222,6 @@ function Reserva() {
       let fechaInicio = formatearHora(startTimeSelected);
       let fechaFin = formatearHora(fechaFinReserva);
       let userId = localStorage.getItem("id");
-
-      console.log(fechaInicio);
-      console.log(fechaFin);
-      console.log(typeof userId);
-      console.log(idClase);
-
-
 
       fetch("http://localhost:8080/reservation-student", {
         method: "POST",

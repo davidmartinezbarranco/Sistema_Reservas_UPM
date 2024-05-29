@@ -102,7 +102,6 @@ function MisReservas() {
 
   useEffect(() => {
     if (cancelarReservaDecision) {
-      console.log("Eliminando reserva con id: " + idAEliminar);
       fetch("http://localhost:8080/reservation-student/" + idAEliminar + "/delete", {
         method: "DELETE",
         headers: {
