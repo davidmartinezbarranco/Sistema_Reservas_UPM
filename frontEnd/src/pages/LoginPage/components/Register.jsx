@@ -132,7 +132,7 @@ function Register({ onChildChange }) {
 
 
   return (
-    <Card className="bg-background/90 px-5 pb-3 pt-3 mt-5 mb-5 ml-2.5">
+    <Card className="bg-background/100 px-8 pb-10 pt-10 mt-5 mb-5 ml-2.5">
       <CardHeader className="text-l font-bold justify-center items-center">
         <div className="flex flex-col items-center">
           <h1>Registro en Reserva de Aulas ETSISI</h1>
