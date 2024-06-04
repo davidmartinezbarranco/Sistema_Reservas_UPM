@@ -42,8 +42,10 @@ public class ReservationController {
 
     @PreAuthorize("hasRole('PROFESSOR')")
     @PostMapping("/reservation-professor")
-    ProfessorReservationDto newProfessorReservation(@RequestBody ProfessorReservationDto professorReservationRequest) {
-        return professorReservationService.createReservation(professorReservationRequest);
+    ProfessorReservationDto newProfessorReservation(@RequestBody ProfessorReservationDto professorReservationRequest,
+                                                    @RequestHeader("Authorization") String authorizationHeader) {
+        String email = jwtService.extractEmail(authorizationHeader.substring(7));
+        return professorReservationService.createReservation(professorReservationRequest, email);
     }
 
     @PreAuthorize("hasRole('ADMINISTRATOR')")
@@ -61,8 +63,10 @@ public class ReservationController {
 
     @PreAuthorize("hasRole('STUDENT')")
     @PostMapping("/reservation-student")
-    StudentReservationDto newStudentReservation(@RequestBody StudentReservationDto studentReservationRequest) throws Exception {
-        return studentReservationService.createReservation(studentReservationRequest);
+    StudentReservationDto newStudentReservation(@RequestBody StudentReservationDto studentReservationRequest,
+                                                @RequestHeader("Authorization") String authorizationHeader){
+        String email = jwtService.extractEmail(authorizationHeader.substring(7));
+        return studentReservationService.createReservation(studentReservationRequest, email);
     }
 
     @PreAuthorize("hasRole('STUDENT')")

@@ -13,7 +13,6 @@ public class ProfessorReservationDto {
         private LocalDateTime startDate;
         private LocalDateTime endDate;
         private Long classroomId;
-        private Long userId;
         private int totalCapacity;
 }
     

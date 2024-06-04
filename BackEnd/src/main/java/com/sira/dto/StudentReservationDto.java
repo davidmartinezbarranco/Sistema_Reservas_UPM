@@ -9,7 +9,6 @@ public class StudentReservationDto {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private Long classroomId;
-    private Long userId;
     public int getHour(){
         return startDate.getHour();
     }

@@ -8,7 +8,6 @@ import com.sira.model.User;
 import com.sira.repository.ClassroomRepository;
 import com.sira.repository.ProfessorReservationRepository;
 import com.sira.repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class ProfessorReservationService {
@@ -39,12 +37,15 @@ public class ProfessorReservationService {
     }
 
     public ProfessorReservation getReservationById(Long id) {
-        return professorReservationRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Reservation not found"));
+        return professorReservationRepository.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Reservation not found"));
     }
 
-    public ProfessorReservationDto createReservation(ProfessorReservationDto request) {
-        User requestUser = userRepository.findById(request.getUserId()).orElseThrow(() -> new EntityNotFoundException("Classroom with ID " + request.getClassroomId() + " not found"));
-        Classroom requestClassroom = classroomRepository.findById(request.getClassroomId()).orElseThrow(() -> new EntityNotFoundException("Classroom with ID " + request.getClassroomId() + " not found"));
+    public ProfessorReservationDto createReservation(ProfessorReservationDto request, String email) {
+        User requestUser = userRepository.findByEmail(email).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "User with email " + email + " not found"));
+        Classroom requestClassroom = classroomRepository.findById(request.getClassroomId()).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Classroom with ID " + request.getClassroomId() + " not found"));
 
         ProfessorReservation reservation = new ProfessorReservation(
                 request.getStartDate(),
@@ -60,7 +61,7 @@ public class ProfessorReservationService {
 
     public ProfessorReservation deleteReservation(Long id, String email){
         ProfessorReservation professorReservation = professorReservationRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Reserva no encontrada"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reserva no encontrada"));
 
         if(!professorReservation.getUser().getEmail().equals(email))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "No puede borrar una reserva que no le pertenezca");
