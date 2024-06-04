@@ -12,13 +12,11 @@ public class ReservationAndClassroomDto {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private Classroom classroom;
-    private Long userId;
 
     public ReservationAndClassroomDto(Reservation reservation) {
         this.id = reservation.getId();
         this.startDate = reservation.getStartDate();
         this.endDate = reservation.getEndDate();
         this.classroom = reservation.getClassroom();
-        this.userId = reservation.getUser().getId();
     }
 }
