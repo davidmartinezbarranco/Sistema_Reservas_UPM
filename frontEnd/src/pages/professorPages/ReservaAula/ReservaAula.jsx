@@ -264,7 +264,6 @@ function ReservaAula() {
 
       let fechaInicio = formatearHora(startTimeSelected);
       let fechaFin = formatearHora(fechaFinReserva);
-      let userId = localStorage.getItem("id");
 
       fetch("http://localhost:8080/reservation-professor", {
         method: "POST",
@@ -275,7 +274,6 @@ function ReservaAula() {
         body: JSON.stringify({
           startDate: fechaInicio,
           endDate: fechaFin,
-          userId: userId,
           classroomId: idClase,
           totalCapacity: cantidadAlumnos
         })
