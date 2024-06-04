@@ -43,7 +43,7 @@ public class AuthenticationService {
 
         String jwt = jwtService.generateToken(user, generateExtraClaims(user));
 
-        return new AuthenticationResponse(user.getId(),jwt);
+        return new AuthenticationResponse(jwt);
     }
 
     public AuthenticationResponse register(RegisterRequest authRequest) {
@@ -59,7 +59,7 @@ public class AuthenticationService {
 
         String jwt = jwtService.generateToken(user, generateExtraClaims(user));
 
-        return new AuthenticationResponse(user.getId(), jwt);
+        return new AuthenticationResponse(jwt);
     }
 
     public ModifiedUserDto modifyUserAndGetJwt(String email, User user) {

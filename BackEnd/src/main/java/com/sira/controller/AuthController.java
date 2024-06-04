@@ -25,7 +25,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody @Valid RegisterRequest authRequest) throws Exception {
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody @Valid RegisterRequest authRequest){
         AuthenticationResponse jwtDto = authenticationService.register(authRequest);
         return ResponseEntity.ok(jwtDto);
     }
