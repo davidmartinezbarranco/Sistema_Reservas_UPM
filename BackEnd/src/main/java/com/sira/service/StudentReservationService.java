@@ -18,7 +18,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class StudentReservationService {
@@ -43,17 +42,17 @@ public class StudentReservationService {
     }
 
     public StudentReservation getReservationById(Long id) {
-        return studentReservationRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Reservation not found"));
+        return studentReservationRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reservation not found"));
     }
 
-    public StudentReservationDto createReservation(StudentReservationDto studentRequest) {
+    public StudentReservationDto createReservation(StudentReservationDto studentRequest, String email) {
         ProfessorReservation professorReservation = professorReservationRepository
                 .findOverlappingReservations(studentRequest.getStartDate(), studentRequest.getClassroomId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No hay reservas de profesor a esa hora"));
         if (!professorReservation.isHourAvailable(studentRequest.getHour())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Hora no disponible");
         }
-        User requestUser = userRepository.findById(studentRequest.getUserId()).orElseThrow(() -> new EntityNotFoundException("Classroom with ID " + studentRequest.getClassroomId() + " not found"));
+        User requestUser = userRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with email " + email + " not found"));
         Classroom requestClassroom = classroomRepository.findById(studentRequest.getClassroomId()).orElseThrow(() -> new EntityNotFoundException("Classroom with ID " + studentRequest.getClassroomId() + " not found"));
 
 
@@ -82,7 +81,7 @@ public class StudentReservationService {
 
     public StudentReservation deleteReservation(Long reservationId, String email) {
         StudentReservation reservation = studentReservationRepository.findById(reservationId)
-                .orElseThrow(() -> new EntityNotFoundException("Reservation not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reservation not found"));
 
         if(!reservation.getUser().getEmail().equals(email))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "No puede borrar una reserva que no le pertenezca");
