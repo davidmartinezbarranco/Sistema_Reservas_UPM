@@ -76,7 +76,7 @@ function ReservaAula() {
 
   useEffect(() => {
     if (idClase != null) {
-      availableTimeSlots.splice(0, availableTimeSlots.length);
+      setAvailableTimeSlots([]);
       calendar();
     }
   }, [idClase]);
