@@ -12,8 +12,7 @@ function Detalles() {
     const [mostrarDatos, setMostrarDatos] = useState(false);
 
     const fetchData = () => {
-        let id = localStorage.getItem("id");
-        return fetch("http://localhost:8080/reservations-student/user/" + id, {
+        return fetch("http://localhost:8080/reservations-student/user", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -37,16 +36,14 @@ function Detalles() {
                         id: reservaEncontrada.id,
                         nombreAula: reservaEncontrada.classroom.name,
                         aula: reservaEncontrada.classroom.number,
-                        fecha: fechaFormatoDia, // <- Aquí necesitas proporcionar valores adecuados para fechaFormatoDia, horaInicioFormateada y horaFinFormateada
+                        fecha: fechaFormatoDia,
                         horaInicio: horaInicioFormateada,
                         horaFin: horaFinFormateada
                     };
-                    console.log(re);
                     setReserva(re);
                 }
             })
             .catch(error => {
-                console.error("Error al obtener los datos:", error);
             });
     }
 

@@ -4,6 +4,7 @@ import Register from "./components/Register";
 import { NextUIProvider } from "@nextui-org/react";
 import NotRegistered from "./components/NotRegistered";
 import NotLoggedIn from "./components/NotLoggedIn";
+import styles from "./Inicio.module.css";
 
 
 
@@ -49,53 +50,34 @@ function Inicio() {
         const showRegistro = mostrarRegistro ? 'visible' : 'oculto';
 
 
-        /*
-        useEffect(() => {
-                const handleBeforeUnload = (event) => {
-                        if (!loginFormIsEmpty || !registerFormIsEmpty) {
-                                event.preventDefault();
-                                event.returnValue = '';
-                        }
-                };
-
-                // window.addEventListener('beforeunload', handleBeforeUnload);
-
-                return () => {
-                        window.removeEventListener('beforeunload', handleBeforeUnload);
-                };
-        }, [loginFormIsEmpty, registerFormIsEmpty]);*/
-
-
-        function vaciarLogin() {
-                console.log("vaciar");
-        }
-
 
         return (
                 <NextUIProvider >
-
-                        <div className="bg-azul min-h-screen inicio-custom-size">
-                                <div className={showInicioSesion}>
-                                        <div className="">
-                                                <NotRegistered onToggle={cambiarARegistro}></NotRegistered>
-                                        </div>
-                                        <div className="">
-                                                <Login
-                                                        onChildChange={handleLoginChildChange} >
-                                                </Login>
-                                        </div>
-                                </div>
-
-                                <div className={showRegistro}>
-                                        <div className="">
-                                                <Register onChildChange={handleRegisterChildChange}></Register>
-                                        </div>
-                                        <div className="">
-                                                <NotLoggedIn onToggle={cambiarALogin} ></NotLoggedIn>
+                        <div className={styles["inicio-custom"]}>
+                                <div className="min-h-screen inicio-custom-size">
+                                        <div className={showInicioSesion}>
+                                                <div className="">
+                                                        <NotRegistered onToggle={cambiarARegistro}></NotRegistered>
+                                                </div>
+                                                <div className="">
+                                                        <Login
+                                                                onChildChange={handleLoginChildChange} >
+                                                        </Login>
+                                                </div>
                                         </div>
 
+                                        <div className={showRegistro}>
+                                                <div className="">
+                                                        <Register onChildChange={handleRegisterChildChange}></Register>
+                                                </div>
+                                                <div className="">
+                                                        <NotLoggedIn onToggle={cambiarALogin} ></NotLoggedIn>
+                                                </div>
+
+                                        </div>
                                 </div>
                         </div>
+
 
                 </NextUIProvider >
 

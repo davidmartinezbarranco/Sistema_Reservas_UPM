@@ -120,7 +120,7 @@ function Reserva() {
   const calendar = () => {
     let mesActual = new Date().getMonth() + 1;
     let year = new Date().getFullYear();
-    let cantidadMesesACargar = 1;
+    let cantidadMesesACargar = 6;
 
     for (let i = mesActual; i < mesActual + cantidadMesesACargar; i++) {
       if (i > 12) {
@@ -212,9 +212,6 @@ function Reserva() {
   }
 
 
-
-
-
   useEffect(() => {
     cambiarHoraFin();
   }, [startTimeSelected])
@@ -225,13 +222,6 @@ function Reserva() {
       let fechaInicio = formatearHora(startTimeSelected);
       let fechaFin = formatearHora(fechaFinReserva);
       let userId = localStorage.getItem("id");
-
-      console.log(fechaInicio);
-      console.log(fechaFin);
-      console.log(typeof userId);
-      console.log(idClase);
-
-
 
       fetch("http://localhost:8080/reservation-student", {
         method: "POST",

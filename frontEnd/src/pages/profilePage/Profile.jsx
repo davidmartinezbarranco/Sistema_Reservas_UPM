@@ -12,7 +12,6 @@ import CustomModalDeleteUser from "./elements/CustomModal"
 function Profile() {
     let token = "Bearer " + getToken();
     const role = getRole(localStorage.getItem("token"));
-    const id = localStorage.getItem("id");
 
     const [editMode, setEditMode] = useState(false);
     const [name, setName] = useState("");
@@ -81,7 +80,7 @@ function Profile() {
     const fetchData = () => {
 
 
-        fetch("http://localhost:8080/users/" + id, {
+        fetch("http://localhost:8080/user", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -125,7 +124,7 @@ function Profile() {
     }
 
     const enviarDatos = (data) => {
-        fetch("http://localhost:8080/user/" + id, {
+        fetch("http://localhost:8080/user", {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -168,7 +167,7 @@ function Profile() {
 
     useEffect(() => {
         if (deleteAccountDecision) {
-            fetch("http://localhost:8080/users/" + id, {
+            fetch("http://localhost:8080/user", {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -178,7 +177,6 @@ function Profile() {
                 .then(response => {
                     if (response.ok) {
                         localStorage.removeItem("token");
-                        localStorage.removeItem("id");
                         window.location.href = "/";
                     }
                 })

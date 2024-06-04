@@ -69,12 +69,9 @@ function Login({ onChildChange }) {
       })
     })
       .then(response => {
-        if (response.ok) {
-          console.log("Todo OK");
-          
+        if (response.ok) {          
           return response.json();
         } else {
-          console.log("No ha iniciado sesión");
           setIncorrectCredentials(true);
           throw new Error('Error de autenticación');
         }
@@ -92,13 +89,10 @@ function Login({ onChildChange }) {
           window.location.href = '/Index';
         }
       })
-      .catch(error => {
-        console.error();
-      })
   }
 
   return (
-    <Card className="bg-background/90 px-10 pb-20 pt-20 mt-10 mb-10">
+    <Card className="bg-background/100 px-10 pb-20 pt-20 mt-10 mb-10">
       <CardHeader className="text-xl font-bold justify-center items-center">
         <div className="flex flex-col items-center">
           <h1>RESERVA DE AULAS ETSISI</h1>

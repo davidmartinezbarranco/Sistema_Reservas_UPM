@@ -5,7 +5,7 @@ import "/src/styles.css"
 function NotRegistered({ onToggle }) {
 
   return (
-    <Card id="Not-registered-box" className="border-none bg-background/70 px-5">
+    <Card id="Not-registered-box" className="border-none bg-background/100 px-5">
       <div className="flex flex-col justify-center items-center h-full">
         <CardBody className="flex flex-col items-center justify-center">
           <h1> ¿Aún no tienes una cuenta?</h1>

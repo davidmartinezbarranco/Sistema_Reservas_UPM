@@ -1,0 +1,6 @@
+.inicio-custom {
+    background-image: url('../../../public/fondo.png');
+    background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat; 
+}
