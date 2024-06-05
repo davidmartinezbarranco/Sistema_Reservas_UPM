@@ -86,10 +86,15 @@ function Register({ onChildChange }) {
 
   };
 
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
 
   const handleRegistro = async (e) => {
 
-    if (formIsFull() && password == confirmedPassword) {
+    if (formIsFull() && password == confirmedPassword && validateEmail(email)) {
       const role = tipoUsuario == "profesor" ? "PROFESSOR" : "STUDENT";
 
 
@@ -121,6 +126,9 @@ function Register({ onChildChange }) {
       setRegistroFallido(true);
     } else if (password != confirmedPassword) {
       setWarningMessage(["Las contraseñas no coinciden."]);
+      setRegistroFallido(true);
+    } else if (!validateEmail(email)){
+      setWarningMessage(["No se ha introducido un email."]);
       setRegistroFallido(true);
     }
 

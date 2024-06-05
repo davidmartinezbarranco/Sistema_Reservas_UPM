@@ -104,22 +104,30 @@ function Profile() {
 
     }
 
+    const validateEmail = (email) => {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+      };
+
 
     const saveChanges = () => {
         if (password != confirmedPassword) {
             setWarningMessage(["Las contraseñas no coinciden"]);
             setGuardadoPerfilFallido(true);
 
+        } if (email && !validateEmail(email)) {
+            setWarningMessage(["No se ha escrito un email"]);
+            setGuardadoPerfilFallido(true);
         } else {
             let dataToSend = {};
 
-            if(name) dataToSend.name = name;
-            if(lastName) dataToSend.lastName = lastName;
-            if(email) dataToSend.email = email;
-            if(password) dataToSend.password = password;
+            if (name) dataToSend.name = name;
+            if (lastName) dataToSend.lastName = lastName;
+            if (email) dataToSend.email = email;
+            if (password) dataToSend.password = password;
 
             enviarDatos(dataToSend);
-        
+
         }
     }
 
@@ -139,7 +147,7 @@ function Profile() {
                 }
             })
             .then(data => {
-                if(data != null){
+                if (data != null) {
                     setToken(data.jwt);
                 }
                 setMessage(["Las modificaciones se han realizado correctamente"]);
