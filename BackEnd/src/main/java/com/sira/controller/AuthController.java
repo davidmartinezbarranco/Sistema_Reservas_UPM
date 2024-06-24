@@ -13,19 +13,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
-
-
     private final AuthenticationService authenticationService;
 
-
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(@RequestBody @Valid AuthenticationRequest authRequest){
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody @Valid AuthenticationRequest authRequest) {
         AuthenticationResponse jwtDto = authenticationService.login(authRequest);
         return ResponseEntity.ok(jwtDto);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody @Valid RegisterRequest authRequest){
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody @Valid RegisterRequest authRequest) {
         AuthenticationResponse jwtDto = authenticationService.register(authRequest);
         return ResponseEntity.ok(jwtDto);
     }
