@@ -1,6 +1,6 @@
 .inicio-custom {
-    background-image: url('../../../public/fondo.png');
-    background-size: cover; 
-    background-position: center;
-    background-repeat: no-repeat; 
+  background-image: url("../../../public/fondo_azul.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }

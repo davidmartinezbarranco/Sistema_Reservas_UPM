@@ -8,21 +8,34 @@ export const content = [
   "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
 ];
 export const theme = {
-  extend: {},
+  extend: {
+    backgroundImage: {
+      "custom-light": "url('/fondo_azul.jpg')",
+      "custom-dark": "url('/fondo_azul.jpg')",
+      azul: "url('/fondo_azul.jpg')", // Añade tu imagen azul aquí
+    },
+    colors: {
+      azul: "#9FABD6",
+    },
+  },
 };
 export const plugins = [
   nextui({
     themes: {
       light: {
-        layout: {},
+        layout: {
+          backgroundColor: "var(--tw-bg-azul)",
+        },
         colors: {
           beige: "#E5D9B6",
-          azul: "#1C2833",
+          azul: "#9FABD6",
           gris: "#333333",
         },
       },
       dark: {
-        layout: {},
+        layout: {
+          backgroundColor: "var(--tw-bg-azul)", // Asegúrate de usar la misma variable para ambos modos si quieres mantener el mismo fondo
+        },
         colors: {
           azulOscuro: "#34495E",
           secondary: "#285430",
